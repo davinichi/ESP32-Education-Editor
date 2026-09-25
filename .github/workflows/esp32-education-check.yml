@@ -1,0 +1,32 @@
+name: ESP32 Education checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check ESP32 extension JavaScript syntax
+        shell: bash
+        run: |
+          node --check packages/scratch-vm/src/extensions/esp32education_shared/transport.js
+          for f in packages/scratch-vm/src/extensions/scratch3_esp32edu*/index.js; do
+            node --check "$f"
+          done
+
+      - name: Build monorepo
+        run: npm run build

@@ -1,56 +1,95 @@
-# scratch-editor: The Scratch Editor Monorepo
+# ESP32 Education Editor
 
-If you'd like to use Scratch, please visit the [Scratch website](https://scratch.mit.edu/). You can build your own
-Scratch project by pressing "Create" on that website or by visiting <https://scratch.mit.edu/projects/editor/>.
+**ESP32 Education Editor** は、ESP32を使ったプログラミング・電子工作教育のためのWebエディタです。
 
-This is a source code repository for the packages that make up the Scratch editor and a few additional support
-packages. Use this if you'd like to learn about how the Scratch editor works or to contribute to its development.
+- Brand: **Davinichi**
+- ESP32 Education additions: **Copyright (c) 2026 Toshikazu Shimada**
+- Base project: **Scratch Editor** (Scratch Foundation)
+- Current prototype: **v0.2 / 7 individually selectable extensions**
 
-## What's in this repository?
+> This project is based on the open-source Scratch Editor. It is not affiliated with, sponsored by, or endorsed by the Scratch Foundation.
 
-The `packages` directory in this repository contains:
+## 特徴
 
-- `scratch-gui` provides the buttons, menus, and other elements that you interact with when creating and editing a
-  project. It's also the "glue" that brings most of the other modules together at runtime.
-- `scratch-media-lib-scripts` builds (or rebuilds) media libraries for the editor.
-- `scratch-paint` provides a way to draw vector (SVG) or bitmap (PNG) images for costumes and backdrops.
-- `scratch-render` draws backdrops, sprites, and clones on the stage.
-- `scratch-storage` helps load project assets like images and sounds. It also provides `ScratchFetch`, a customized
-  wrapper around `fetch`.
-- `scratch-svg-renderer` processes SVG (vector) images for use with Scratch projects.
-- `scratch-vm` is the virtual machine that runs Scratch projects.
-- `task-herder` manages queues of tasks with throttling and concurrency limits.
+ESP32向け機能を7つの拡張として個別に追加できます。
 
-_Please add to this list as more packages are migrated to the monorepo._
+| 拡張 | 主な機能 |
+|---|---|
+| ESP32 接続 | Web Serial接続・切断・状態・MAC・Wi-Fiチャンネル |
+| ESP32 GPIO | デジタル入出力 |
+| ESP32 DHT | DHT11 / DHT22 温度・湿度 |
+| ESP32 OLED | SSD1306 OLED 表示・全消去・部分消去 |
+| ESP32 ESP-NOW | MAC指定・ブロードキャスト・送受信 |
+| ESP32 環境指数 | 温度・湿度から10種類の環境指数を計算 |
+| データ処理 | CSV分解・文字列処理 |
 
-Each package has its own `README.md` file with more information about that package.
+GPIO / DHT / OLED / ESP-NOW は、内部で1つのWeb Serial接続を共有します。
 
-## Monorepo migration
+## 対象環境
 
-### What's going on?
+開発・実機確認環境：
 
-We're migrating the Scratch editor packages into this monorepo. This will allow us to manage all the packages that
-make up the Scratch editor in one place, making  it easier to manage dependencies and make changes that affect
-multiple packages.
+- Windows 11
+- Chrome
+- Node.js 24系
+- ESP32-WROOM系
+- Web Serial
 
-### Why are there only a few packages in this repo?
+最終的には、ChromebookからHTTPSのWeb版を開き、USB/Web SerialでESP32へ接続する構成を目標としています。
 
-We're migrating packages in stages. The current plan, which is subject to change, has us migrating repositories in
-four batches. We plan to complete the migration within 2025.
+## ESP32ファームウェア
 
-### What will happen to the existing repositories?
+`firmware/esp32_education_editor_firmware_v0_2.ino` をESP32へ書き込みます。
 
-The existing repositories will be archived and made read-only. Those repositories contain valuable work and
-information, including but not limited to issues and pull requests. We plan to keep that information available for
-reference, and to selectively migrate it to this new repository.
+主なUSBシリアルコマンド：
 
-## Thank you
+- `SYS:*`
+- `GPIO:*`
+- `DHT:*`
+- `OLED:*`
+- `ESPNOW:*`
 
-Scratch would not be what it is today without help from the global community of Scratchers and open-source
-contributors. Thank you for your contributions and support. _[Scratch on!](https://scratch.mit.edu/projects/65347738/fullscreen/)_
+## 開発元と著作権
 
-## Donate
+ESP32 Education Editorとして追加したESP32拡張・統合コード・ファームウェア・ドキュメントは、DavinichiブランドのもとでToshikazu Shimadaが開発しています。
 
-We provide [Scratch](https://scratch.mit.edu) free of charge, and want to keep it that way! Please consider making a
-[donation](https://www.scratchfoundation.org/donate) to support our continued engineering, design, community, and
-resource development efforts. Donations of any size are appreciated. Thank you!
+**Copyright (c) 2026 Toshikazu Shimada**
+
+Scratch Editor本体および既存コンポーネントの著作権は、それぞれの権利者に帰属します。本プロジェクトの著作権表示は、それら既存部分の権利を置き換えるものではありません。
+
+詳細は `NOTICE.md`、既存の `LICENSE`、`TRADEMARK` を参照してください。
+
+## ライセンス
+
+このリポジトリはScratch Editorをベースにした派生ソースを含むため、Scratch Editorの **GNU Affero General Public License v3.0 only (AGPL-3.0-only)** の条件を維持します。
+
+公開Web版を提供する場合も、その版を生成・変更するための対応するソースコードを利用者が入手できる状態にしてください。
+
+## Scratch Foundationとの関係
+
+Scratchの名称、ロゴ、Scratch Cat等の商標はScratch Foundationに帰属します。
+
+ESP32 Education EditorはScratch Foundationの公式製品ではなく、同財団による承認・推奨・スポンサーを受けたものではありません。
+
+プロジェクト独自のロゴやGitHubのソーシャルプレビューには、ScratchのロゴやScratch Catを使用しない方針です。
+
+## 開発方法
+
+Scratch Editorのソースを取得して依存関係を準備した後、ESP32 Education拡張を組み込んで使用します。
+
+```powershell
+cd C:\scratch-editor
+npm install
+npm run build
+npm start
+```
+
+ローカル開発画面：
+
+```text
+http://localhost:8601/
+```
+
+## GitHub公開
+
+公開手順は `docs/GITHUB_PUBLISH_JA.md` を参照してください。

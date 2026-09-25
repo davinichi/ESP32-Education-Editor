@@ -13,6 +13,15 @@ const builtinExtensions = {
     // but serves as a reference for loading core blocks as extensions.
     coreExample: () => require('../blocks/scratch3_core_example'),
     // These are the non-core built-in extensions.
+    // ESP32_EDUCATION_V02_BEGIN
+    esp32educonnection: () => require('../extensions/scratch3_esp32educonnection'),
+    esp32edugpio: () => require('../extensions/scratch3_esp32edugpio'),
+    esp32edudht: () => require('../extensions/scratch3_esp32edudht'),
+    esp32eduoled: () => require('../extensions/scratch3_esp32eduoled'),
+    esp32eduespnow: () => require('../extensions/scratch3_esp32eduespnow'),
+    esp32eduenvironment: () => require('../extensions/scratch3_esp32eduenvironment'),
+    esp32edudata: () => require('../extensions/scratch3_esp32edudata'),
+    // ESP32_EDUCATION_V02_END
     pen: () => require('../extensions/scratch3_pen'),
     wedo2: () => require('../extensions/scratch3_wedo2'),
     music: () => require('../extensions/scratch3_music'),

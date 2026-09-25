@@ -1,0 +1,6 @@
+ESP32 Education Editor
+Prototype Version: v0.2
+Architecture: 7 individually selectable extensions
+Brand: Davinichi
+ESP32 Education additions copyright: Copyright (c) 2026 Toshikazu Shimada
+Tested base: Scratch Editor 15.1.1
