@@ -1,6 +1,10 @@
 ESP32 Education Editor
-Prototype Version: v0.2
+Preview Version: v0.3.3
+Update: Dedicated About page + Japanese File menu labels
 Architecture: 7 individually selectable extensions
 Brand: Davinichi
 ESP32 Education additions copyright: Copyright (c) 2026 Toshikazu Shimada
 Tested base: Scratch Editor 15.1.1
+v0.2 functional baseline: all 7 major functions verified on hardware/web (2026-09-25)
+Branding safety: menu-bar.jsx is not modified by v0.3.3
+Web: https://davinichi.github.io/

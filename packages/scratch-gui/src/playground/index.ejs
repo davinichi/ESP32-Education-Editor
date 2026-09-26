@@ -14,14 +14,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" value="notranslate">
-    <link rel="shortcut icon" href="static/favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
+<title>ESP32 Education Editor</title>
+  <!-- ESP32_EDUCATION_BRAND_V033_FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjZmYjIiLz4KICA8cmVjdCB4PSIxNCIgeT0iMTQiIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgcng9IjciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTIwIDl2NU0yOCA5djVNMzYgOXY1TTQ0IDl2NU0yMCA1MHY1TTI4IDUwdjVNMzYgNTB2NU00NCA1MHY1TTkgMjBoNU05IDI4aDVNOSAzNmg1TTkgNDRoNU01MCAyMGg1TTUwIDI4aDVNNTAgMzZoNU01MCA0NGg1IiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMTAiIGZpbGw9IiM0M2QxN2IiLz4KICA8dGV4dCB4PSIzMiIgeT0iMzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iNzAwIj5FMzwvdGV4dD4KPC9zdmc+Cg==">
+</head>
   <body>
     <% if (htmlWebpackPlugin.options.gtm_id) { %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%- htmlWebpackPlugin.options.gtm_id %><%= htmlWebpackPlugin.options.gtm_env_auth %>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     <% } %>
-  </body>
+<!-- ESP32_EDUCATION_BRAND_V033_UI -->
+<script>
+(() => {
+  const aboutHtml = "<!doctype html>\n<html lang=\"ja\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>ESP32 Education Editor について</title>\n  <style>\n    :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; color: #263238; background: #f5f7fa; }\n    body { margin: 0; }\n    main { max-width: 880px; margin: 36px auto; padding: 0 20px 48px; }\n    .card { background: #fff; border: 1px solid #dbe3ea; border-radius: 16px; padding: 28px; box-shadow: 0 4px 18px rgba(0,0,0,.06); }\n    .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }\n    .mark { width: 58px; height: 58px; border-radius: 14px; background: #1f6fb2; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 20px; }\n    h1 { margin: 0; font-size: 2rem; color: #164f7f; }\n    h2 { margin-top: 28px; font-size: 1.2rem; color: #245f42; }\n    p, li { line-height: 1.75; }\n    .meta { color: #51606d; margin-top: 4px; }\n    .notice { background: #f0f7ff; border-left: 5px solid #1f6fb2; padding: 14px 16px; border-radius: 8px; }\n    .footer { margin-top: 28px; font-size: .9rem; color: #66737f; }\n    a { color: #1769aa; }\n    code { background: #edf1f4; padding: 2px 5px; border-radius: 4px; }\n  </style>\n</head>\n<body>\n<main>\n  <section class=\"card\">\n    <div class=\"brand\">\n      <div class=\"mark\">E3</div>\n      <div>\n        <h1>ESP32 Education Editor</h1>\n        <div class=\"meta\">Davinichi / Version 0.3.3</div>\n      </div>\n    </div>\n\n    <p><strong>ESP32 Education Editor</strong> は、ESP32を使ったプログラミング・電子工作教育のためのWebエディタです。</p>\n\n    <h2>開発・著作</h2>\n    <p>ESP32 Education Editorとして追加したESP32拡張、統合コード、ファームウェア、関連文書、独自ブランド素材は、DavinichiブランドのもとでToshikazu Shimadaが開発しています。</p>\n    <p><strong>Copyright &copy; 2026 Toshikazu Shimada</strong></p>\n\n    <h2>Scratch Editorとの関係</h2>\n    <div class=\"notice\">\n      <p>このエディタは、Scratch Foundationが公開しているオープンソースのScratch Editorを基にした独立プロジェクトです。Scratch Foundationの公式製品ではなく、同財団による承認、推奨、スポンサーを示すものではありません。</p>\n      <p>Scratchの名称、ロゴ、Scratch Cat等の商標はScratch Foundationに帰属します。本プロジェクトでは、それらをESP32 Education Editorの製品ロゴやDavinichiのブランド表示として使用しません。</p>\n    </div>\n\n    <h2>ライセンスと表示</h2>\n    <p>ベースとなるScratch Editorのライセンス、商標に関する条件、および本プロジェクトの追加部分に関する情報は、公開ソースリポジトリ内の <code>LICENSE</code>、<code>TRADEMARK</code>、<code>NOTICE.md</code> を参照してください。</p>\n\n    <h2>ソースコード・関連情報</h2>\n    <ul>\n      <li><a href=\"https://github.com/davinichi/ESP32-Education-Editor\" target=\"_blank\" rel=\"noopener noreferrer\">ESP32 Education Editor ソースコード</a></li>\n      <li><a href=\"https://github.com/scratchfoundation/scratch-editor\" target=\"_blank\" rel=\"noopener noreferrer\">上流 Scratch Editor</a></li>\n      <li><a href=\"https://github.com/davinichi/ESP32-Education-Editor/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">LICENSE</a></li>\n      <li><a href=\"https://github.com/davinichi/ESP32-Education-Editor/blob/main/NOTICE.md\" target=\"_blank\" rel=\"noopener noreferrer\">NOTICE</a></li>\n      <li><a href=\"https://github.com/davinichi/ESP32-Education-Editor/blob/main/TRADEMARK\" target=\"_blank\" rel=\"noopener noreferrer\">TRADEMARK</a></li>\n    </ul>\n\n    <p class=\"footer\">ESP32 Education Editor / Davinichi</p>\n  </section>\n</main>\n</body>\n</html>\n";
+  const fileMenuTranslations = new Map([
+    ['File', 'ファイル'],
+    ['New', '新規'],
+    ['Save now', '直ちに保存'],
+    ['Save as a copy', 'コピーを保存'],
+    ['Load from your computer', 'コンピューターから読み込む'],
+    ['Save to your computer', 'コンピューターに保存する']
+  ]);
+
+  const openAboutPage = () => {
+    const blob = new Blob([aboutHtml], {type: 'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank', 'noopener,noreferrer');
+    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  };
+
+  const bindBrandLogo = () => {
+    const logo = document.getElementById('logo_img');
+    if (!logo) return;
+    logo.setAttribute('alt', 'ESP32 Education Editor');
+    logo.setAttribute('title', 'ESP32 Education Editor / Davinichi');
+    const button = logo.closest('button');
+    if (!button) return;
+    button.setAttribute('aria-label', 'ESP32 Education Editor - About');
+    button.setAttribute('title', 'ESP32 Education Editor について');
+    if (button.dataset.esp32EducationAboutBound === '1') return;
+    button.dataset.esp32EducationAboutBound = '1';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      openAboutPage();
+    }, true);
+  };
+
+  const replaceExactText = (root, translations) => {
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const raw = node.nodeValue || '';
+      const trimmed = raw.trim();
+      if (!translations.has(trimmed)) continue;
+      const before = raw.slice(0, raw.indexOf(trimmed));
+      const after = raw.slice(raw.indexOf(trimmed) + trimmed.length);
+      node.nodeValue = before + translations.get(trimmed) + after;
+    }
+  };
+
+  const findExactTextElement = text => {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if ((node.nodeValue || '').trim() === text) return node.parentElement;
+    }
+    return null;
+  };
+
+  const localizeFileMenu = () => {
+    const header = document.querySelector('header');
+    if (header) replaceExactText(header, new Map([['File', 'ファイル']]));
+
+    const unique = new Map([
+      ['Load from your computer', 'コンピューターから読み込む'],
+      ['Save to your computer', 'コンピューターに保存する']
+    ]);
+    replaceExactText(document.body, unique);
+
+    const loadItem = findExactTextElement('コンピューターから読み込む') || findExactTextElement('Load from your computer');
+    if (!loadItem) return;
+    let scope = loadItem;
+    for (let i = 0; i < 8 && scope; i++, scope = scope.parentElement) {
+      const t = scope.textContent || '';
+      const hasSave = t.includes('コンピューターに保存する') || t.includes('Save to your computer');
+      const hasNew = t.includes('新規') || t.includes('New');
+      if (hasSave && hasNew) {
+        replaceExactText(scope, fileMenuTranslations);
+        break;
+      }
+    }
+  };
+
+  let scheduled = false;
+  const refreshUi = () => {
+    if (scheduled) return;
+    scheduled = true;
+    const run = () => {
+      scheduled = false;
+      bindBrandLogo();
+      localizeFileMenu();
+    };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 0);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', refreshUi, {once: true});
+  } else {
+    refreshUi();
+  }
+  const observer = new MutationObserver(refreshUi);
+  observer.observe(document.documentElement, {childList: true, subtree: true});
+})();
+</script>
+</body>
 </html>
