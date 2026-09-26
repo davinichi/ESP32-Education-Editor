@@ -2,7 +2,7 @@
 
 ## ESP32 Education Editor additions
 
-ESP32 Education Editor additions, including the ESP32-specific extensions, integration code, firmware, and project documentation:
+ESP32 Education Editor additions, including the ESP32-specific extensions, integration code, firmware, branding assets created for this project, and project documentation:
 
 Copyright (c) 2026 Toshikazu Shimada
 
@@ -23,4 +23,4 @@ Scratch trademarks, including the Scratch name, logo and Scratch Cat, are proper
 
 ESP32 Education Editor is an independent project and is not affiliated with, sponsored by, or endorsed by the Scratch Foundation.
 
-Do not use Scratch trademarks as the product logo, GitHub social preview, or promotional branding for ESP32 Education Editor without permission from the Scratch Foundation.
+The normal product header, browser title, favicon and project branding use ESP32 Education Editor-specific assets rather than Scratch trademarks. Source-internal identifiers inherited from Scratch Editor may retain the word `scratch` for compatibility and maintenance.
