@@ -1,4 +1,4 @@
-/** Scratch ESP32 Education v0.2 - データ処理 */
+/** Scratch ESP32 Education v0.4 development - データ処理 */
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const formatMessage = require('format-message');
@@ -27,6 +27,8 @@ class Scratch3ESP32DataBlocks {
                 {opcode: 'csvNumber', blockType: BlockType.REPORTER, text: 'CSVの [INDEX] 番目の数値', arguments: {INDEX: {type: ArgumentType.NUMBER, defaultValue: 1}}},
                 {opcode: 'csvCount', blockType: BlockType.REPORTER, text: 'CSVの項目数'},
                 {opcode: 'csvSucceeded', blockType: BlockType.BOOLEAN, text: 'CSVの分解は成功した？'},
+                '---',
+                {opcode: 'formatFixed', blockType: BlockType.REPORTER, text: '\u6570\u5024 [VALUE] \u3092\u5c0f\u6570\u70b9\u4ee5\u4e0b [DIGITS] \u6841\u3067\u8868\u793a', arguments: {VALUE: {type: ArgumentType.NUMBER, defaultValue: 25.376}, DIGITS: {type: ArgumentType.NUMBER, defaultValue: 2}}},
                 '---',
                 {opcode: 'left', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の左から [COUNT] 文字を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABC富山県'}, COUNT: {type: ArgumentType.NUMBER, defaultValue: 3}}},
                 {opcode: 'right', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の右から [COUNT] 文字を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABC富山県'}, COUNT: {type: ArgumentType.NUMBER, defaultValue: 3}}},
@@ -64,6 +66,15 @@ class Scratch3ESP32DataBlocks {
     csvCount () { return this.csv.length; }
     /** 最後のCSV分解が成功したかを返します。 */
     csvSucceeded () { return this.ok; }
+    /** Convert a number to a display string with a fixed number of decimal places. */
+    formatFixed (args) {
+        const value = Number(args.VALUE);
+        if (!Number.isFinite(value)) return '';
+        const requestedDigits = Number(args.DIGITS);
+        const digits = Number.isFinite(requestedDigits) ?
+            Math.max(0, Math.min(10, Math.floor(requestedDigits))) : 0;
+        return value.toFixed(digits);
+    }
     /** 左から指定文字数を取り出します。 */
     left (args) { const c = Math.max(0, Math.floor(Number(args.COUNT))); return Array.from(String(args.TEXT)).slice(0, c).join(''); }
     /** 右から指定文字数を取り出します。 */

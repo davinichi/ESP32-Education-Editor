@@ -1,5 +1,5 @@
 /**
- * Scratch ESP32 Education v0.2
+ * Scratch ESP32 Education v0.4 development
  * 7個の拡張カテゴリーから共用する Web Serial 通信モジュール。
  *
  * 1台のESP32に対して複数カテゴリーが別々のシリアルポートを開かないよう、
@@ -48,6 +48,17 @@ class ESP32EducationTransport {
         this.channel = '';
         // 接続・送信などで発生した最後のエラー文字列です。
         this.lastError = '';
+        // Prevent duplicate cleanup when multiple disconnect signals arrive together.
+        this._cleanupPromise = null;
+        // Register the browser-level disconnect event only once.
+        this._serialDisconnectListenerInstalled = false;
+        this._serialDisconnectHandler = event => {
+            const eventPort = event && (event.target || event.port);
+            if (!this.port) return;
+            if (eventPort && eventPort !== this.port &&
+                (typeof navigator === 'undefined' || eventPort !== navigator.serial)) return;
+            void this.handleUnexpectedDisconnect('USB cable disconnected. Connect the ESP32 again manually.');
+        };
     }
 
     /**
@@ -75,6 +86,67 @@ class ESP32EducationTransport {
         }
     }
 
+    /** Register the Web Serial physical-disconnect event once. */
+    installDisconnectListener () {
+        if (this._serialDisconnectListenerInstalled) return;
+        if (typeof navigator === 'undefined' || !navigator.serial ||
+            typeof navigator.serial.addEventListener !== 'function') return;
+        navigator.serial.addEventListener('disconnect', this._serialDisconnectHandler);
+        this._serialDisconnectListenerInstalled = true;
+    }
+
+    /** Clear values that belong to the previously connected ESP32. */
+    clearDeviceState () {
+        this.ready = '';
+        this.mac = '';
+        this.channel = '';
+        this.readBuffer = '';
+    }
+
+    /** Release stream locks and the selected port. */
+    async cleanupConnection (reason = '') {
+        if (reason) this.lastError = reason;
+        this.connected = false;
+        this.keepReading = false;
+        this.clearDeviceState();
+
+        if (this._cleanupPromise) {
+            await this._cleanupPromise;
+            return;
+        }
+
+        const port = this.port;
+        const reader = this.reader;
+        const writer = this.writer;
+        this.port = null;
+        this.reader = null;
+        this.writer = null;
+
+        this._cleanupPromise = (async () => {
+            if (reader) {
+                try { await reader.cancel(); } catch (error) { /* already closed */ }
+                try { reader.releaseLock(); } catch (error) { /* already released */ }
+            }
+            if (writer) {
+                try { writer.releaseLock(); } catch (error) { /* already released */ }
+            }
+            if (port) {
+                try { await port.close(); } catch (error) { /* unplugged ports can already be closed */ }
+            }
+        })();
+
+        try {
+            await this._cleanupPromise;
+        } finally {
+            this._cleanupPromise = null;
+        }
+    }
+
+    /** Handle an unexpected USB/Web Serial disconnect without reconnecting automatically. */
+    async handleUnexpectedDisconnect (reason) {
+        await this.cleanupConnection(reason || 'USB communication disconnected. Connect the ESP32 again manually.');
+    }
+
     /**
      * Web Serialのポート選択画面を開き、115200bpsでESP32へ接続します。
      * ESP32の自動リセットを考慮して1.5秒待った後に状態を要求します。
@@ -82,15 +154,19 @@ class ESP32EducationTransport {
      */
     async connect () {
         this.lastError = '';
-        if (!('serial' in navigator)) {
+        if (typeof navigator === 'undefined' || !('serial' in navigator)) {
             this.lastError = 'このブラウザはWeb Serialに対応していません。';
             throw new Error(this.lastError);
         }
         if (this.connected) return;
+        if (this._cleanupPromise) await this._cleanupPromise;
+
+        this.installDisconnectListener();
 
         try {
-            this.port = await navigator.serial.requestPort();
-            await this.port.open({
+            const selectedPort = await navigator.serial.requestPort();
+            this.port = selectedPort;
+            await selectedPort.open({
                 baudRate: 115200,
                 dataBits: 8,
                 stopBits: 1,
@@ -98,14 +174,21 @@ class ESP32EducationTransport {
                 bufferSize: 1024,
                 flowControl: 'none'
             });
-            this.writer = this.port.writable.getWriter();
+            if (!selectedPort.writable) throw new Error('Serial port is not writable.');
+            this.writer = selectedPort.writable.getWriter();
             this.connected = true;
             this.keepReading = true;
-            this.readLoop();
+            void this.readLoop();
             await sleep(1500);
+            if (!this.connected) throw new Error(this.lastError || 'USB communication disconnected.');
             await this.sendLine('SYS:STATUS');
         } catch (error) {
-            this.lastError = error && error.message ? error.message : String(error);
+            const message = this.lastError || (error && error.message ? error.message : String(error));
+            if (this.port || this.reader || this.writer || this.connected) {
+                await this.cleanupConnection(message);
+            } else {
+                this.lastError = message;
+            }
             throw error;
         }
     }
@@ -115,32 +198,8 @@ class ESP32EducationTransport {
      * @returns {Promise<void>} 切断完了時に解決します。
      */
     async disconnect () {
-        this.keepReading = false;
-        if (this.reader) {
-            try {
-                await this.reader.cancel();
-            } catch (error) {
-                // 既にストリームが終了している場合などは切断を続けます。
-            }
-        }
-        await sleep(50);
-        if (this.writer) {
-            try {
-                this.writer.releaseLock();
-            } catch (error) {
-                // ロック解放済みでも切断を続けます。
-            }
-            this.writer = null;
-        }
-        if (this.port) {
-            try {
-                await this.port.close();
-            } catch (error) {
-                // ポートが既に閉じていても状態を未接続へ戻します。
-            }
-            this.port = null;
-        }
-        this.connected = false;
+        this.lastError = '';
+        await this.cleanupConnection('');
     }
 
     /**
@@ -150,11 +209,17 @@ class ESP32EducationTransport {
     async readLoop () {
         if (!this.port || !this.port.readable) return;
         const decoder = new TextDecoder();
+        const reader = this.port.readable.getReader();
+        this.reader = reader;
+        let unexpectedDisconnect = false;
+
         try {
-            this.reader = this.port.readable.getReader();
             while (this.keepReading) {
-                const {value, done} = await this.reader.read();
-                if (done) break;
+                const {value, done} = await reader.read();
+                if (done) {
+                    if (this.keepReading && this.connected) unexpectedDisconnect = true;
+                    break;
+                }
                 if (!value) continue;
                 this.readBuffer += decoder.decode(value, {stream: true});
                 let index;
@@ -170,15 +235,15 @@ class ESP32EducationTransport {
                 }
             }
         } catch (error) {
-            this.lastError = error && error.message ? error.message : String(error);
+            if (this.keepReading && this.connected) {
+                unexpectedDisconnect = true;
+                this.lastError = 'USB cable disconnected. Connect the ESP32 again manually.';
+            }
         } finally {
-            if (this.reader) {
-                try {
-                    this.reader.releaseLock();
-                } catch (error) {
-                    // 解放済みの場合は無視します。
-                }
-                this.reader = null;
+            try { reader.releaseLock(); } catch (error) { /* already released */ }
+            if (this.reader === reader) this.reader = null;
+            if (unexpectedDisconnect) {
+                await this.handleUnexpectedDisconnect(this.lastError);
             }
         }
     }
@@ -194,8 +259,14 @@ class ESP32EducationTransport {
             throw new Error(this.lastError);
         }
         const normalized = String(text).replace(/[\r\n]+/g, '');
-        await this.writer.write(this.encoder.encode(`${normalized}\n`));
-        await sleep(10);
+        try {
+            await this.writer.write(this.encoder.encode(`${normalized}\n`));
+            await sleep(10);
+        } catch (error) {
+            const message = 'USB communication failed. Connect the ESP32 again manually.';
+            await this.handleUnexpectedDisconnect(message);
+            throw error;
+        }
     }
 
     /**
