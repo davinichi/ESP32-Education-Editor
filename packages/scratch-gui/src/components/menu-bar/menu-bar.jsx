@@ -12,7 +12,6 @@ import VM from '@scratch/scratch-vm';
 
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
-import CommunityButton from './community-button.jsx';
 import ShareButton from './share-button.jsx';
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
@@ -159,7 +158,7 @@ class MenuBar extends React.Component {
         super(props);
         bindAll(this, [
             'handleClickNew',
-            'handleClickSeeCommunity',
+            'handleClickFirmwareInstaller',
             'handleClickShare',
             'handleSetMode',
             'handleKeyPress',
@@ -187,15 +186,12 @@ class MenuBar extends React.Component {
             this.props.onClickNew(this.props.canSave && this.props.canCreateNew);
         }
     }
-    handleClickSeeCommunity (waitForUpdate) {
-        if (this.props.shouldSaveBeforeTransition()) {
-            this.props.autoUpdateProject(); // save before transitioning to project page
-            waitForUpdate({
-                isSaving: true
-            }); // queue the transition to project page
-        } else {
-            waitForUpdate(); // immediately transition to project page
-        }
+    handleClickFirmwareInstaller () {
+        window.open(
+            'https://davinichi.github.io/firmware/',
+            '_blank',
+            'noopener,noreferrer'
+        );
     }
     handleClickShare (waitForUpdate) {
         if (!this.props.isShared) {
@@ -431,29 +427,17 @@ class MenuBar extends React.Component {
                         )}
                         {this.props.canRemix ? remixButton : []}
                     </div>
-                    <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
-                        {this.props.enableCommunity ? (
-                            (this.props.isShowingProject || this.props.isUpdating) && (
-                                <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
-                                    {
-                                        waitForUpdate => (
-                                            <CommunityButton
-                                                className={styles.menuBarButton}
-                                                /* eslint-disable react/jsx-no-bind */
-                                                onClick={() => {
-                                                    this.handleClickSeeCommunity(waitForUpdate);
-                                                }}
-                                                /* eslint-enable react/jsx-no-bind */
-                                            />
-                                        )
-                                    }
-                                </ProjectWatcher>
-                            )
-                        ) : (this.props.showComingSoon ? (
-                            <MenuBarItemTooltip id="community-button">
-                                <CommunityButton className={styles.menuBarButton} />
-                            </MenuBarItemTooltip>
-                        ) : [])}
+                    <div className={classNames(styles.menuBarItem)}>
+                        <Button
+                            className={styles.menuBarButton}
+                            onClick={this.handleClickFirmwareInstaller}
+                        >
+                            <FormattedMessage
+                                defaultMessage="ファームウェア書き込み"
+                                description="Menu bar button for opening the ESP32 firmware installer"
+                                id="gui.menuBar.firmwareInstaller"
+                            />
+                        </Button>
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div className={styles.fileGroup}>
