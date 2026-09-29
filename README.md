@@ -1,103 +1,331 @@
 # ESP32 Education Editor
 
-**ESP32 Education Editor** 縺ｯ縲・SP32繧剃ｽｿ縺｣縺溘・繝ｭ繧ｰ繝ｩ繝溘Φ繧ｰ繝ｻ髮ｻ蟄仙ｷ･菴懈蕗閧ｲ縺ｮ縺溘ａ縺ｮWeb繧ｨ繝・ぅ繧ｿ縺ｧ縺吶・
-- Brand: **Davinichi**
-- ESP32 Education additions: **Copyright (c) 2026 Toshikazu Shimada**
-- Base project: **Scratch Editor** (Scratch Foundation)
-- Current preview: **v0.4 / USB disconnect safety + fixed-decimal data formatting**
-- Web: **https://davinichi.github.io/**
+**ESP32 Education Editor** は、ESP32を学校教育で扱いやすくするための、Scratch系ブロックプログラミング環境です。
 
-> This project is based on the open-source Scratch Editor. It is not affiliated with, sponsored by, or endorsed by the Scratch Foundation.
+ChromebookやWindows PCのブラウザから、ESP32-WROOM-32をUSBで接続し、GPIO、温湿度センサ、OLED、ESP-NOW、環境指数などをブロックで扱うことを目的としています。
 
-## v0.4
+- 公開版 Editor: https://davinichi.github.io/
+- Firmware Web Installer: https://davinichi.github.io/firmware/
+- GitHub Repository: https://github.com/davinichi/ESP32-Education-Editor
+- Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
+- Firmware v0.1.4: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
 
-v0.4では、学校や実習環境での使いやすさを高めるため、次の2点を改善しました。
+> **Version note**
+>
+> ESP32 Education Editor本体とESP32共通ファームウェアは、別々のバージョンで管理しています。
+>
+> - Editor: **v0.4**
+> - Common Firmware: **v0.1.4**
 
-### USBケーブル切断時の安全な処理
+---
 
-ESP32との通信中にUSBケーブルが抜かれた場合、Web Serialの接続状態を安全に未接続へ戻します。
+## 1. このプロジェクトについて
 
-- USB切断を検出
-- 読み取り・書き込みに使っていた接続情報を整理
-- `ESP32は接続中？` を未接続状態へ更新
-- USBを挿し直しても自動再接続しない
-- 利用者がもう一度「ESP32に接続する」を実行して再接続
+学校のChromebookなどでESP32を利用する場合、Arduino IDEなどの開発環境を端末へインストールすることが難しいことがあります。
 
-教育用途では、接続と切断を利用者自身が意識できることを重視し、自動再接続は行わない設計としています。
-
-### データ処理：小数点以下の表示桁数指定
-
-データ処理に、数値を指定した小数点以下の桁数で表示するレポーターブロックを追加しました。
+ESP32 Education Editorでは、ESP32側へあらかじめ共通ファームウェアを書き込んでおき、ブラウザからWeb Serialでコマンドを送る方式を採用しています。
 
 ```text
-数値 25.376 を 小数点以下 2 桁で表示 -> 25.38
-数値 25     を 小数点以下 2 桁で表示 -> 25.00
+Scratch系ブロック
+      ↓
+ESP32 Education Editor
+      ↓
+Web Serial
+      ↓
+USB
+      ↓
+ESP32 共通ファームウェア
+      ↓
+センサ・OLED・GPIO・ESP-NOW
 ```
 
-結果は表示用文字列として返すため、末尾の `0` も保持できます。OLED表示、ESP-NOW送信文字列、CSVなどで表示形式を揃える用途に利用できます。
+この方式により、授業中に児童・生徒が毎回Arduinoスケッチをコンパイルして書き込む必要がなく、ブロックを組んで実行する学習に集中できます。
 
-v0.4の追加機能は実機で動作確認済みです。
+---
 
-変更履歴：`CHANGELOG_ESP32_EDUCATION_EDITOR.md`
+## 2. 主な特徴
 
-## v0.3.3縺ｮ繝悶Λ繝ｳ繝芽｡ｨ遉ｺ譁ｹ驥・
-騾壼ｸｸ蛻ｩ逕ｨ譎ゅ↓陬ｽ蜩√ヶ繝ｩ繝ｳ繝峨→縺励※隕九∴繧狗ｮ・園繧・**ESP32 Education Editor / Davinichi** 縺ｫ謨ｴ逅・＠縺ｾ縺吶・
-- 陬ｽ蜩√・繝・ム繝ｼ・哘SP32 Education Editor迢ｬ閾ｪ繝ｯ繝ｼ繝峨・繝ｼ繧ｯ
-- 繝悶Λ繧ｦ繧ｶ繧ｿ繧､繝医Ν・哘SP32 Education Editor
-- favicon・夂峡閾ｪ繧｢繧､繧ｳ繝ｳ
-- 繝倥ャ繝繝ｼ繝ｭ繧ｴ・壹け繝ｪ繝・け縺吶ｋ縺ｨ譛ｬ繝励Ο繧ｸ繧ｧ繧ｯ繝医・About / 繝ｩ繧､繧ｻ繝ｳ繧ｹ隱ｬ譏弱ｒ髢九￥
+- Scratchに近いブロックプログラミング環境
+- Chromebookからブラウザで利用可能
+- Web SerialによるESP32とのUSB通信
+- ESP32側の共通ファームウェア方式
+- GPIO入出力
+- DHT11 / DHT22 温湿度センサ
+- SSD1306 OLED
+- ESP-NOW
+- 温度・湿度を利用した環境指数
+- データ処理
+- GitHub Pagesから利用可能
+- Web InstallerからESP32-WROOM-32へファームウェアを書き込み可能
 
-v0.3.3縺ｧ繧ゅヾcratch Editor縺ｮReact繝｡繝九Η繝ｼ繝舌・譛ｬ菴・(`menu-bar.jsx`) 繧貞､画峩縺励∪縺帙ｓ縲ょｷｦ荳翫Ο繧ｴ縺ｯ蟆ら畑About繝壹・繧ｸ繧呈眠縺励＞繧ｿ繝悶〒髢九″縺ｾ縺吶ゅ∪縺溘：ile繝｡繝九Η繝ｼ縺ｮ荳ｻ隕√↑闍ｱ隱櫁｡ｨ遉ｺ繧呈律譛ｬ隱槭↓陬懈ｭ｣縺励∪縺吶ゅ％繧後ｉ縺ｮ陬懷勧蜃ｦ逅・・繝悶Λ繧ｦ繧ｶ逕ｨ繝・Φ繝励Ξ繝ｼ繝亥・縺ｫ髯仙ｮ壹＠縺ｾ縺吶・
-Scratch縺ｮ蜷咲ｧｰ縲√Ο繧ｴ縲ヾcratch Cat遲峨・蝠・ｨ吶・Scratch Foundation縺ｫ蟶ｰ螻槭＠縺ｾ縺吶よ悽繝励Ο繧ｸ繧ｧ繧ｯ繝医〒縺ｯ縲√◎繧後ｉ繧脱SP32 Education Editor縺ｮ陬ｽ蜩√Ο繧ｴ繧Дavinichi縺ｮ繝励Ο繝｢繝ｼ繧ｷ繝ｧ繝ｳ繝悶Λ繝ｳ繝峨→縺励※菴ｿ逕ｨ縺励∪縺帙ｓ縲・
-## ESP32蜷代￠7諡｡蠑ｵ
+---
 
-| 諡｡蠑ｵ | 荳ｻ縺ｪ讖溯・ |
+## 3. ESP32拡張
+
+現在、ESP32 Education Editorでは機能を次のカテゴリに分けています。
+
+| 拡張 | 内容 |
 |---|---|
-| ESP32 謗･邯・| Web Serial謗･邯壹・蛻・妙繝ｻ迥ｶ諷九・MAC繝ｻWi-Fi繝√Ε繝ｳ繝阪Ν |
-| ESP32 GPIO | 繝・ず繧ｿ繝ｫ蜈･蜃ｺ蜉・|
-| ESP32 DHT | DHT11 / DHT22 貂ｩ蠎ｦ繝ｻ貉ｿ蠎ｦ |
-| ESP32 OLED | SSD1306 OLED 陦ｨ遉ｺ繝ｻ蜈ｨ豸亥悉繝ｻ驛ｨ蛻・ｶ亥悉 |
-| ESP32 ESP-NOW | MAC謖・ｮ壹・繝悶Ο繝ｼ繝峨く繝｣繧ｹ繝医・騾∝女菫｡ |
-| ESP32 迺ｰ蠅・欠謨ｰ | 貂ｩ蠎ｦ繝ｻ貉ｿ蠎ｦ縺九ｉ10遞ｮ鬘槭・迺ｰ蠅・欠謨ｰ繧定ｨ育ｮ・|
-| 繝・・繧ｿ蜃ｦ逅・| CSV蛻・ｧ｣繝ｻ譁・ｭ怜・蜃ｦ逅・|
+| ESP32 接続 | ESP32との接続・通信 |
+| ESP32 GPIO | デジタル入出力などのGPIO制御 |
+| ESP32 DHT | DHT11 / DHT22 温湿度センサ |
+| ESP32 OLED | SSD1306 OLED表示 |
+| ESP32 ESP-NOW | ESP32同士の無線通信 |
+| ESP32 環境指数 | 温度・湿度を利用した環境値の計算 |
+| データ処理 | 取得したデータの処理 |
 
-GPIO / DHT / OLED / ESP-NOW 縺ｯ蜀・Κ縺ｧ1縺､縺ｮWeb Serial謗･邯壹ｒ蜈ｱ譛峨＠縺ｾ縺吶・
-## v0.2讖溯・遒ｺ隱・
-2026-09-25縺ｫ縲；itHub Pages蜈ｬ髢狗沿縺九ｉChrome / Web Serial邨檎罰縺ｧESP32螳滓ｩ溘ｒ謗･邯壹＠縲∽ｸｻ隕・讖溯・繧堤｢ｺ隱阪＠縺ｾ縺励◆縲・
-- ESP32 謗･邯・ OK
-- GPIO: OK
-- DHT: OK
-- OLED: OK
-- ESP-NOW: OK
-- 迺ｰ蠅・欠謨ｰ: OK
-- 繝・・繧ｿ蜃ｦ逅・ OK
+各機能を別々の拡張に分けることで、授業で必要な機能だけを選択しやすい構成にしています。
 
-隧ｳ邏ｰ・啻docs/esp32-education-editor/TEST_RESULTS_V0_2_JA.md`
+---
 
-## 髢狗匱蜈・→闡嶺ｽ懈ｨｩ
+## 4. 対応・確認済みハードウェア
 
-ESP32 Education Editor縺ｨ縺励※霑ｽ蜉縺励◆ESP32諡｡蠑ｵ縲∫ｵｱ蜷医さ繝ｼ繝峨√ヵ繧｡繝ｼ繝繧ｦ繧ｧ繧｢縲・未騾｣譁・嶌縺ｯ縲．avinichi繝悶Λ繝ｳ繝峨・繧ゅ→縺ｧToshikazu Shimada縺碁幕逋ｺ縺励※縺・∪縺吶・
-**Copyright (c) 2026 Toshikazu Shimada**
+### 実機確認済み
 
-縺薙・陦ｨ遉ｺ縺ｯScratch Editor譛ｬ菴薙♀繧医・譌｢蟄倥さ繝ｳ繝昴・繝阪Φ繝亥・菴薙・闡嶺ｽ懈ｨｩ繧堤ｽｮ縺肴鋤縺医ｋ繧ゅ・縺ｧ縺ｯ縺ゅｊ縺ｾ縺帙ｓ縲よ里蟄倬Κ蛻・・闡嶺ｽ懈ｨｩ縺ｯ縺昴ｌ縺槭ｌ縺ｮ讓ｩ蛻ｩ閠・↓蟶ｰ螻槭＠縺ｾ縺吶・
-## 繝ｩ繧､繧ｻ繝ｳ繧ｹ縺ｨScratch Foundation縺ｨ縺ｮ髢｢菫・
-縺薙・繝ｪ繝昴ず繝医Μ縺ｯScratch Editor繧偵・繝ｼ繧ｹ縺ｫ縺励◆豢ｾ逕溘た繝ｼ繧ｹ繧貞性繧縺溘ａ縲ヾcratch Editor縺ｮ **GNU Affero General Public License v3.0 only (AGPL-3.0-only)** 縺ｮ譚｡莉ｶ繧堤ｶｭ謖√＠縺ｾ縺吶・
-荳頑ｵ√・ `LICENSE` 縺ｨ `TRADEMARK` 繧堤ｶｭ謖√＠縲仝eb蜈ｬ髢狗沿縺ｫ蟇ｾ蠢懊☆繧九た繝ｼ繧ｹ繧ｳ繝ｼ繝峨ｒ縺薙・繝ｪ繝昴ず繝医Μ縺ｧ謠蝉ｾ帙＠縺ｾ縺吶・
-隧ｳ縺励￥縺ｯ谺｡繧貞盾辣ｧ縺励※縺上□縺輔＞縲・
-- `docs/esp32-education-editor/ABOUT_JA.md`
-- `docs/esp32-education-editor/BRANDING_AND_LICENSE_JA.md`
-- `NOTICE.md`
-- `LICENSE`
-- `TRADEMARK`
+- **ESP32-WROOM-32**
+- DHT11
+- DHT22
+- SSD1306 OLED
 
-## 繝ｭ繝ｼ繧ｫ繝ｫ髢狗匱
+ESP32-WROOM-32では、EditorからのUSB / Web Serial接続と主要拡張の動作を確認しています。
 
-```powershell
-cd C:\scratch-editor
-npm start
-```
+### その他のESP32
 
-繝ｭ繝ｼ繧ｫ繝ｫ髢狗匱逕ｻ髱｢・・
+XIAO ESP32-C3 / ESP32-S3などについては、現時点の正式ファームウェア release `firmware-v0.1.4` の動作保証対象には含めていません。
+
+---
+
+## 5. はじめ方
+
+### Step 1: ESP32へ共通ファームウェアを書き込む
+
+ESP32-WROOM-32をUSBケーブルでPCまたはChromebookへ接続します。
+
+次のWeb Installerを開きます。
+
+https://davinichi.github.io/firmware/
+
+画面の案内に従ってESP32を選択し、共通ファームウェアを書き込みます。
+
+現在の正式ファームウェアは **v0.1.4** です。
+
+ファームウェアファイルを手動で選択する必要はありません。
+
+### Step 2: ESP32 Education Editorを開く
+
+https://davinichi.github.io/
+
+### Step 3: ESP32を接続する
+
+ESP32接続拡張からWeb Serial接続を実行し、ブラウザに表示されるシリアルポート選択画面でESP32を選択します。
+
+### Step 4: 必要な拡張を追加する
+
+授業や実験に合わせて、GPIO、DHT、OLED、ESP-NOW、環境指数などの拡張を追加します。
+
+### Step 5: ブロックを組んで実行する
+
+ESP32側には共通ファームウェアが入っているため、通常の利用ではブロックを変更するたびにファームウェアを書き直す必要はありません。
+
+---
+
+## 6. Firmware v0.1.4
+
+正式版:
+
+https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
+
+対象:
+
+- ESP32-WROOM-32
+
+主な機能:
+
+- Web SerialによるUSB通信
+- BLE UART通信
+- GPIO入出力
+- DHT11 / DHT22
+- SSD1306 OLED
+- OLED指定範囲消去（FILLBLACK）
+- ESP-NOW
+
+Release Assetsには、Web Installerで使用するmerged binaryとファームウェア一式のZIPを公開しています。
+
+### v0.1.4で実機確認した内容
+
+- Web InstallerからESP32-WROOM-32への書き込み
+- GitHub Pagesで公開したWeb Installerからの直接書き込み
+- USB / Web Serial通信
+- GPIO
+- DHT
+- OLED
+- OLED FILLBLACK
+
+> BLE UART機能はファームウェアに含まれていますが、v0.1.4のReleaseで明記している実機確認項目とは分けて扱っています。
+
+---
+
+## 7. ESP-NOWと学校ネットワーク
+
+ESP32 Education Editorでは、ESP32同士の通信にESP-NOWを利用できます。
+
 ```text
-http://localhost:8601/
+Chromebook
+   │
+   │ USB / Web Serial
+   ↓
+ ESP32 A
+   ↕
+ ESP-NOW
+   ↕
+ ESP32 B
 ```
+
+ESP32 AとESP32 BのESP-NOW通信では、学校Wi-Fiや校内LANを使用しません。
+
+そのため、ESP32を学校Wi-Fiへ登録せずに、次のような通信学習を行うことができます。
+
+- MACアドレス
+- 送信と受信
+- ブロードキャスト
+- ユニキャスト
+- RSSI
+- 通信距離
+- データ欠損
+- センサネットワーク
+
+GitHub Pages版を最初に読み込む際にはインターネット接続が必要ですが、ESP-NOW通信そのものは学校Wi-Fiを経由しません。
+
+---
+
+## 8. 対応ブラウザ
+
+Web Serialを利用するため、Chromium系ブラウザを推奨します。
+
+主な利用環境:
+
+- Google Chrome
+- ChromeOS / Chromebook
+- Microsoft Edge
+
+ブラウザやOSのWeb Serial対応状況によっては利用できない場合があります。
+
+---
+
+## 9. 開発者向け
+
+このリポジトリはESP32 Education Editorのソースコードを管理しています。
+
+基本的なビルド:
+
+```bash
+npm ci
+npm run build
+```
+
+GitHub Actionsでビルドし、GitHub Pagesへ公開しています。
+
+開発では、原則として次の流れで変更を管理しています。
+
+```text
+main
+  ↓
+作業ブランチ
+  ↓
+Pull Request
+  ↓
+GitHub Actions
+  ↓
+mainへMerge
+  ↓
+GitHub PagesへDeploy
+```
+
+---
+
+## 10. バージョン管理
+
+EditorとFirmwareは別々に管理します。
+
+| 種類 | バージョン例 |
+|---|---|
+| ESP32 Education Editor | `v0.4` |
+| ESP32共通Firmware | `firmware-v0.1.4` |
+
+Firmwareのタグには `firmware-` を付け、Editor本体のバージョンと区別します。
+
+---
+
+## 11. 開発状況
+
+ESP32 Education Editorは、教育現場での利用を想定して継続開発中です。
+
+現在はESP32-WROOM-32を中心に実機確認を行っています。
+
+今後は、実際の授業や教材での利用結果をもとに、操作性、対応機器、通信機能などを改善していく予定です。
+
+---
+
+## 12. Scratchについて
+
+ESP32 Education Editorは、Scratch Foundationが公開しているオープンソースのScratch Editorをベースに開発しています。
+
+本プロジェクトはScratch Foundationの公式製品ではありません。
+
+ScratchおよびScratchロゴ等の権利は、それぞれの権利者に帰属します。
+
+---
+
+## 13. License
+
+ライセンスについては、このリポジトリの `LICENSE` を参照してください。
+
+---
+
+## 14. Author
+
+**Davinichi**
+
+GitHub:
+
+https://github.com/davinichi
+
+---
+
+# English Summary
+
+**ESP32 Education Editor** is an educational Scratch-style block programming environment for ESP32.
+
+It is designed to let students use ESP32-WROOM-32 from a Chromebook or PC browser without installing a traditional Arduino development environment.
+
+Main features include:
+
+- USB communication via Web Serial
+- Common ESP32 firmware
+- GPIO
+- DHT11 / DHT22
+- SSD1306 OLED
+- ESP-NOW
+- Environmental calculations
+- Data processing
+- Browser-based firmware installation
+
+Public Editor:
+
+https://davinichi.github.io/
+
+Firmware Installer:
+
+https://davinichi.github.io/firmware/
+
+Repository:
+
+https://github.com/davinichi/ESP32-Education-Editor
+
+Latest official common firmware:
+
+https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
+
+The current official firmware release has been verified on ESP32-WROOM-32.
+
+This project is based on the open-source Scratch Editor and is not an official Scratch Foundation product.
