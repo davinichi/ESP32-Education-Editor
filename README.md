@@ -8,14 +8,14 @@ ChromebookやWindows PCのブラウザから、ESP32-WROOM-32をUSBで接続し�
 - Firmware Web Installer: https://davinichi.github.io/firmware/
 - GitHub Repository: https://github.com/davinichi/ESP32-Education-Editor
 - Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
-- Firmware v0.1.4: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
+- Firmware v0.1.5: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.5
 
 > **Version note**
 >
 > ESP32 Education Editor本体とESP32共通ファームウェアは、別々のバージョンで管理しています。
 >
 > - Editor: **v0.4**
-> - Common Firmware: **v0.1.4**
+> - Common Firmware: **v0.1.5**
 
 ---
 
@@ -91,7 +91,7 @@ ESP32-WROOM-32では、EditorからのUSB / Web Serial接続と主要拡張の�
 
 ### その他のESP32
 
-XIAO ESP32-C3 / ESP32-S3などについては、現時点の正式ファームウェア release `firmware-v0.1.4` の動作保証対象には含めていません。
+XIAO ESP32-C3 / ESP32-S3などについては、現時点の正式ファームウェア release `firmware-v0.1.5` の動作保証対象には含めていません。
 
 ---
 
@@ -107,7 +107,7 @@ https://davinichi.github.io/firmware/
 
 画面の案内に従ってESP32を選択し、共通ファームウェアを書き込みます。
 
-現在の正式ファームウェアは **v0.1.4** です。
+現在の正式ファームウェアは **v0.1.5** です。
 
 ファームウェアファイルを手動で選択する必要はありません。
 
@@ -129,11 +129,11 @@ ESP32側には共通ファームウェアが入っているため、通常の利
 
 ---
 
-## 6. Firmware v0.1.4
+## 6. Firmware v0.1.5
 
 正式版:
 
-https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
+https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.5
 
 対象:
 
@@ -142,26 +142,33 @@ https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
 主な機能:
 
 - Web SerialによるUSB通信
-- BLE UART通信
 - GPIO入出力
 - DHT11 / DHT22
 - SSD1306 OLED
 - OLED指定範囲消去（FILLBLACK）
 - ESP-NOW
+  - Wi-Fiチャンネル1
+  - ブロードキャスト送信
+  - MACアドレス指定送信
+  - 受信
 
-Release Assetsには、Web Installerで使用するmerged binaryとファームウェア一式のZIPを公開しています。
+v0.1.5ではESP-NOWの安定動作を優先し、実機で確認済みの安定構成を採用しています。
 
-### v0.1.4で実機確認した内容
+BLE UART機能は、本バージョンでは一時的に含めていません。
 
-- Web InstallerからESP32-WROOM-32への書き込み
-- GitHub Pagesで公開したWeb Installerからの直接書き込み
-- USB / Web Serial通信
+Release Assetsには、Web Installerで使用するmerged binaryを公開しています。
+
+### v0.1.5で実機確認した内容
+
+ESP32-WROOM-32で次の動作を確認しています。
+
+- 公開Web Installerからのファームウェア書き込み
+- USB / Web Serial接続
 - GPIO
-- DHT
+- DHT11 / DHT22
 - OLED
-- OLED FILLBLACK
-
-> BLE UART機能はファームウェアに含まれていますが、v0.1.4のReleaseで明記している実機確認項目とは分けて扱っています。
+- ESP-NOW
+- merged binaryから書き込んだ状態でのESP-NOW通信
 
 ---
 
@@ -250,7 +257,7 @@ EditorとFirmwareは別々に管理します。
 | 種類 | バージョン例 |
 |---|---|
 | ESP32 Education Editor | `v0.4` |
-| ESP32共通Firmware | `firmware-v0.1.4` |
+| ESP32共通Firmware | `firmware-v0.1.5` |
 
 Firmwareのタグには `firmware-` を付け、Editor本体のバージョンと区別します。
 
@@ -324,8 +331,10 @@ https://github.com/davinichi/ESP32-Education-Editor
 
 Latest official common firmware:
 
-https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.4
+https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.5
 
 The current official firmware release has been verified on ESP32-WROOM-32.
+
+Firmware v0.1.5 prioritizes stable ESP-NOW operation. BLE UART is temporarily excluded from this release.
 
 This project is based on the open-source Scratch Editor and is not an official Scratch Foundation product.
