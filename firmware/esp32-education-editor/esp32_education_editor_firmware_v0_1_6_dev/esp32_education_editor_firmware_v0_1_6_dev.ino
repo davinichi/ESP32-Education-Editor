@@ -29,6 +29,7 @@
 // ===== 使用するライブラリ =====
 // Arduinoの基本機能：GPIO、時刻、文字列、USBシリアルなど。
 #include <Arduino.h>
+#include <esp_arduino_version.h>
 // ESP32のWi-FiモードとMACアドレス取得。
 #include <WiFi.h>
 // OLEDに使用するI2C通信。
@@ -88,6 +89,28 @@ float lastDhtHumi = NAN;
 // 最後に正常取得したときのmillis()値。単位はミリ秒で、測定間隔の判定に使います。
 unsigned long lastDhtReadMs = 0;
 
+
+// ===== サーボモーター設定 =====
+
+// SG90など一般的なRCサーボ用PWM設定。
+// 50Hz = 20ms周期。
+static const uint32_t SERVO_FREQ_HZ = 50;
+static const uint8_t SERVO_RESOLUTION_BITS = 16;
+
+// SG90のパルス幅。
+// 最初の実機試験では0度180度まで振り切らず、30～150度程度で確認します。
+static const uint16_t SERVO_MIN_US = 500;
+static const uint16_t SERVO_MAX_US = 2400;
+
+#if ESP_ARDUINO_VERSION_MAJOR < 3
+// Arduino-ESP32 2.xではLEDCチャンネルを明示します。
+static const uint8_t SERVO_LEDC_CHANNEL = 7;
+#endif
+
+// v0.1.6-devではサーボ1個を直接制御します。
+int servoPin = -1;
+bool servoAttached = false;
+int servoAngle = 90;
 // ===== ESP-NOW：送受信コールバック =====
 
 /**
@@ -316,6 +339,155 @@ void printEspNowChannel() {
 
   Serial.print("ESPNOW:CHANNEL:");
   Serial.println(primary);
+}
+
+// ===== サーボモーター制御 =====
+
+/**
+ * マイクロ秒単位のパルス幅をLEDCのDuty値へ変換します。
+ */
+uint32_t servoPulseToDuty(uint16_t pulseUs) {
+  const uint32_t periodUs = 1000000UL / SERVO_FREQ_HZ;
+  const uint32_t maxDuty = (1UL << SERVO_RESOLUTION_BITS) - 1UL;
+
+  return (uint32_t)(((uint64_t)pulseUs * maxDuty) / periodUs);
+}
+
+/**
+ * サーボ用PWMをGPIOへ割り当てます。
+ */
+bool attachServo(int pin) {
+  if (pin < 0 || pin > 33 || (pin >= 6 && pin <= 11)) {
+    Serial.println("SERVO:ERROR:INVALID_PIN");
+    return false;
+  }
+
+  // 別のGPIOですでに使用中なら一度解除します。
+  if (servoAttached && servoPin != pin) {
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+    ledcDetach(servoPin);
+#else
+    ledcDetachPin(servoPin);
+#endif
+    servoAttached = false;
+    servoPin = -1;
+  }
+
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+
+  if (!ledcAttach((uint8_t)pin, SERVO_FREQ_HZ, SERVO_RESOLUTION_BITS)) {
+    Serial.println("SERVO:ERROR:ATTACH");
+    return false;
+  }
+
+#else
+
+  double actualFreq =
+      ledcSetup(SERVO_LEDC_CHANNEL, SERVO_FREQ_HZ, SERVO_RESOLUTION_BITS);
+
+  if (actualFreq <= 0) {
+    Serial.println("SERVO:ERROR:ATTACH");
+    return false;
+  }
+
+  ledcAttachPin(pin, SERVO_LEDC_CHANNEL);
+
+#endif
+
+  servoPin = pin;
+  servoAttached = true;
+
+  Serial.print("SERVO:ATTACH:OK:");
+  Serial.println(servoPin);
+
+  return true;
+}
+
+/**
+ * サーボを0～180度の指定角度へ動かします。
+ */
+void writeServoAngle(int angle) {
+  if (!servoAttached || servoPin < 0) {
+    Serial.println("SERVO:ERROR:NOT_ATTACHED");
+    return;
+  }
+
+  if (angle < 0 || angle > 180) {
+    Serial.println("SERVO:ERROR:ANGLE_RANGE");
+    return;
+  }
+
+  uint16_t pulseUs =
+      (uint16_t)map(angle, 0, 180, SERVO_MIN_US, SERVO_MAX_US);
+
+  uint32_t duty = servoPulseToDuty(pulseUs);
+
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+
+  if (!ledcWrite((uint8_t)servoPin, duty)) {
+    Serial.println("SERVO:ERROR:WRITE");
+    return;
+  }
+
+#else
+
+  ledcWrite(SERVO_LEDC_CHANNEL, duty);
+
+#endif
+
+  servoAngle = angle;
+
+  Serial.print("SERVO:ANGLE:OK:");
+  Serial.println(servoAngle);
+}
+
+/**
+ * サーボPWM出力を停止してGPIOから切り離します。
+ */
+void detachServo() {
+  if (!servoAttached || servoPin < 0) {
+    Serial.println("SERVO:ERROR:NOT_ATTACHED");
+    return;
+  }
+
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+  ledcDetach((uint8_t)servoPin);
+#else
+  ledcDetachPin(servoPin);
+#endif
+
+  servoPin = -1;
+  servoAttached = false;
+
+  Serial.println("SERVO:DETACH:OK");
+}
+
+/**
+ * ESP32 Education EditorからのSERVO命令を処理します。
+ *
+ * SERVO:ATTACH:13
+ * SERVO:ANGLE:90
+ * SERVO:DETACH
+ */
+void processServo(const String &command) {
+
+  if (command.startsWith("SERVO:ATTACH:")) {
+    int pin = command.substring(13).toInt();
+    attachServo(pin);
+  }
+
+  else if (command.startsWith("SERVO:ANGLE:")) {
+    int angle = command.substring(12).toInt();
+    writeServoAngle(angle);
+  }
+
+  else if (command == "SERVO:DETACH") {
+    detachServo();
+  }
+
+  else {
+    Serial.println("SERVO:ERROR:UNKNOWN");
+  }
 }
 // ===== 共通の状態通知 =====
 
@@ -693,6 +865,7 @@ void processCommand(String command) {
 
   if (command == "SYS:STATUS") printSystemStatus();
   else if (command.startsWith("GPIO:")) processGPIO(command);
+  else if (command.startsWith("SERVO:")) processServo(command);
   else if (command.startsWith("DHT:")) processDHT(command);
   else if (command == "ESPNOW:CHANNEL?") {
     printEspNowChannel();
