@@ -111,6 +111,18 @@ static const uint8_t SERVO_LEDC_CHANNEL = 7;
 int servoPin = -1;
 bool servoAttached = false;
 int servoAngle = 90;
+
+// ===== ESP-NOW遠隔サーボ命令 =====
+
+// ESP-NOW受信コールバックではサーボを直接操作せず、
+// REMOTE:SERVO:ANGLE: の命令だけを一時保存し、loop()側で実行します。
+static const size_t REMOTE_SERVO_COMMAND_MAX_LEN = 32;
+
+char remoteServoCommand[REMOTE_SERVO_COMMAND_MAX_LEN + 1] = {0};
+volatile bool remoteServoCommandPending = false;
+
+// ESP-NOWコールバックとloop()間で共有する領域を保護します。
+portMUX_TYPE remoteServoMux = portMUX_INITIALIZER_UNLOCKED;
 // ===== ESP-NOW：送受信コールバック =====
 
 /**
@@ -151,6 +163,34 @@ void onDataRecv(const esp_now_recv_info_t*, const uint8_t *data, int len) {
   message[n] = '\0';
   Serial.print("ESPNOW:RX:");
   Serial.println(message);
+
+  // REMOTE:SERVO:ANGLE: で始まる命令だけを遠隔操作として受け付けます。
+  // コールバック内では実際のサーボ操作を行わず、loop()用に保存します。
+  static const char remotePrefix[] = "REMOTE:SERVO:ANGLE:";
+
+  if (strncmp(message, remotePrefix, strlen(remotePrefix)) == 0) {
+    const char *servoCommand = message + 7;  // "REMOTE:" を除去
+
+    size_t commandLength = strlen(servoCommand);
+
+    if (commandLength <= REMOTE_SERVO_COMMAND_MAX_LEN) {
+      portENTER_CRITICAL(&remoteServoMux);
+
+      strncpy(
+        remoteServoCommand,
+        servoCommand,
+        REMOTE_SERVO_COMMAND_MAX_LEN
+      );
+
+      remoteServoCommand[REMOTE_SERVO_COMMAND_MAX_LEN] = '\0';
+      remoteServoCommandPending = true;
+
+      portEXIT_CRITICAL(&remoteServoMux);
+    }
+    else {
+      Serial.println("REMOTE:ERROR:TOO_LONG");
+    }
+  }
 }
 
 // ===== ESP-NOW：MACアドレス解析・相手登録・初期化・送信 =====
@@ -487,6 +527,45 @@ void processServo(const String &command) {
 
   else {
     Serial.println("SERVO:ERROR:UNKNOWN");
+  }
+}
+
+// ===== ESP-NOW遠隔サーボ命令の実行 =====
+
+/**
+ * ESP-NOW受信コールバックが保存した遠隔サーボ命令を実行します。
+ *
+ * 現在許可する遠隔命令はSERVO:ANGLEのみです。
+ * ATTACHやDETACHはローカルUSBシリアルから行います。
+ */
+void processPendingRemoteServoCommand() {
+  if (!remoteServoCommandPending) return;
+
+  char command[REMOTE_SERVO_COMMAND_MAX_LEN + 1];
+
+  portENTER_CRITICAL(&remoteServoMux);
+
+  strncpy(
+    command,
+    remoteServoCommand,
+    REMOTE_SERVO_COMMAND_MAX_LEN
+  );
+
+  command[REMOTE_SERVO_COMMAND_MAX_LEN] = '\0';
+
+  remoteServoCommandPending = false;
+  remoteServoCommand[0] = '\0';
+
+  portEXIT_CRITICAL(&remoteServoMux);
+
+  String remoteCommand = String(command);
+
+  // 安全のためANGLE命令だけを許可します。
+  if (remoteCommand.startsWith("SERVO:ANGLE:")) {
+    processServo(remoteCommand);
+  }
+  else {
+    Serial.println("REMOTE:ERROR:NOT_ALLOWED");
   }
 }
 // ===== 共通の状態通知 =====
@@ -935,6 +1014,9 @@ void setup() {
  * 読み取りにはreadStringUntil()を使い、専用のタイムアウト値はここで指定しません。
  */
 void loop() {
+  // ESP-NOWで受信した遠隔サーボ命令を通常タスク側で処理します。
+  processPendingRemoteServoCommand();
+
   if (Serial.available()) processCommand(Serial.readStringUntil('\n'));
   else delay(1);
 }
