@@ -1,5 +1,5 @@
 /*
-  ESP32 Education Editor Common Firmware v0.1.5
+  ESP32 Education Editor Common Firmware v0.1.6-dev
   Stable ESP-NOW release for ESP32-WROOM-32.
 
   【公開版 v0.1.5】
@@ -47,7 +47,11 @@
 // ===== 共通設定・グローバル変数 =====
 
 // ESP-NOWで使用するWi-Fiチャンネル番号。初期化時と相手登録時に使用します。
-static const uint8_t WIFI_CHANNEL = 1;
+static const uint8_t DEFAULT_WIFI_CHANNEL = 1;
+
+// 現在ESP-NOWで使用しているWi-Fiチャンネル。
+// 起動時は1、ESPNOW:CHANNEL命令で1～13へ変更できます。
+uint8_t espNowChannel = DEFAULT_WIFI_CHANNEL;
 
 // ESP-NOW本文の最大長。受信時のコピー量と送信時の切り詰めに使用します。
 // 単位はバイトで、日本語の文字数とは一致しません。末尾の終端文字は別途確保します。
@@ -196,7 +200,7 @@ bool ensurePeer(const uint8_t mac[6]) {
   esp_now_peer_info_t peer = {};
 
   memcpy(peer.peer_addr, mac, 6);
-  peer.channel = WIFI_CHANNEL;
+  peer.channel = 0;
   peer.encrypt = false;
   return esp_now_add_peer(&peer) == ESP_OK;
 }
@@ -214,7 +218,7 @@ bool initEspNow() {
   WiFi.mode(WIFI_STA);
   delay(300);
 
-  if (esp_wifi_set_channel(WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE) != ESP_OK) return false;
+  if (esp_wifi_set_channel(espNowChannel, WIFI_SECOND_CHAN_NONE) != ESP_OK) return false;
   if (esp_now_init() != ESP_OK) return false;
 
   esp_now_register_send_cb(onDataSent);
@@ -260,6 +264,59 @@ void sendEspNowTo(String macText, String message) {
   }
 }
 
+
+// ===== ESP-NOW：チャンネル設定 =====
+
+/**
+ * ESP-NOWで使用するWi-Fiチャンネルを変更します。
+ *
+ * @param channel 1～13のWi-Fiチャンネル番号。
+ * @returns 設定成功時true、範囲外または設定失敗時false。
+ *
+ * 設定は再起動後には保存されません。
+ * 再起動するとDEFAULT_WIFI_CHANNEL（チャンネル1）へ戻ります。
+ */
+bool setEspNowChannel(int channel) {
+  if (channel < 1 || channel > 13) {
+    Serial.println("ESPNOW:CHANNEL:ERROR:RANGE");
+    return false;
+  }
+
+  esp_err_t result =
+      esp_wifi_set_channel((uint8_t)channel, WIFI_SECOND_CHAN_NONE);
+
+  if (result != ESP_OK) {
+    Serial.print("ESPNOW:CHANNEL:ERROR:");
+    Serial.println((int)result);
+    return false;
+  }
+
+  espNowChannel = (uint8_t)channel;
+
+  Serial.print("ESPNOW:CHANNEL:OK:");
+  Serial.println(espNowChannel);
+
+  return true;
+}
+
+/**
+ * 現在ESP32が実際に使用しているWi-Fiチャンネルを返します。
+ */
+void printEspNowChannel() {
+  uint8_t primary = 0;
+  wifi_second_chan_t secondary = WIFI_SECOND_CHAN_NONE;
+
+  esp_err_t result = esp_wifi_get_channel(&primary, &secondary);
+
+  if (result != ESP_OK) {
+    Serial.print("ESPNOW:CHANNEL:ERROR:");
+    Serial.println((int)result);
+    return;
+  }
+
+  Serial.print("ESPNOW:CHANNEL:");
+  Serial.println(primary);
+}
 // ===== 共通の状態通知 =====
 
 /**
@@ -637,6 +694,14 @@ void processCommand(String command) {
   if (command == "SYS:STATUS") printSystemStatus();
   else if (command.startsWith("GPIO:")) processGPIO(command);
   else if (command.startsWith("DHT:")) processDHT(command);
+  else if (command == "ESPNOW:CHANNEL?") {
+    printEspNowChannel();
+  }
+  else if (command.startsWith("ESPNOW:CHANNEL:")) {
+    String value = command.substring(15);
+    value.trim();
+    setEspNowChannel(value.toInt());
+  }
   else if (command.startsWith("ESPNOW:SENDTO:")) {
     // 接頭辞を除いた「宛先MAC,本文」。宛先を省略する場合はカンマから始まります。
     String payload=command.substring(14);
