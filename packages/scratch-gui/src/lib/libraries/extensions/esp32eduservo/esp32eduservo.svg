@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <rect x="5" y="8" width="70" height="64" rx="12" fill="#FF6680"/>
+
+  <!-- Servo body -->
+  <rect x="22" y="34" width="36" height="25" rx="4"
+        fill="none" stroke="white" stroke-width="4"/>
+
+  <!-- Mounting tabs -->
+  <rect x="16" y="39" width="7" height="15" rx="2" fill="white"/>
+  <rect x="57" y="39" width="7" height="15" rx="2" fill="white"/>
+
+  <!-- Output shaft -->
+  <circle cx="40" cy="31" r="6"
+          fill="#FF6680" stroke="white" stroke-width="4"/>
+
+  <!-- Servo horn -->
+  <line x1="40" y1="25" x2="40" y2="15"
+        stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="27" y1="20" x2="53" y2="20"
+        stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+  <circle cx="27" cy="20" r="2" fill="#FF6680"/>
+  <circle cx="53" cy="20" r="2" fill="#FF6680"/>
+</svg>
