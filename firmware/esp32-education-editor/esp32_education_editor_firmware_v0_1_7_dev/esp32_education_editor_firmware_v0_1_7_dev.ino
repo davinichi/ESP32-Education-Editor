@@ -381,6 +381,242 @@ void printEspNowChannel() {
   Serial.println(primary);
 }
 
+
+// ===== 汎用PWM出力 =====
+
+// LEDやモータードライバなどで使用する汎用PWMです。
+// Editor側では0～100%で指定し、内部では8bit Dutyへ変換します。
+static const uint32_t PWM_FREQ_HZ = 5000;
+static const uint8_t PWM_RESOLUTION_BITS = 8;
+
+#if ESP_ARDUINO_VERSION_MAJOR < 3
+// Arduino-ESP32 2.xではLEDCチャンネルを明示的に管理します。
+// チャンネル7はServo専用として使用するため、PWMでは0～6を使用します。
+static const uint8_t PWM_CHANNEL_COUNT = 7;
+
+struct PwmChannelState {
+  int pin;
+  bool active;
+};
+
+PwmChannelState pwmChannels[PWM_CHANNEL_COUNT] = {
+  {-1, false},
+  {-1, false},
+  {-1, false},
+  {-1, false},
+  {-1, false},
+  {-1, false},
+  {-1, false}
+};
+#endif
+
+/**
+ * PWM出力に使用できるGPIOか確認します。
+ */
+bool isValidPwmPin(int pin) {
+  switch (pin) {
+    case 13:
+    case 14:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 21:
+    case 22:
+    case 23:
+    case 25:
+    case 26:
+    case 27:
+    case 32:
+    case 33:
+      return true;
+
+    default:
+      return false;
+  }
+}
+
+/**
+ * 0～100%を8bit Duty(0～255)へ変換します。
+ */
+uint32_t pwmPercentToDuty(int percent) {
+  return (uint32_t)((percent * 255L + 50L) / 100L);
+}
+
+#if ESP_ARDUINO_VERSION_MAJOR < 3
+/**
+ * 指定GPIOに割り当て済みのPWMチャンネルを返します。
+ */
+int findPwmChannelByPin(int pin) {
+  for (uint8_t channel = 0; channel < PWM_CHANNEL_COUNT; channel++) {
+    if (pwmChannels[channel].active && pwmChannels[channel].pin == pin) {
+      return channel;
+    }
+  }
+
+  return -1;
+}
+
+/**
+ * 未使用のPWMチャンネルを返します。
+ */
+int findFreePwmChannel() {
+  for (uint8_t channel = 0; channel < PWM_CHANNEL_COUNT; channel++) {
+    if (!pwmChannels[channel].active) {
+      return channel;
+    }
+  }
+
+  return -1;
+}
+#endif
+
+/**
+ * GPIOへPWMを出力します。
+ */
+void writePwm(int pin, int percent) {
+  if (!isValidPwmPin(pin)) {
+    Serial.println("PWM:ERROR:INVALID_PIN");
+    return;
+  }
+
+  if (percent < 0 || percent > 100) {
+    Serial.println("PWM:ERROR:RANGE");
+    return;
+  }
+
+  // Servoが使用中のGPIOとの競合を防止します。
+  if (servoAttached && servoPin == pin) {
+    Serial.println("PWM:ERROR:PIN_IN_USE");
+    return;
+  }
+
+  uint32_t duty = pwmPercentToDuty(percent);
+
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+
+  // 既にLEDCが割り当て済みでも、同じ設定で再Attachできるよう
+  // 初回だけAttachします。
+  static bool pwmAttached[40] = {false};
+
+  if (!pwmAttached[pin]) {
+    if (!ledcAttach((uint8_t)pin, PWM_FREQ_HZ, PWM_RESOLUTION_BITS)) {
+      Serial.println("PWM:ERROR:ATTACH");
+      return;
+    }
+
+    pwmAttached[pin] = true;
+  }
+
+  if (!ledcWrite((uint8_t)pin, duty)) {
+    Serial.println("PWM:ERROR:WRITE");
+    return;
+  }
+
+#else
+
+  int channel = findPwmChannelByPin(pin);
+
+  if (channel < 0) {
+    channel = findFreePwmChannel();
+
+    if (channel < 0) {
+      Serial.println("PWM:ERROR:NO_CHANNEL");
+      return;
+    }
+
+    double actualFreq =
+        ledcSetup((uint8_t)channel, PWM_FREQ_HZ, PWM_RESOLUTION_BITS);
+
+    if (actualFreq <= 0) {
+      Serial.println("PWM:ERROR:ATTACH");
+      return;
+    }
+
+    ledcAttachPin(pin, (uint8_t)channel);
+
+    pwmChannels[channel].pin = pin;
+    pwmChannels[channel].active = true;
+  }
+
+  ledcWrite((uint8_t)channel, duty);
+
+#endif
+
+  Serial.print("PWM:OK:");
+  Serial.print(pin);
+  Serial.print(":");
+  Serial.println(percent);
+}
+
+/**
+ * 指定GPIOのPWM出力を停止し、LEDCを解放します。
+ */
+void stopPwm(int pin) {
+  if (!isValidPwmPin(pin)) {
+    Serial.println("PWM:ERROR:INVALID_PIN");
+    return;
+  }
+
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+
+  ledcWrite((uint8_t)pin, 0);
+  ledcDetach((uint8_t)pin);
+
+#else
+
+  int channel = findPwmChannelByPin(pin);
+
+  if (channel >= 0) {
+    ledcWrite((uint8_t)channel, 0);
+    ledcDetachPin(pin);
+
+    pwmChannels[channel].pin = -1;
+    pwmChannels[channel].active = false;
+  }
+
+#endif
+
+  pinMode(pin, OUTPUT);
+  digitalWrite(pin, LOW);
+
+  Serial.print("PWM:STOP:OK:");
+  Serial.println(pin);
+}
+
+/**
+ * ESP32 Education EditorからのPWM命令を処理します。
+ *
+ * PWM:WRITE:23,50
+ * PWM:STOP:23
+ */
+void processPWM(const String &command) {
+  if (command.startsWith("PWM:WRITE:")) {
+    String value = command.substring(10);
+
+    int comma = value.indexOf(',');
+
+    if (comma < 0) {
+      Serial.println("PWM:ERROR:FORMAT");
+      return;
+    }
+
+    int pin = value.substring(0, comma).toInt();
+    int percent = value.substring(comma + 1).toInt();
+
+    writePwm(pin, percent);
+  }
+
+  else if (command.startsWith("PWM:STOP:")) {
+    int pin = command.substring(9).toInt();
+    stopPwm(pin);
+  }
+
+  else {
+    Serial.println("PWM:ERROR:UNKNOWN");
+  }
+}
+
 // ===== サーボモーター制御 =====
 
 /**
@@ -944,6 +1180,7 @@ void processCommand(String command) {
 
   if (command == "SYS:STATUS") printSystemStatus();
   else if (command.startsWith("GPIO:")) processGPIO(command);
+  else if (command.startsWith("PWM:")) processPWM(command);
   else if (command.startsWith("SERVO:")) processServo(command);
   else if (command.startsWith("DHT:")) processDHT(command);
   else if (command == "ESPNOW:CHANNEL?") {
