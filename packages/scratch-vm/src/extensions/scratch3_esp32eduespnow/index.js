@@ -16,6 +16,8 @@ class Scratch3ESP32ESPNowBlocks {
         this.newData = false;
         // 最後の送信結果です。
         this.txResult = '';
+        // 現在のESP-NOWチャンネルです。
+        this.espnowChannel = '';
         // ESP-NOWの受信本文と送信結果を保存します。
         this.transport.addListener(line => {
             if (line.startsWith('ESPNOW:RX:')) {
@@ -27,6 +29,13 @@ class Scratch3ESP32ESPNowBlocks {
                 this.txResult = 'FAIL';
             } else if (line.startsWith('ESPNOW:TX:ERROR:')) {
                 this.txResult = line.substring(16);
+            } else if (line.startsWith('ESPNOW:CHANNEL:OK:')) {
+                this.espnowChannel = line.substring(18);
+            } else if (line.startsWith('ESPNOW:CHANNEL:')) {
+                const channel = line.substring(15);
+                if (/^\d+$/.test(channel)) this.espnowChannel = channel;
+            } else if (line.startsWith('SYS:CH:')) {
+                this.espnowChannel = line.substring(7);
             }
         });
     }
@@ -40,6 +49,10 @@ class Scratch3ESP32ESPNowBlocks {
             color2: '#0B8E69',
             color3: '#087052',
             blocks: [
+                {opcode: 'setChannel', blockType: BlockType.COMMAND, text: 'ESP-NOW チャンネルを [CHANNEL] にする', arguments: {
+                    CHANNEL: {type: ArgumentType.STRING, menu: 'channels', defaultValue: '1'}
+                }},
+                {opcode: 'channel', blockType: BlockType.REPORTER, text: 'ESP-NOW チャンネル'},
                 {opcode: 'send', blockType: BlockType.COMMAND, text: '送信先MAC [MAC] に [MESSAGE] を送信', arguments: {
                     MAC: {type: ArgumentType.STRING, defaultValue: ''},
                     MESSAGE: {type: ArgumentType.STRING, defaultValue: 'こんにちは'}
@@ -47,10 +60,26 @@ class Scratch3ESP32ESPNowBlocks {
                 {opcode: 'received', blockType: BlockType.REPORTER, text: 'ESP-NOWで受信したデータ'},
                 {opcode: 'hasNew', blockType: BlockType.BOOLEAN, text: 'ESP-NOWの新しいデータを受信した？'},
                 {opcode: 'result', blockType: BlockType.REPORTER, text: 'ESP-NOWの送信結果'}
-            ]
+            ],
+            menus: {
+                channels: {
+                    acceptReporters: false,
+                    items: ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+                }
+            }
         };
     }
 
+    /** ESP-NOWで使用するWi-Fiチャンネルを1～13から設定します。 */
+    async setChannel (args) {
+        await this.transport.sendLine(`ESPNOW:CHANNEL:${args.CHANNEL}`);
+    }
+
+    /** 現在のESP-NOWチャンネルを返します。 */
+    channel () {
+        if (!this.transport.connected) return '';
+        return this.espnowChannel || this.transport.channel || '';
+    }
     /** MAC指定時はユニキャスト、空欄時はブロードキャストで送信します。 */
     async send (args) {
         this.txResult = '';
