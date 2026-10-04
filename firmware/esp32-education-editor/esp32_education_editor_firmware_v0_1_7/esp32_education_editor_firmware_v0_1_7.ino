@@ -1,5 +1,5 @@
 /*
-  ESP32 Education Editor Common Firmware v0.1.7-dev
+  ESP32 Education Editor Common Firmware v0.1.7
   Stable ESP-NOW release for ESP32-WROOM-32.
 
   【公開版 v0.1.5】
@@ -107,7 +107,7 @@ static const uint16_t SERVO_MAX_US = 2400;
 static const uint8_t SERVO_LEDC_CHANNEL = 7;
 #endif
 
-// v0.1.7-devではサーボ1個を直接制御します。
+// v0.1.7ではサーボ1個を直接制御します。
 int servoPin = -1;
 bool servoAttached = false;
 int servoAngle = 90;
