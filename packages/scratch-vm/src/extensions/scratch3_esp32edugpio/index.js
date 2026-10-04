@@ -38,12 +38,20 @@ class Scratch3ESP32GPIOBlocks {
                     PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '23'},
                     STATE: {type: ArgumentType.STRING, menu: 'states', defaultValue: 'HIGH'}
                 }},
+                {opcode: 'pwmWrite', blockType: BlockType.COMMAND, text: 'GPIO [PIN] のPWM出力を [PERCENT] % にする', arguments: {
+                    PIN: {type: ArgumentType.STRING, menu: 'pwmPins', defaultValue: '23'},
+                    PERCENT: {type: ArgumentType.NUMBER, defaultValue: 50}
+                }},
+                {opcode: 'pwmStop', blockType: BlockType.COMMAND, text: 'GPIO [PIN] のPWM出力を停止する', arguments: {
+                    PIN: {type: ArgumentType.STRING, menu: 'pwmPins', defaultValue: '23'}
+                }},
                 {opcode: 'read', blockType: BlockType.REPORTER, text: 'GPIO [PIN] のデジタル入力', arguments: {
                     PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '23'}
                 }}
             ],
             menus: {
                 pins: {acceptReporters: false, items: ['2','4','5','12','13','14','15','16','17','18','19','21','22','23','25','26','27','32','33','34','35','36','39']},
+                pwmPins: {acceptReporters: false, items: ['13','14','16','17','18','19','21','22','23','25','26','27','32','33']},
                 modes: {acceptReporters: false, items: [
                     {text: '出力', value: 'OUTPUT'},
                     {text: '入力', value: 'INPUT'},
@@ -59,6 +67,19 @@ class Scratch3ESP32GPIOBlocks {
     async mode (args) { await this.transport.sendLine(`GPIO:MODE:${args.PIN},${args.MODE}`); }
     /** 指定GPIOへHIGH/LOWを出力します。 */
     async write (args) { await this.transport.sendLine(`GPIO:WRITE:${args.PIN},${args.STATE}`); }
+    /** 指定GPIOへ0～100%のPWMを出力します。 */
+    async pwmWrite (args) {
+        let percent = Math.round(Number(args.PERCENT));
+        if (!Number.isFinite(percent)) percent = 0;
+        percent = Math.max(0, Math.min(100, percent));
+
+        await this.transport.sendLine(`PWM:WRITE:${args.PIN},${percent}`);
+    }
+
+    /** 指定GPIOのPWM出力を停止します。 */
+    async pwmStop (args) {
+        await this.transport.sendLine(`PWM:STOP:${args.PIN}`);
+    }
     /** 指定GPIOのデジタル値を要求し、最後に受信した0/1を返します。 */
     async read (args) {
         const pin = String(args.PIN);
