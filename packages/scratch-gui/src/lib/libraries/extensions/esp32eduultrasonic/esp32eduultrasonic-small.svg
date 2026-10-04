@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <rect x="2" y="4" width="36" height="32" rx="6" fill="#4C97FF"/>
+
+  <!-- HC-SR04 board -->
+  <rect x="7" y="12" width="26" height="17" rx="3"
+        fill="none" stroke="white" stroke-width="2"/>
+
+  <!-- Ultrasonic transmitter / receiver -->
+  <circle cx="14" cy="20" r="5"
+          fill="#4C97FF" stroke="white" stroke-width="2"/>
+  <circle cx="26" cy="20" r="5"
+          fill="#4C97FF" stroke="white" stroke-width="2"/>
+
+  <!-- Sensor centers -->
+  <circle cx="14" cy="20" r="1.5" fill="white"/>
+  <circle cx="26" cy="20" r="1.5" fill="white"/>
+
+  <!-- Connection pins -->
+  <line x1="11" y1="29" x2="11" y2="33"
+        stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="17" y1="29" x2="17" y2="33"
+        stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="23" y1="29" x2="23" y2="33"
+        stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="29" y1="29" x2="29" y2="33"
+        stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>

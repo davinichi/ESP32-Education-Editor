@@ -62,6 +62,8 @@ import esp32ESPNowIconURL from './esp32eduespnow/esp32eduespnow.svg';
 import esp32ESPNowInsetIconURL from './esp32eduespnow/esp32eduespnow-small.svg';
 import esp32ServoIconURL from './esp32eduservo/esp32eduservo.svg';
 import esp32ServoInsetIconURL from './esp32eduservo/esp32eduservo-small.svg';
+import esp32UltrasonicIconURL from './esp32eduultrasonic/esp32eduultrasonic.svg';
+import esp32UltrasonicInsetIconURL from './esp32eduultrasonic/esp32eduultrasonic-small.svg';
 import esp32EnvironmentIconURL from './esp32eduenvironment/esp32eduenvironment.svg';
 import esp32EnvironmentInsetIconURL from './esp32eduenvironment/esp32eduenvironment-small.svg';
 import esp32DataIconURL from './esp32edudata/esp32edudata.svg';
@@ -109,6 +111,13 @@ export default [
         extensionId: 'esp32eduservo', collaborator: 'davinichi',
         iconURL: esp32ServoIconURL, insetIconURL: esp32ServoInsetIconURL,
         description: <FormattedMessage defaultMessage="SG90などのサーボモーターをGPIOから制御します。" description="ESP32 Servo description" id="gui.extension.esp32eduservo.description" />,
+        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+    },
+    {
+        name: <FormattedMessage defaultMessage="ESP32 超音波" description="ESP32 ultrasonic extension" id="gui.extension.esp32eduultrasonic.name" />,
+        extensionId: 'esp32eduultrasonic', collaborator: 'davinichi',
+        iconURL: esp32UltrasonicIconURL, insetIconURL: esp32UltrasonicInsetIconURL,
+        description: <FormattedMessage defaultMessage="HC-SR04超音波センサで距離を測定します。" description="ESP32 ultrasonic description" id="gui.extension.esp32eduultrasonic.description" />,
         featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
     },
     {
