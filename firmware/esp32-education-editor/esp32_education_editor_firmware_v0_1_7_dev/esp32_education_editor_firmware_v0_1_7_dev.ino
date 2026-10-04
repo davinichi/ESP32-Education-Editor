@@ -389,6 +389,11 @@ void printEspNowChannel() {
 static const uint32_t PWM_FREQ_HZ = 5000;
 static const uint8_t PWM_RESOLUTION_BITS = 8;
 
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+// Arduino-ESP32 3.xではGPIOごとのLEDC接続状態を管理します。
+static bool pwmAttached[40] = {false};
+#endif
+
 #if ESP_ARDUINO_VERSION_MAJOR < 3
 // Arduino-ESP32 2.xではLEDCチャンネルを明示的に管理します。
 // チャンネル7はServo専用として使用するため、PWMでは0～6を使用します。
@@ -497,7 +502,6 @@ void writePwm(int pin, int percent) {
 
   // 既にLEDCが割り当て済みでも、同じ設定で再Attachできるよう
   // 初回だけAttachします。
-  static bool pwmAttached[40] = {false};
 
   if (!pwmAttached[pin]) {
     if (!ledcAttach((uint8_t)pin, PWM_FREQ_HZ, PWM_RESOLUTION_BITS)) {
@@ -562,6 +566,7 @@ void stopPwm(int pin) {
 
   ledcWrite((uint8_t)pin, 0);
   ledcDetach((uint8_t)pin);
+  pwmAttached[pin] = false;
 
 #else
 
