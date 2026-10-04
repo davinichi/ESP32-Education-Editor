@@ -617,6 +617,207 @@ void processPWM(const String &command) {
   }
 }
 
+
+// ===== HC-SR04 超音波センサ =====
+
+// ECHO待ち時間の上限。
+// 30msを超えた場合は測定失敗として扱います。
+static const unsigned long HCSR04_TIMEOUT_US = 30000UL;
+
+// HC-SR04の連続測定間隔。
+// 前回測定から60ms未満の場合は残り時間を待ちます。
+static const unsigned long HCSR04_MIN_INTERVAL_MS = 60UL;
+
+int hcsr04TrigPin = -1;
+int hcsr04EchoPin = -1;
+bool hcsr04Attached = false;
+unsigned long hcsr04LastMeasurementMs = 0;
+
+/**
+ * HC-SR04のTRIGに使用できるGPIOか確認します。
+ * 出力可能で、教材で安全に使いやすいGPIOに限定します。
+ */
+bool isValidHcsr04TrigPin(int pin) {
+  switch (pin) {
+    case 13:
+    case 14:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 21:
+    case 22:
+    case 23:
+    case 25:
+    case 26:
+    case 27:
+    case 32:
+    case 33:
+      return true;
+
+    default:
+      return false;
+  }
+}
+
+/**
+ * HC-SR04のECHOに使用できるGPIOか確認します。
+ * GPIO34、35、36、39は入力専用なのでECHO用途にも使用できます。
+ */
+bool isValidHcsr04EchoPin(int pin) {
+  switch (pin) {
+    case 13:
+    case 14:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 21:
+    case 22:
+    case 23:
+    case 25:
+    case 26:
+    case 27:
+    case 32:
+    case 33:
+    case 34:
+    case 35:
+    case 36:
+    case 39:
+      return true;
+
+    default:
+      return false;
+  }
+}
+
+/**
+ * HC-SR04のTRIG/ECHOを設定します。
+ */
+void attachHcsr04(int trigPin, int echoPin) {
+  if (!isValidHcsr04TrigPin(trigPin)) {
+    Serial.println("HCSR04:ERROR:INVALID_TRIG");
+    return;
+  }
+
+  if (!isValidHcsr04EchoPin(echoPin)) {
+    Serial.println("HCSR04:ERROR:INVALID_ECHO");
+    return;
+  }
+
+  if (trigPin == echoPin) {
+    Serial.println("HCSR04:ERROR:SAME_PIN");
+    return;
+  }
+
+  // Servo使用中のGPIOとの競合を防止します。
+  if (servoAttached &&
+      (servoPin == trigPin || servoPin == echoPin)) {
+    Serial.println("HCSR04:ERROR:PIN_IN_USE");
+    return;
+  }
+
+  hcsr04TrigPin = trigPin;
+  hcsr04EchoPin = echoPin;
+
+  pinMode(hcsr04TrigPin, OUTPUT);
+  digitalWrite(hcsr04TrigPin, LOW);
+
+  pinMode(hcsr04EchoPin, INPUT);
+
+  hcsr04Attached = true;
+  hcsr04LastMeasurementMs = 0;
+
+  Serial.print("HCSR04:ATTACH:OK:");
+  Serial.print(hcsr04TrigPin);
+  Serial.print(",");
+  Serial.println(hcsr04EchoPin);
+}
+
+/**
+ * HC-SR04で距離を測定してcm単位で返します。
+ *
+ * 測定できない場合は
+ * HCSR04:DISTANCE:-1
+ * を返します。
+ */
+void readHcsr04Distance() {
+  if (!hcsr04Attached) {
+    Serial.println("HCSR04:ERROR:NOT_ATTACHED");
+    return;
+  }
+
+  // 前回測定から60ms以上空けます。
+  if (hcsr04LastMeasurementMs != 0) {
+    unsigned long elapsed =
+        millis() - hcsr04LastMeasurementMs;
+
+    if (elapsed < HCSR04_MIN_INTERVAL_MS) {
+      delay(HCSR04_MIN_INTERVAL_MS - elapsed);
+    }
+  }
+
+  // TRIGへ10usのパルスを送ります。
+  digitalWrite(hcsr04TrigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(hcsr04TrigPin, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(hcsr04TrigPin, LOW);
+
+  // ECHOがHIGHになっている時間を測定します。
+  unsigned long duration =
+      pulseIn(hcsr04EchoPin, HIGH, HCSR04_TIMEOUT_US);
+
+  hcsr04LastMeasurementMs = millis();
+
+  if (duration == 0) {
+    Serial.println("HCSR04:DISTANCE:-1");
+    return;
+  }
+
+  // 音速を約343m/sとして距離(cm)へ変換します。
+  // 往復時間なので2で割ります。
+  float distanceCm =
+      (duration * 0.0343f) / 2.0f;
+
+  Serial.print("HCSR04:DISTANCE:");
+  Serial.println(distanceCm, 1);
+}
+
+/**
+ * ESP32 Education EditorからのHC-SR04命令を処理します。
+ *
+ * HCSR04:ATTACH:23,34
+ * HCSR04:DISTANCE?
+ */
+void processHCSR04(const String &command) {
+  if (command.startsWith("HCSR04:ATTACH:")) {
+    String value = command.substring(14);
+
+    int comma = value.indexOf(',');
+
+    if (comma < 0) {
+      Serial.println("HCSR04:ERROR:FORMAT");
+      return;
+    }
+
+    int trigPin = value.substring(0, comma).toInt();
+    int echoPin = value.substring(comma + 1).toInt();
+
+    attachHcsr04(trigPin, echoPin);
+  }
+
+  else if (command == "HCSR04:DISTANCE?") {
+    readHcsr04Distance();
+  }
+
+  else {
+    Serial.println("HCSR04:ERROR:UNKNOWN");
+  }
+}
+
 // ===== サーボモーター制御 =====
 
 /**
@@ -1181,6 +1382,7 @@ void processCommand(String command) {
   if (command == "SYS:STATUS") printSystemStatus();
   else if (command.startsWith("GPIO:")) processGPIO(command);
   else if (command.startsWith("PWM:")) processPWM(command);
+  else if (command.startsWith("HCSR04:")) processHCSR04(command);
   else if (command.startsWith("SERVO:")) processServo(command);
   else if (command.startsWith("DHT:")) processDHT(command);
   else if (command == "ESPNOW:CHANNEL?") {
