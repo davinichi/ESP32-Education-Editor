@@ -9,39 +9,138 @@ class Scratch3ESP32EnvironmentBlocks {
     getInfo () {
         return {
             id: 'esp32eduenvironment',
-            name: formatMessage({id: 'esp32eduenvironment.name', default: 'ESP32 環境指数', description: 'ESP32 environment index extension name'}),
+            name: formatMessage({
+                id: 'esp32eduenvironment.name',
+                default: 'ESP32 Environmental Indices',
+                description: 'ESP32 environment index extension name'
+            }),
             color1: '#2EAF7D',
             color2: '#23875F',
             color3: '#1A684A',
             blocks: [
-                {opcode: 'index', blockType: BlockType.REPORTER, text: '温度 [TEMP] ℃ 湿度 [HUM] ％ から [INDEX] を計算', arguments: {
-                    TEMP: {type: ArgumentType.NUMBER, defaultValue: 25},
-                    HUM: {type: ArgumentType.NUMBER, defaultValue: 60},
-                    INDEX: {type: ArgumentType.STRING, menu: 'indices', defaultValue: 'WBGT'}
-                }},
+                {
+                    opcode: 'index',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduenvironment.index',
+                        default: 'calculate [INDEX] from temperature [TEMP] °C and humidity [HUM] %',
+                        description: 'ESP32 Environmental Indices block'
+                    }),
+                    arguments: {
+                        TEMP: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 25
+                        },
+                        HUM: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 60
+                        },
+                        INDEX: {
+                            type: ArgumentType.STRING,
+                            menu: 'indices',
+                            defaultValue: 'WBGT'
+                        }
+                    }
+                },
                 {
                     opcode: 'level',
                     blockType: BlockType.REPORTER,
                     text: 'WBGT [WBGT] の警戒レベル',
                     hideFromPalette: true,
                     arguments: {
-                        WBGT: {type: ArgumentType.NUMBER, defaultValue: 25}
+                        WBGT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 25
+                        }
                     }
                 }
             ],
             menus: {
-                indices: {acceptReporters: false, items: [
-                    {text: '不快指数 DI', value: 'DI'},
-                    {text: 'Heat Index', value: 'HEAT_INDEX'},
-                    {text: 'Humidex', value: 'HUMIDEX'},
-                    {text: '露点温度 Td', value: 'DEW_POINT'},
-                    {text: '絶対湿度 AH', value: 'ABS_HUM'},
-                    {text: '湿球温度 Tw', value: 'WET_BULB'},
-                    {text: 'VPD（飽差）', value: 'VPD'},
-                    {text: '水蒸気圧 VP', value: 'VP'},
-                    {text: 'THI（温湿度指数）', value: 'THI'},
-                    {text: '推定WBGT（簡易）', value: 'WBGT'}
-                ]}
+                indices: {
+                    acceptReporters: false,
+                    items: [
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.DI',
+                                default: 'Discomfort Index (DI)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'DI'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.HEAT_INDEX',
+                                default: 'Heat Index',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'HEAT_INDEX'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.HUMIDEX',
+                                default: 'Humidex',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'HUMIDEX'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.DEW_POINT',
+                                default: 'Dew Point (Td)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'DEW_POINT'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.ABS_HUM',
+                                default: 'Absolute Humidity (AH)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'ABS_HUM'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.WET_BULB',
+                                default: 'Wet-Bulb Temperature (Tw)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'WET_BULB'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.VPD',
+                                default: 'Vapor Pressure Deficit (VPD)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'VPD'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.VP',
+                                default: 'Vapor Pressure (VP)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'VP'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.THI',
+                                default: 'Temperature-Humidity Index (THI)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'THI'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32eduenvironment.menu.WBGT',
+                                default: 'Estimated WBGT (simplified)',
+                                description: 'ESP32 Environmental Indices menu item'
+                            }),
+                            value: 'WBGT'
+                        }
+                    ]
+                }
             }
         };
     }

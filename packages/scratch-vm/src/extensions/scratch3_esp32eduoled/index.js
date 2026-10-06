@@ -26,29 +26,136 @@ class Scratch3ESP32OLEDBlocks {
     getInfo () {
         return {
             id: 'esp32eduoled',
-            name: formatMessage({id: 'esp32eduoled.name', default: 'ESP32 OLED', description: 'ESP32 OLED extension name'}),
+            name: formatMessage({
+                id: 'esp32eduoled.name',
+                default: 'ESP32 OLED',
+                description: 'ESP32 OLED extension name'
+            }),
             color1: '#9966FF',
             color2: '#774DCB',
             color3: '#5E3DA3',
             blocks: [
-                {opcode: 'init', blockType: BlockType.COMMAND, text: 'OLEDを初期化'},
-                {opcode: 'clear', blockType: BlockType.COMMAND, text: 'OLED画面を消去'},
-                {opcode: 'fillBlack', blockType: BlockType.COMMAND, text: 'OLEDの X [X] Y [Y] 幅 [W] 高さ [H] を黒で塗りつぶす', arguments: {
-                    X: {type: ArgumentType.NUMBER, defaultValue: 0}, Y: {type: ArgumentType.NUMBER, defaultValue: 0},
-                    W: {type: ArgumentType.NUMBER, defaultValue: 60}, H: {type: ArgumentType.NUMBER, defaultValue: 12}
-                }},
-                {opcode: 'cursor', blockType: BlockType.COMMAND, text: 'OLEDカーソルを X [X] Y [Y] に設定', arguments: {
-                    X: {type: ArgumentType.NUMBER, defaultValue: 0}, Y: {type: ArgumentType.NUMBER, defaultValue: 0}
-                }},
-                {opcode: 'size', blockType: BlockType.COMMAND, text: 'OLED文字サイズを [SIZE] に設定', arguments: {
-                    SIZE: {type: ArgumentType.NUMBER, defaultValue: 1}
-                }},
-                {opcode: 'text', blockType: BlockType.COMMAND, text: 'OLEDに [TEXT] を表示', arguments: {
-                    TEXT: {type: ArgumentType.STRING, defaultValue: 'Hello'}
-                }},
-                {opcode: 'test', blockType: BlockType.COMMAND, text: 'OLED表示テスト'},
-                {opcode: 'status', blockType: BlockType.REPORTER, text: 'OLEDの状態'},
-                {opcode: 'ack', blockType: BlockType.REPORTER, text: 'OLED最後の応答'}
+                {
+                    opcode: 'init',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.init',
+                        default: 'initialize OLED',
+                        description: 'ESP32 OLED block'
+                    })
+                },
+                {
+                    opcode: 'clear',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.clear',
+                        default: 'clear OLED display',
+                        description: 'ESP32 OLED block'
+                    })
+                },
+                {
+                    opcode: 'fillBlack',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.fillBlack',
+                        default: 'fill OLED rectangle at X [X] Y [Y] width [W] height [H] with black',
+                        description: 'ESP32 OLED block'
+                    }),
+                    arguments: {
+                        X: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                        Y: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                        W: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 60
+                        },
+                        H: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 12
+                        }
+                    }
+                },
+                {
+                    opcode: 'cursor',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.cursor',
+                        default: 'set OLED cursor to X [X] Y [Y]',
+                        description: 'ESP32 OLED block'
+                    }),
+                    arguments: {
+                        X: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                        Y: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        }
+                    }
+                },
+                {
+                    opcode: 'size',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.size',
+                        default: 'set OLED text size to [SIZE]',
+                        description: 'ESP32 OLED block'
+                    }),
+                    arguments: {
+                        SIZE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 1
+                        }
+                    }
+                },
+                {
+                    opcode: 'text',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.text',
+                        default: 'display [TEXT] on OLED',
+                        description: 'ESP32 OLED block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'Hello'
+                        }
+                    }
+                },
+                {
+                    opcode: 'test',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduoled.test',
+                        default: 'test OLED display',
+                        description: 'ESP32 OLED block'
+                    })
+                },
+                {
+                    opcode: 'status',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduoled.status',
+                        default: 'OLED status',
+                        description: 'ESP32 OLED block'
+                    })
+                },
+                {
+                    opcode: 'ack',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduoled.ack',
+                        default: 'last OLED response',
+                        description: 'ESP32 OLED block'
+                    })
+                }
             ]
         };
     }

@@ -33,7 +33,7 @@ class Scratch3ESP32UltrasonicBlocks {
             id: 'esp32eduultrasonic',
             name: formatMessage({
                 id: 'esp32eduultrasonic.name',
-                default: 'ESP32 超音波',
+                default: 'ESP32 Ultrasonic',
                 description: 'ESP32 ultrasonic sensor extension name'
             }),
             color1: '#4C97FF',
@@ -43,7 +43,11 @@ class Scratch3ESP32UltrasonicBlocks {
                 {
                     opcode: 'attach',
                     blockType: BlockType.COMMAND,
-                    text: '超音波センサを TRIG [TRIG] ECHO [ECHO] に接続',
+                    text: formatMessage({
+                        id: 'esp32eduultrasonic.attach',
+                        default: 'attach ultrasonic sensor to TRIG [TRIG] ECHO [ECHO]',
+                        description: 'ESP32 Ultrasonic block'
+                    }),
                     arguments: {
                         TRIG: {
                             type: ArgumentType.STRING,
@@ -60,23 +64,54 @@ class Scratch3ESP32UltrasonicBlocks {
                 {
                     opcode: 'distance',
                     blockType: BlockType.REPORTER,
-                    text: '超音波センサの距離（cm）'
+                    text: formatMessage({
+                        id: 'esp32eduultrasonic.distance',
+                        default: 'ultrasonic sensor distance (cm)',
+                        description: 'ESP32 Ultrasonic block'
+                    })
                 }
             ],
             menus: {
                 trigPins: {
                     acceptReporters: false,
                     items: [
-                        '13','14','16','17','18','19',
-                        '21','22','23','25','26','27','32','33'
+                        '13',
+                        '14',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '21',
+                        '22',
+                        '23',
+                        '25',
+                        '26',
+                        '27',
+                        '32',
+                        '33'
                     ]
                 },
                 echoPins: {
                     acceptReporters: false,
                     items: [
-                        '13','14','16','17','18','19',
-                        '21','22','23','25','26','27',
-                        '32','33','34','35','36','39'
+                        '13',
+                        '14',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '21',
+                        '22',
+                        '23',
+                        '25',
+                        '26',
+                        '27',
+                        '32',
+                        '33',
+                        '34',
+                        '35',
+                        '36',
+                        '39'
                     ]
                 }
             }

@@ -25,40 +25,184 @@ class Scratch3ESP32GPIOBlocks {
     getInfo () {
         return {
             id: 'esp32edugpio',
-            name: formatMessage({id: 'esp32edugpio.name', default: 'ESP32 GPIO', description: 'ESP32 GPIO extension name'}),
+            name: formatMessage({
+                id: 'esp32edugpio.name',
+                default: 'ESP32 GPIO',
+                description: 'ESP32 GPIO extension name'
+            }),
             color1: '#FFAB19',
             color2: '#CF8B17',
             color3: '#A66F12',
             blocks: [
-                {opcode: 'mode', blockType: BlockType.COMMAND, text: 'GPIO [PIN] を [MODE] に設定', arguments: {
-                    PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '23'},
-                    MODE: {type: ArgumentType.STRING, menu: 'modes', defaultValue: 'OUTPUT'}
-                }},
-                {opcode: 'write', blockType: BlockType.COMMAND, text: 'GPIO [PIN] に [STATE] を出力', arguments: {
-                    PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '23'},
-                    STATE: {type: ArgumentType.STRING, menu: 'states', defaultValue: 'HIGH'}
-                }},
-                {opcode: 'pwmWrite', blockType: BlockType.COMMAND, text: 'GPIO [PIN] のPWM出力を [PERCENT] % にする', arguments: {
-                    PIN: {type: ArgumentType.STRING, menu: 'pwmPins', defaultValue: '23'},
-                    PERCENT: {type: ArgumentType.NUMBER, defaultValue: 50}
-                }},
-                {opcode: 'pwmStop', blockType: BlockType.COMMAND, text: 'GPIO [PIN] のPWM出力を停止する', arguments: {
-                    PIN: {type: ArgumentType.STRING, menu: 'pwmPins', defaultValue: '23'}
-                }},
-                {opcode: 'read', blockType: BlockType.REPORTER, text: 'GPIO [PIN] のデジタル入力', arguments: {
-                    PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '23'}
-                }}
+                {
+                    opcode: 'mode',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edugpio.mode',
+                        default: 'set GPIO [PIN] mode to [MODE]',
+                        description: 'ESP32 GPIO block'
+                    }),
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pins',
+                            defaultValue: '23'
+                        },
+                        MODE: {
+                            type: ArgumentType.STRING,
+                            menu: 'modes',
+                            defaultValue: 'OUTPUT'
+                        }
+                    }
+                },
+                {
+                    opcode: 'write',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edugpio.write',
+                        default: 'set GPIO [PIN] to [STATE]',
+                        description: 'ESP32 GPIO block'
+                    }),
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pins',
+                            defaultValue: '23'
+                        },
+                        STATE: {
+                            type: ArgumentType.STRING,
+                            menu: 'states',
+                            defaultValue: 'HIGH'
+                        }
+                    }
+                },
+                {
+                    opcode: 'pwmWrite',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edugpio.pwmWrite',
+                        default: 'set PWM on GPIO [PIN] to [PERCENT] %',
+                        description: 'ESP32 GPIO block'
+                    }),
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pwmPins',
+                            defaultValue: '23'
+                        },
+                        PERCENT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 50
+                        }
+                    }
+                },
+                {
+                    opcode: 'pwmStop',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edugpio.pwmStop',
+                        default: 'stop PWM on GPIO [PIN]',
+                        description: 'ESP32 GPIO block'
+                    }),
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pwmPins',
+                            defaultValue: '23'
+                        }
+                    }
+                },
+                {
+                    opcode: 'read',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edugpio.read',
+                        default: 'digital input from GPIO [PIN]',
+                        description: 'ESP32 GPIO block'
+                    }),
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pins',
+                            defaultValue: '23'
+                        }
+                    }
+                }
             ],
             menus: {
-                pins: {acceptReporters: false, items: ['2','4','5','12','13','14','15','16','17','18','19','21','22','23','25','26','27','32','33','34','35','36','39']},
-                pwmPins: {acceptReporters: false, items: ['13','14','16','17','18','19','21','22','23','25','26','27','32','33']},
-                modes: {acceptReporters: false, items: [
-                    {text: '出力', value: 'OUTPUT'},
-                    {text: '入力', value: 'INPUT'},
-                    {text: '入力（プルアップ）', value: 'INPUT_PULLUP'},
-                    {text: '入力（プルダウン）', value: 'INPUT_PULLDOWN'}
-                ]},
-                states: {acceptReporters: false, items: ['HIGH', 'LOW']}
+                pins: {
+                    acceptReporters: false,
+                    items: [
+                        '2',
+                        '4',
+                        '5',
+                        '12',
+                        '13',
+                        '14',
+                        '15',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '21',
+                        '22',
+                        '23',
+                        '25',
+                        '26',
+                        '27',
+                        '32',
+                        '33',
+                        '34',
+                        '35',
+                        '36',
+                        '39'
+                    ]
+                },
+                pwmPins: {
+                    acceptReporters: false,
+                    items: ['13', '14', '16', '17', '18', '19', '21', '22', '23', '25', '26', '27', '32', '33']
+                },
+                modes: {
+                    acceptReporters: false,
+                    items: [
+                        {
+                            text: formatMessage({
+                                id: 'esp32edugpio.menu.OUTPUT',
+                                default: 'output',
+                                description: 'ESP32 GPIO menu item'
+                            }),
+                            value: 'OUTPUT'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32edugpio.menu.INPUT',
+                                default: 'input',
+                                description: 'ESP32 GPIO menu item'
+                            }),
+                            value: 'INPUT'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32edugpio.menu.INPUT_PULLUP',
+                                default: 'input (pull-up)',
+                                description: 'ESP32 GPIO menu item'
+                            }),
+                            value: 'INPUT_PULLUP'
+                        },
+                        {
+                            text: formatMessage({
+                                id: 'esp32edugpio.menu.INPUT_PULLDOWN',
+                                default: 'input (pull-down)',
+                                description: 'ESP32 GPIO menu item'
+                            }),
+                            value: 'INPUT_PULLDOWN'
+                        }
+                    ]
+                },
+                states: {
+                    acceptReporters: false,
+                    items: ['HIGH', 'LOW']
+                }
             }
         };
     }

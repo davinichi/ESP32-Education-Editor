@@ -17,25 +17,217 @@ class Scratch3ESP32DataBlocks {
     getInfo () {
         return {
             id: 'esp32edudata',
-            name: formatMessage({id: 'esp32edudata.name', default: 'データ処理', description: 'ESP32 education data processing extension name'}),
+            name: formatMessage({
+                id: 'esp32edudata.name',
+                default: 'Data Processing',
+                description: 'ESP32 education data processing extension name'
+            }),
             color1: '#FF8C1A',
             color2: '#D96F00',
             color3: '#B45B00',
             blocks: [
-                {opcode: 'splitCsv', blockType: BlockType.COMMAND, text: 'CSVデータ [CSV] を分ける', arguments: {CSV: {type: ArgumentType.STRING, defaultValue: '25.6,60,28.3'}}},
-                {opcode: 'csvText', blockType: BlockType.REPORTER, text: 'CSVの [INDEX] 番目の文字', arguments: {INDEX: {type: ArgumentType.NUMBER, defaultValue: 1}}},
-                {opcode: 'csvNumber', blockType: BlockType.REPORTER, text: 'CSVの [INDEX] 番目の数値', arguments: {INDEX: {type: ArgumentType.NUMBER, defaultValue: 1}}},
-                {opcode: 'csvCount', blockType: BlockType.REPORTER, text: 'CSVの項目数'},
-                {opcode: 'csvSucceeded', blockType: BlockType.BOOLEAN, text: 'CSVの分解は成功した？'},
+                {
+                    opcode: 'splitCsv',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edudata.splitCsv',
+                        default: 'split CSV data [CSV]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        CSV: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '25.6,60,28.3'
+                        }
+                    }
+                },
+                {
+                    opcode: 'csvText',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.csvText',
+                        default: 'text of CSV item [INDEX]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        INDEX: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 1
+                        }
+                    }
+                },
+                {
+                    opcode: 'csvNumber',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.csvNumber',
+                        default: 'number of CSV item [INDEX]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        INDEX: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 1
+                        }
+                    }
+                },
+                {
+                    opcode: 'csvCount',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.csvCount',
+                        default: 'number of CSV items',
+                        description: 'Data Processing block'
+                    })
+                },
+                {
+                    opcode: 'csvSucceeded',
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: 'esp32edudata.csvSucceeded',
+                        default: 'CSV split successful?',
+                        description: 'Data Processing block'
+                    })
+                },
                 '---',
-                {opcode: 'formatFixed', blockType: BlockType.REPORTER, text: '\u6570\u5024 [VALUE] \u3092\u5c0f\u6570\u70b9\u4ee5\u4e0b [DIGITS] \u6841\u3067\u8868\u793a', arguments: {VALUE: {type: ArgumentType.NUMBER, defaultValue: 25.376}, DIGITS: {type: ArgumentType.NUMBER, defaultValue: 2}}},
+                {
+                    opcode: 'formatFixed',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.formatFixed',
+                        default: 'format number [VALUE] with [DIGITS] decimal places',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        VALUE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 25.376
+                        },
+                        DIGITS: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 2
+                        }
+                    }
+                },
                 '---',
-                {opcode: 'left', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の左から [COUNT] 文字を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABC富山県'}, COUNT: {type: ArgumentType.NUMBER, defaultValue: 3}}},
-                {opcode: 'right', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の右から [COUNT] 文字を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABC富山県'}, COUNT: {type: ArgumentType.NUMBER, defaultValue: 3}}},
-                {opcode: 'length', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の文字数', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABC富山県'}}},
-                {opcode: 'fromPosition', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の左から [START] 文字目以降を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: '2026/08/01'}, START: {type: ArgumentType.NUMBER, defaultValue: 6}}},
-                {opcode: 'substring', blockType: BlockType.REPORTER, text: '文字列 [TEXT] の左から [START] 文字目から [COUNT] 文字を取り出す', arguments: {TEXT: {type: ArgumentType.STRING, defaultValue: 'ABCDEFG'}, START: {type: ArgumentType.NUMBER, defaultValue: 3}, COUNT: {type: ArgumentType.NUMBER, defaultValue: 2}}},
-                {opcode: 'joinWith', blockType: BlockType.REPORTER, text: '文字列 [A] と [B] を [SEP] でつなぐ', arguments: {A: {type: ArgumentType.STRING, defaultValue: '25.6'}, B: {type: ArgumentType.STRING, defaultValue: '60'}, SEP: {type: ArgumentType.STRING, defaultValue: ','}}}
+                {
+                    opcode: 'left',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.left',
+                        default: 'first [COUNT] characters of [TEXT]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'ABC富山県'
+                        },
+                        COUNT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 3
+                        }
+                    }
+                },
+                {
+                    opcode: 'right',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.right',
+                        default: 'last [COUNT] characters of [TEXT]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'ABC富山県'
+                        },
+                        COUNT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 3
+                        }
+                    }
+                },
+                {
+                    opcode: 'length',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.length',
+                        default: 'length of [TEXT]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'ABC富山県'
+                        }
+                    }
+                },
+                {
+                    opcode: 'fromPosition',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.fromPosition',
+                        default: 'characters of [TEXT] from position [START] to the end',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '2026/08/01'
+                        },
+                        START: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 6
+                        }
+                    }
+                },
+                {
+                    opcode: 'substring',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.substring',
+                        default: '[COUNT] characters of [TEXT] starting at position [START]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'ABCDEFG'
+                        },
+                        START: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 3
+                        },
+                        COUNT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 2
+                        }
+                    }
+                },
+                {
+                    opcode: 'joinWith',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudata.joinWith',
+                        default: 'join [A] and [B] with [SEP]',
+                        description: 'Data Processing block'
+                    }),
+                    arguments: {
+                        A: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '25.6'
+                        },
+                        B: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '60'
+                        },
+                        SEP: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ','
+                        }
+                    }
+                }
             ]
         };
     }

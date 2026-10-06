@@ -1,0 +1,1051 @@
+{
+    "specs": {
+        "esp32educonnection": {
+            "name": "ESP32 Connection",
+            "blocks": {
+                "connect": "connect to ESP32",
+                "disconnect": "disconnect from ESP32",
+                "isConnected": "ESP32 connected?",
+                "refresh": "refresh ESP32 status",
+                "status": "ESP32 status",
+                "mac": "ESP32 MAC address",
+                "channel": "ESP32 Wi-Fi channel"
+            },
+            "card": "Add this extension first to connect to ESP32 using USB/Web Serial."
+        },
+        "esp32edugpio": {
+            "name": "ESP32 GPIO",
+            "blocks": {
+                "mode": "set GPIO [PIN] mode to [MODE]",
+                "write": "set GPIO [PIN] to [STATE]",
+                "pwmWrite": "set PWM on GPIO [PIN] to [PERCENT] %",
+                "pwmStop": "stop PWM on GPIO [PIN]",
+                "read": "digital input from GPIO [PIN]"
+            },
+            "menus": {
+                "OUTPUT": "output",
+                "INPUT": "input",
+                "INPUT_PULLUP": "input (pull-up)",
+                "INPUT_PULLDOWN": "input (pull-down)"
+            },
+            "card": "Read and write digital GPIO signals."
+        },
+        "esp32edudht": {
+            "name": "ESP32 DHT",
+            "blocks": {
+                "init": "initialize [TYPE] on GPIO [PIN]",
+                "temp": "DHT temperature (°C)",
+                "humi": "DHT humidity (%)",
+                "status": "DHT status"
+            },
+            "card": "Read temperature and humidity from DHT11/DHT22 sensors."
+        },
+        "esp32eduoled": {
+            "name": "ESP32 OLED",
+            "blocks": {
+                "init": "initialize OLED",
+                "clear": "clear OLED display",
+                "fillBlack": "fill OLED rectangle at X [X] Y [Y] width [W] height [H] with black",
+                "cursor": "set OLED cursor to X [X] Y [Y]",
+                "size": "set OLED text size to [SIZE]",
+                "text": "display [TEXT] on OLED",
+                "test": "test OLED display",
+                "status": "OLED status",
+                "ack": "last OLED response"
+            },
+            "card": "Display text and clear selected areas on an SSD1306 OLED."
+        },
+        "esp32eduespnow": {
+            "name": "ESP32 ESP-NOW",
+            "blocks": {
+                "setChannel": "set ESP-NOW channel to [CHANNEL]",
+                "channel": "ESP-NOW channel",
+                "send": "send [MESSAGE] to MAC address [MAC]",
+                "received": "data received via ESP-NOW",
+                "hasNew": "new ESP-NOW data received?",
+                "result": "ESP-NOW send result"
+            },
+            "card": "Send and receive text using ESP-NOW. Leave the MAC address blank to broadcast."
+        },
+        "esp32eduservo": {
+            "name": "ESP32 Servo",
+            "blocks": {
+                "attach": "attach servo to GPIO [PIN]",
+                "angle": "set servo angle to [ANGLE] degrees",
+                "detach": "detach servo"
+            },
+            "card": "Control servo motors such as the SG90 using GPIO."
+        },
+        "esp32eduultrasonic": {
+            "name": "ESP32 Ultrasonic",
+            "blocks": {
+                "attach": "attach ultrasonic sensor to TRIG [TRIG] ECHO [ECHO]",
+                "distance": "ultrasonic sensor distance (cm)"
+            },
+            "card": "Measure distance using an HC-SR04 ultrasonic sensor."
+        },
+        "esp32eduenvironment": {
+            "name": "ESP32 Environmental Indices",
+            "blocks": {
+                "index": "calculate [INDEX] from temperature [TEMP] °C and humidity [HUM] %"
+            },
+            "menus": {
+                "DI": "Discomfort Index (DI)",
+                "HEAT_INDEX": "Heat Index",
+                "HUMIDEX": "Humidex",
+                "DEW_POINT": "Dew Point (Td)",
+                "ABS_HUM": "Absolute Humidity (AH)",
+                "WET_BULB": "Wet-Bulb Temperature (Tw)",
+                "VPD": "Vapor Pressure Deficit (VPD)",
+                "VP": "Vapor Pressure (VP)",
+                "THI": "Temperature-Humidity Index (THI)",
+                "WBGT": "Estimated WBGT (simplified)"
+            },
+            "card": "Calculate 10 environmental indices from temperature and humidity."
+        },
+        "esp32edudata": {
+            "name": "Data Processing",
+            "blocks": {
+                "splitCsv": "split CSV data [CSV]",
+                "csvText": "text of CSV item [INDEX]",
+                "csvNumber": "number of CSV item [INDEX]",
+                "csvCount": "number of CSV items",
+                "csvSucceeded": "CSV split successful?",
+                "formatFixed": "format number [VALUE] with [DIGITS] decimal places",
+                "left": "first [COUNT] characters of [TEXT]",
+                "right": "last [COUNT] characters of [TEXT]",
+                "length": "length of [TEXT]",
+                "fromPosition": "characters of [TEXT] from position [START] to the end",
+                "substring": "[COUNT] characters of [TEXT] starting at position [START]",
+                "joinWith": "join [A] and [B] with [SEP]"
+            },
+            "card": "Split CSV data, extract parts of text, and join strings."
+        }
+    },
+    "baseline": {
+        "esp32educonnection": {
+            "id": "esp32educonnection",
+            "name": "ESP32 接続",
+            "color1": "#4C97FF",
+            "color2": "#3373CC",
+            "color3": "#2E64A1",
+            "blocks": [
+                {
+                    "opcode": "connect",
+                    "blockType": "command",
+                    "text": "ESP32に接続"
+                },
+                {
+                    "opcode": "disconnect",
+                    "blockType": "command",
+                    "text": "ESP32から切断"
+                },
+                {
+                    "opcode": "isConnected",
+                    "blockType": "Boolean",
+                    "text": "ESP32は接続済み？"
+                },
+                {
+                    "opcode": "refresh",
+                    "blockType": "command",
+                    "text": "ESP32の状態を更新"
+                },
+                {
+                    "opcode": "status",
+                    "blockType": "reporter",
+                    "text": "ESP32の状態"
+                },
+                {
+                    "opcode": "mac",
+                    "blockType": "reporter",
+                    "text": "ESP32のMACアドレス"
+                },
+                {
+                    "opcode": "channel",
+                    "blockType": "reporter",
+                    "text": "ESP32のWi-Fiチャンネル"
+                }
+            ]
+        },
+        "esp32edugpio": {
+            "id": "esp32edugpio",
+            "name": "ESP32 GPIO",
+            "color1": "#FFAB19",
+            "color2": "#CF8B17",
+            "color3": "#A66F12",
+            "blocks": [
+                {
+                    "opcode": "mode",
+                    "blockType": "command",
+                    "text": "GPIO [PIN] を [MODE] に設定",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pins",
+                            "defaultValue": "23"
+                        },
+                        "MODE": {
+                            "type": "string",
+                            "menu": "modes",
+                            "defaultValue": "OUTPUT"
+                        }
+                    }
+                },
+                {
+                    "opcode": "write",
+                    "blockType": "command",
+                    "text": "GPIO [PIN] に [STATE] を出力",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pins",
+                            "defaultValue": "23"
+                        },
+                        "STATE": {
+                            "type": "string",
+                            "menu": "states",
+                            "defaultValue": "HIGH"
+                        }
+                    }
+                },
+                {
+                    "opcode": "pwmWrite",
+                    "blockType": "command",
+                    "text": "GPIO [PIN] のPWM出力を [PERCENT] % にする",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pwmPins",
+                            "defaultValue": "23"
+                        },
+                        "PERCENT": {
+                            "type": "number",
+                            "defaultValue": 50
+                        }
+                    }
+                },
+                {
+                    "opcode": "pwmStop",
+                    "blockType": "command",
+                    "text": "GPIO [PIN] のPWM出力を停止する",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pwmPins",
+                            "defaultValue": "23"
+                        }
+                    }
+                },
+                {
+                    "opcode": "read",
+                    "blockType": "reporter",
+                    "text": "GPIO [PIN] のデジタル入力",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pins",
+                            "defaultValue": "23"
+                        }
+                    }
+                }
+            ],
+            "menus": {
+                "pins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "2",
+                        "4",
+                        "5",
+                        "12",
+                        "13",
+                        "14",
+                        "15",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33",
+                        "34",
+                        "35",
+                        "36",
+                        "39"
+                    ]
+                },
+                "pwmPins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "13",
+                        "14",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33"
+                    ]
+                },
+                "modes": {
+                    "acceptReporters": false,
+                    "items": [
+                        {
+                            "text": "出力",
+                            "value": "OUTPUT"
+                        },
+                        {
+                            "text": "入力",
+                            "value": "INPUT"
+                        },
+                        {
+                            "text": "入力（プルアップ）",
+                            "value": "INPUT_PULLUP"
+                        },
+                        {
+                            "text": "入力（プルダウン）",
+                            "value": "INPUT_PULLDOWN"
+                        }
+                    ]
+                },
+                "states": {
+                    "acceptReporters": false,
+                    "items": [
+                        "HIGH",
+                        "LOW"
+                    ]
+                }
+            }
+        },
+        "esp32edudht": {
+            "id": "esp32edudht",
+            "name": "ESP32 DHT",
+            "color1": "#5CB1D6",
+            "color2": "#3E8FB0",
+            "color3": "#32718C",
+            "blocks": [
+                {
+                    "opcode": "init",
+                    "blockType": "command",
+                    "text": "[TYPE] を GPIO [PIN] で初期化",
+                    "arguments": {
+                        "TYPE": {
+                            "type": "string",
+                            "menu": "types",
+                            "defaultValue": "DHT22"
+                        },
+                        "PIN": {
+                            "type": "string",
+                            "menu": "pins",
+                            "defaultValue": "25"
+                        }
+                    }
+                },
+                {
+                    "opcode": "temp",
+                    "blockType": "reporter",
+                    "text": "DHT 温度（℃）"
+                },
+                {
+                    "opcode": "humi",
+                    "blockType": "reporter",
+                    "text": "DHT 湿度（％）"
+                },
+                {
+                    "opcode": "status",
+                    "blockType": "reporter",
+                    "text": "DHTの状態"
+                }
+            ],
+            "menus": {
+                "types": {
+                    "acceptReporters": false,
+                    "items": [
+                        "DHT11",
+                        "DHT22"
+                    ]
+                },
+                "pins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "2",
+                        "4",
+                        "5",
+                        "12",
+                        "13",
+                        "14",
+                        "15",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33"
+                    ]
+                }
+            }
+        },
+        "esp32eduoled": {
+            "id": "esp32eduoled",
+            "name": "ESP32 OLED",
+            "color1": "#9966FF",
+            "color2": "#774DCB",
+            "color3": "#5E3DA3",
+            "blocks": [
+                {
+                    "opcode": "init",
+                    "blockType": "command",
+                    "text": "OLEDを初期化"
+                },
+                {
+                    "opcode": "clear",
+                    "blockType": "command",
+                    "text": "OLED画面を消去"
+                },
+                {
+                    "opcode": "fillBlack",
+                    "blockType": "command",
+                    "text": "OLEDの X [X] Y [Y] 幅 [W] 高さ [H] を黒で塗りつぶす",
+                    "arguments": {
+                        "X": {
+                            "type": "number",
+                            "defaultValue": 0
+                        },
+                        "Y": {
+                            "type": "number",
+                            "defaultValue": 0
+                        },
+                        "W": {
+                            "type": "number",
+                            "defaultValue": 60
+                        },
+                        "H": {
+                            "type": "number",
+                            "defaultValue": 12
+                        }
+                    }
+                },
+                {
+                    "opcode": "cursor",
+                    "blockType": "command",
+                    "text": "OLEDカーソルを X [X] Y [Y] に設定",
+                    "arguments": {
+                        "X": {
+                            "type": "number",
+                            "defaultValue": 0
+                        },
+                        "Y": {
+                            "type": "number",
+                            "defaultValue": 0
+                        }
+                    }
+                },
+                {
+                    "opcode": "size",
+                    "blockType": "command",
+                    "text": "OLED文字サイズを [SIZE] に設定",
+                    "arguments": {
+                        "SIZE": {
+                            "type": "number",
+                            "defaultValue": 1
+                        }
+                    }
+                },
+                {
+                    "opcode": "text",
+                    "blockType": "command",
+                    "text": "OLEDに [TEXT] を表示",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "Hello"
+                        }
+                    }
+                },
+                {
+                    "opcode": "test",
+                    "blockType": "command",
+                    "text": "OLED表示テスト"
+                },
+                {
+                    "opcode": "status",
+                    "blockType": "reporter",
+                    "text": "OLEDの状態"
+                },
+                {
+                    "opcode": "ack",
+                    "blockType": "reporter",
+                    "text": "OLED最後の応答"
+                }
+            ]
+        },
+        "esp32eduespnow": {
+            "id": "esp32eduespnow",
+            "name": "ESP32 ESP-NOW",
+            "color1": "#0FBD8C",
+            "color2": "#0B8E69",
+            "color3": "#087052",
+            "blocks": [
+                {
+                    "opcode": "setChannel",
+                    "blockType": "command",
+                    "text": "ESP-NOW チャンネルを [CHANNEL] にする",
+                    "arguments": {
+                        "CHANNEL": {
+                            "type": "string",
+                            "menu": "channels",
+                            "defaultValue": "1"
+                        }
+                    }
+                },
+                {
+                    "opcode": "channel",
+                    "blockType": "reporter",
+                    "text": "ESP-NOW チャンネル"
+                },
+                {
+                    "opcode": "send",
+                    "blockType": "command",
+                    "text": "送信先MAC [MAC] に [MESSAGE] を送信",
+                    "arguments": {
+                        "MAC": {
+                            "type": "string",
+                            "defaultValue": ""
+                        },
+                        "MESSAGE": {
+                            "type": "string",
+                            "defaultValue": "こんにちは"
+                        }
+                    }
+                },
+                {
+                    "opcode": "received",
+                    "blockType": "reporter",
+                    "text": "ESP-NOWで受信したデータ"
+                },
+                {
+                    "opcode": "hasNew",
+                    "blockType": "Boolean",
+                    "text": "ESP-NOWの新しいデータを受信した？"
+                },
+                {
+                    "opcode": "result",
+                    "blockType": "reporter",
+                    "text": "ESP-NOWの送信結果"
+                }
+            ],
+            "menus": {
+                "channels": {
+                    "acceptReporters": false,
+                    "items": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
+                        "13"
+                    ]
+                }
+            }
+        },
+        "esp32eduservo": {
+            "id": "esp32eduservo",
+            "name": "ESP32 Servo",
+            "color1": "#FF6680",
+            "color2": "#E64D68",
+            "color3": "#CC3D58",
+            "blocks": [
+                {
+                    "opcode": "attach",
+                    "blockType": "command",
+                    "text": "サーボを GPIO [PIN] に接続",
+                    "arguments": {
+                        "PIN": {
+                            "type": "string",
+                            "menu": "servoPins",
+                            "defaultValue": "13"
+                        }
+                    }
+                },
+                {
+                    "opcode": "angle",
+                    "blockType": "command",
+                    "text": "サーボの角度を [ANGLE] 度にする",
+                    "arguments": {
+                        "ANGLE": {
+                            "type": "number",
+                            "defaultValue": 90
+                        }
+                    }
+                },
+                {
+                    "opcode": "detach",
+                    "blockType": "command",
+                    "text": "サーボを切断する"
+                }
+            ],
+            "menus": {
+                "servoPins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "13",
+                        "14",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33"
+                    ]
+                }
+            }
+        },
+        "esp32eduultrasonic": {
+            "id": "esp32eduultrasonic",
+            "name": "ESP32 超音波",
+            "color1": "#4C97FF",
+            "color2": "#3373CC",
+            "color3": "#285AA3",
+            "blocks": [
+                {
+                    "opcode": "attach",
+                    "blockType": "command",
+                    "text": "超音波センサを TRIG [TRIG] ECHO [ECHO] に接続",
+                    "arguments": {
+                        "TRIG": {
+                            "type": "string",
+                            "menu": "trigPins",
+                            "defaultValue": "26"
+                        },
+                        "ECHO": {
+                            "type": "string",
+                            "menu": "echoPins",
+                            "defaultValue": "34"
+                        }
+                    }
+                },
+                {
+                    "opcode": "distance",
+                    "blockType": "reporter",
+                    "text": "超音波センサの距離（cm）"
+                }
+            ],
+            "menus": {
+                "trigPins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "13",
+                        "14",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33"
+                    ]
+                },
+                "echoPins": {
+                    "acceptReporters": false,
+                    "items": [
+                        "13",
+                        "14",
+                        "16",
+                        "17",
+                        "18",
+                        "19",
+                        "21",
+                        "22",
+                        "23",
+                        "25",
+                        "26",
+                        "27",
+                        "32",
+                        "33",
+                        "34",
+                        "35",
+                        "36",
+                        "39"
+                    ]
+                }
+            }
+        },
+        "esp32eduenvironment": {
+            "id": "esp32eduenvironment",
+            "name": "ESP32 環境指数",
+            "color1": "#2EAF7D",
+            "color2": "#23875F",
+            "color3": "#1A684A",
+            "blocks": [
+                {
+                    "opcode": "index",
+                    "blockType": "reporter",
+                    "text": "温度 [TEMP] ℃ 湿度 [HUM] ％ から [INDEX] を計算",
+                    "arguments": {
+                        "TEMP": {
+                            "type": "number",
+                            "defaultValue": 25
+                        },
+                        "HUM": {
+                            "type": "number",
+                            "defaultValue": 60
+                        },
+                        "INDEX": {
+                            "type": "string",
+                            "menu": "indices",
+                            "defaultValue": "WBGT"
+                        }
+                    }
+                },
+                {
+                    "opcode": "level",
+                    "blockType": "reporter",
+                    "text": "WBGT [WBGT] の警戒レベル",
+                    "hideFromPalette": true,
+                    "arguments": {
+                        "WBGT": {
+                            "type": "number",
+                            "defaultValue": 25
+                        }
+                    }
+                }
+            ],
+            "menus": {
+                "indices": {
+                    "acceptReporters": false,
+                    "items": [
+                        {
+                            "text": "不快指数 DI",
+                            "value": "DI"
+                        },
+                        {
+                            "text": "Heat Index",
+                            "value": "HEAT_INDEX"
+                        },
+                        {
+                            "text": "Humidex",
+                            "value": "HUMIDEX"
+                        },
+                        {
+                            "text": "露点温度 Td",
+                            "value": "DEW_POINT"
+                        },
+                        {
+                            "text": "絶対湿度 AH",
+                            "value": "ABS_HUM"
+                        },
+                        {
+                            "text": "湿球温度 Tw",
+                            "value": "WET_BULB"
+                        },
+                        {
+                            "text": "VPD（飽差）",
+                            "value": "VPD"
+                        },
+                        {
+                            "text": "水蒸気圧 VP",
+                            "value": "VP"
+                        },
+                        {
+                            "text": "THI（温湿度指数）",
+                            "value": "THI"
+                        },
+                        {
+                            "text": "推定WBGT（簡易）",
+                            "value": "WBGT"
+                        }
+                    ]
+                }
+            }
+        },
+        "esp32edudata": {
+            "id": "esp32edudata",
+            "name": "データ処理",
+            "color1": "#FF8C1A",
+            "color2": "#D96F00",
+            "color3": "#B45B00",
+            "blocks": [
+                {
+                    "opcode": "splitCsv",
+                    "blockType": "command",
+                    "text": "CSVデータ [CSV] を分ける",
+                    "arguments": {
+                        "CSV": {
+                            "type": "string",
+                            "defaultValue": "25.6,60,28.3"
+                        }
+                    }
+                },
+                {
+                    "opcode": "csvText",
+                    "blockType": "reporter",
+                    "text": "CSVの [INDEX] 番目の文字",
+                    "arguments": {
+                        "INDEX": {
+                            "type": "number",
+                            "defaultValue": 1
+                        }
+                    }
+                },
+                {
+                    "opcode": "csvNumber",
+                    "blockType": "reporter",
+                    "text": "CSVの [INDEX] 番目の数値",
+                    "arguments": {
+                        "INDEX": {
+                            "type": "number",
+                            "defaultValue": 1
+                        }
+                    }
+                },
+                {
+                    "opcode": "csvCount",
+                    "blockType": "reporter",
+                    "text": "CSVの項目数"
+                },
+                {
+                    "opcode": "csvSucceeded",
+                    "blockType": "Boolean",
+                    "text": "CSVの分解は成功した？"
+                },
+                "---",
+                {
+                    "opcode": "formatFixed",
+                    "blockType": "reporter",
+                    "text": "数値 [VALUE] を小数点以下 [DIGITS] 桁で表示",
+                    "arguments": {
+                        "VALUE": {
+                            "type": "number",
+                            "defaultValue": 25.376
+                        },
+                        "DIGITS": {
+                            "type": "number",
+                            "defaultValue": 2
+                        }
+                    }
+                },
+                "---",
+                {
+                    "opcode": "left",
+                    "blockType": "reporter",
+                    "text": "文字列 [TEXT] の左から [COUNT] 文字を取り出す",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "ABC富山県"
+                        },
+                        "COUNT": {
+                            "type": "number",
+                            "defaultValue": 3
+                        }
+                    }
+                },
+                {
+                    "opcode": "right",
+                    "blockType": "reporter",
+                    "text": "文字列 [TEXT] の右から [COUNT] 文字を取り出す",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "ABC富山県"
+                        },
+                        "COUNT": {
+                            "type": "number",
+                            "defaultValue": 3
+                        }
+                    }
+                },
+                {
+                    "opcode": "length",
+                    "blockType": "reporter",
+                    "text": "文字列 [TEXT] の文字数",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "ABC富山県"
+                        }
+                    }
+                },
+                {
+                    "opcode": "fromPosition",
+                    "blockType": "reporter",
+                    "text": "文字列 [TEXT] の左から [START] 文字目以降を取り出す",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "2026/08/01"
+                        },
+                        "START": {
+                            "type": "number",
+                            "defaultValue": 6
+                        }
+                    }
+                },
+                {
+                    "opcode": "substring",
+                    "blockType": "reporter",
+                    "text": "文字列 [TEXT] の左から [START] 文字目から [COUNT] 文字を取り出す",
+                    "arguments": {
+                        "TEXT": {
+                            "type": "string",
+                            "defaultValue": "ABCDEFG"
+                        },
+                        "START": {
+                            "type": "number",
+                            "defaultValue": 3
+                        },
+                        "COUNT": {
+                            "type": "number",
+                            "defaultValue": 2
+                        }
+                    }
+                },
+                {
+                    "opcode": "joinWith",
+                    "blockType": "reporter",
+                    "text": "文字列 [A] と [B] を [SEP] でつなぐ",
+                    "arguments": {
+                        "A": {
+                            "type": "string",
+                            "defaultValue": "25.6"
+                        },
+                        "B": {
+                            "type": "string",
+                            "defaultValue": "60"
+                        },
+                        "SEP": {
+                            "type": "string",
+                            "defaultValue": ","
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "japanese": {
+        "esp32educonnection.name": "ESP32 接続",
+        "esp32educonnection.connect": "ESP32に接続",
+        "esp32educonnection.disconnect": "ESP32から切断",
+        "esp32educonnection.isConnected": "ESP32は接続済み？",
+        "esp32educonnection.refresh": "ESP32の状態を更新",
+        "esp32educonnection.status": "ESP32の状態",
+        "esp32educonnection.mac": "ESP32のMACアドレス",
+        "esp32educonnection.channel": "ESP32のWi-Fiチャンネル",
+        "gui.extension.esp32educonnection.name": "ESP32 接続",
+        "gui.extension.esp32educonnection.description": "最初に追加します。USB/Web SerialでESP32へ接続します。",
+        "esp32edugpio.name": "ESP32 GPIO",
+        "esp32edugpio.mode": "GPIO [PIN] を [MODE] に設定",
+        "esp32edugpio.write": "GPIO [PIN] に [STATE] を出力",
+        "esp32edugpio.pwmWrite": "GPIO [PIN] のPWM出力を [PERCENT] % にする",
+        "esp32edugpio.pwmStop": "GPIO [PIN] のPWM出力を停止する",
+        "esp32edugpio.read": "GPIO [PIN] のデジタル入力",
+        "esp32edugpio.menu.OUTPUT": "出力",
+        "esp32edugpio.menu.INPUT": "入力",
+        "esp32edugpio.menu.INPUT_PULLUP": "入力（プルアップ）",
+        "esp32edugpio.menu.INPUT_PULLDOWN": "入力（プルダウン）",
+        "gui.extension.esp32edugpio.name": "ESP32 GPIO",
+        "gui.extension.esp32edugpio.description": "GPIOのデジタル入出力を行います。",
+        "esp32edudht.name": "ESP32 DHT",
+        "esp32edudht.init": "[TYPE] を GPIO [PIN] で初期化",
+        "esp32edudht.temp": "DHT 温度（℃）",
+        "esp32edudht.humi": "DHT 湿度（％）",
+        "esp32edudht.status": "DHTの状態",
+        "gui.extension.esp32edudht.name": "ESP32 DHT",
+        "gui.extension.esp32edudht.description": "DHT11/DHT22の温度・湿度を取得します。",
+        "esp32eduoled.name": "ESP32 OLED",
+        "esp32eduoled.init": "OLEDを初期化",
+        "esp32eduoled.clear": "OLED画面を消去",
+        "esp32eduoled.fillBlack": "OLEDの X [X] Y [Y] 幅 [W] 高さ [H] を黒で塗りつぶす",
+        "esp32eduoled.cursor": "OLEDカーソルを X [X] Y [Y] に設定",
+        "esp32eduoled.size": "OLED文字サイズを [SIZE] に設定",
+        "esp32eduoled.text": "OLEDに [TEXT] を表示",
+        "esp32eduoled.test": "OLED表示テスト",
+        "esp32eduoled.status": "OLEDの状態",
+        "esp32eduoled.ack": "OLED最後の応答",
+        "gui.extension.esp32eduoled.name": "ESP32 OLED",
+        "gui.extension.esp32eduoled.description": "SSD1306 OLEDへ文字表示・部分消去を行います。",
+        "esp32eduespnow.name": "ESP32 ESP-NOW",
+        "esp32eduespnow.setChannel": "ESP-NOW チャンネルを [CHANNEL] にする",
+        "esp32eduespnow.channel": "ESP-NOW チャンネル",
+        "esp32eduespnow.send": "送信先MAC [MAC] に [MESSAGE] を送信",
+        "esp32eduespnow.received": "ESP-NOWで受信したデータ",
+        "esp32eduespnow.hasNew": "ESP-NOWの新しいデータを受信した？",
+        "esp32eduespnow.result": "ESP-NOWの送信結果",
+        "gui.extension.esp32eduespnow.name": "ESP32 ESP-NOW",
+        "gui.extension.esp32eduespnow.description": "ESP-NOWで文字列を送受信します。MAC空欄はブロードキャストです。",
+        "esp32eduservo.name": "ESP32 Servo",
+        "esp32eduservo.attach": "サーボを GPIO [PIN] に接続",
+        "esp32eduservo.angle": "サーボの角度を [ANGLE] 度にする",
+        "esp32eduservo.detach": "サーボを切断する",
+        "gui.extension.esp32eduservo.name": "ESP32 Servo",
+        "gui.extension.esp32eduservo.description": "SG90などのサーボモーターをGPIOから制御します。",
+        "esp32eduultrasonic.name": "ESP32 超音波",
+        "esp32eduultrasonic.attach": "超音波センサを TRIG [TRIG] ECHO [ECHO] に接続",
+        "esp32eduultrasonic.distance": "超音波センサの距離（cm）",
+        "gui.extension.esp32eduultrasonic.name": "ESP32 超音波",
+        "gui.extension.esp32eduultrasonic.description": "HC-SR04超音波センサで距離を測定します。",
+        "esp32eduenvironment.name": "ESP32 環境指数",
+        "esp32eduenvironment.index": "温度 [TEMP] ℃ 湿度 [HUM] ％ から [INDEX] を計算",
+        "esp32eduenvironment.menu.DI": "不快指数 DI",
+        "esp32eduenvironment.menu.HEAT_INDEX": "Heat Index",
+        "esp32eduenvironment.menu.HUMIDEX": "Humidex",
+        "esp32eduenvironment.menu.DEW_POINT": "露点温度 Td",
+        "esp32eduenvironment.menu.ABS_HUM": "絶対湿度 AH",
+        "esp32eduenvironment.menu.WET_BULB": "湿球温度 Tw",
+        "esp32eduenvironment.menu.VPD": "VPD（飽差）",
+        "esp32eduenvironment.menu.VP": "水蒸気圧 VP",
+        "esp32eduenvironment.menu.THI": "THI（温湿度指数）",
+        "esp32eduenvironment.menu.WBGT": "推定WBGT（簡易）",
+        "gui.extension.esp32eduenvironment.name": "ESP32 環境指数",
+        "gui.extension.esp32eduenvironment.description": "温度・湿度から10種類の環境指数を計算します。",
+        "esp32edudata.name": "データ処理",
+        "esp32edudata.splitCsv": "CSVデータ [CSV] を分ける",
+        "esp32edudata.csvText": "CSVの [INDEX] 番目の文字",
+        "esp32edudata.csvNumber": "CSVの [INDEX] 番目の数値",
+        "esp32edudata.csvCount": "CSVの項目数",
+        "esp32edudata.csvSucceeded": "CSVの分解は成功した？",
+        "esp32edudata.formatFixed": "数値 [VALUE] を小数点以下 [DIGITS] 桁で表示",
+        "esp32edudata.left": "文字列 [TEXT] の左から [COUNT] 文字を取り出す",
+        "esp32edudata.right": "文字列 [TEXT] の右から [COUNT] 文字を取り出す",
+        "esp32edudata.length": "文字列 [TEXT] の文字数",
+        "esp32edudata.fromPosition": "文字列 [TEXT] の左から [START] 文字目以降を取り出す",
+        "esp32edudata.substring": "文字列 [TEXT] の左から [START] 文字目から [COUNT] 文字を取り出す",
+        "esp32edudata.joinWith": "文字列 [A] と [B] を [SEP] でつなぐ",
+        "gui.extension.esp32edudata.name": "データ処理",
+        "gui.extension.esp32edudata.description": "CSV分解と文字列の切り出し・結合を行います。"
+    }
+}

@@ -1,14 +1,25 @@
 import {isRtl} from 'scratch-l10n';
 import editorMessages from 'scratch-l10n/locales/editor-msgs';
+import esp32JapaneseMessages from '../lib/esp32-messages/ja.json';
 
 const UPDATE_LOCALES = 'scratch-gui/locales/UPDATE_LOCALES';
 const SELECT_LOCALE = 'scratch-gui/locales/SELECT_LOCALE';
 
+const addEsp32Messages = function (messagesByLocale) {
+    const messages = Object.assign({}, messagesByLocale);
+    if (Object.prototype.hasOwnProperty.call(messages, 'ja')) {
+        messages.ja = Object.assign({}, messages.ja, esp32JapaneseMessages);
+    }
+    return messages;
+};
+
+const defaultMessages = addEsp32Messages(editorMessages);
+
 const initialState = {
     isRtl: false,
     locale: 'en',
-    messagesByLocale: editorMessages,
-    messages: editorMessages.en
+    messagesByLocale: defaultMessages,
+    messages: defaultMessages.en
 };
 
 const reducer = function (state, action) {
@@ -43,7 +54,7 @@ const selectLocale = function (locale) {
 const setLocales = function (localesMessages) {
     return {
         type: UPDATE_LOCALES,
-        messagesByLocale: localesMessages
+        messagesByLocale: addEsp32Messages(localesMessages)
     };
 };
 const initLocale = function (currentState, locale) {

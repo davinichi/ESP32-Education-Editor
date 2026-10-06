@@ -17,18 +17,78 @@ class Scratch3ESP32ConnectionBlocks {
     getInfo () {
         return {
             id: 'esp32educonnection',
-            name: formatMessage({id: 'esp32educonnection.name', default: 'ESP32 接続', description: 'ESP32 connection extension name'}),
+            name: formatMessage({
+                id: 'esp32educonnection.name',
+                default: 'ESP32 Connection',
+                description: 'ESP32 connection extension name'
+            }),
             color1: '#4C97FF',
             color2: '#3373CC',
             color3: '#2E64A1',
             blocks: [
-                {opcode: 'connect', blockType: BlockType.COMMAND, text: 'ESP32に接続'},
-                {opcode: 'disconnect', blockType: BlockType.COMMAND, text: 'ESP32から切断'},
-                {opcode: 'isConnected', blockType: BlockType.BOOLEAN, text: 'ESP32は接続済み？'},
-                {opcode: 'refresh', blockType: BlockType.COMMAND, text: 'ESP32の状態を更新'},
-                {opcode: 'status', blockType: BlockType.REPORTER, text: 'ESP32の状態'},
-                {opcode: 'mac', blockType: BlockType.REPORTER, text: 'ESP32のMACアドレス'},
-                {opcode: 'channel', blockType: BlockType.REPORTER, text: 'ESP32のWi-Fiチャンネル'}
+                {
+                    opcode: 'connect',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32educonnection.connect',
+                        default: 'connect to ESP32',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'disconnect',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32educonnection.disconnect',
+                        default: 'disconnect from ESP32',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'isConnected',
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: 'esp32educonnection.isConnected',
+                        default: 'ESP32 connected?',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'refresh',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32educonnection.refresh',
+                        default: 'refresh ESP32 status',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'status',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32educonnection.status',
+                        default: 'ESP32 status',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'mac',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32educonnection.mac',
+                        default: 'ESP32 MAC address',
+                        description: 'ESP32 Connection block'
+                    })
+                },
+                {
+                    opcode: 'channel',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32educonnection.channel',
+                        default: 'ESP32 Wi-Fi channel',
+                        description: 'ESP32 Connection block'
+                    })
+                }
             ]
         };
     }

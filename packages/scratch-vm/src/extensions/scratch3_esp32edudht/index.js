@@ -35,22 +35,93 @@ class Scratch3ESP32DHTBlocks {
     getInfo () {
         return {
             id: 'esp32edudht',
-            name: formatMessage({id: 'esp32edudht.name', default: 'ESP32 DHT', description: 'ESP32 DHT extension name'}),
+            name: formatMessage({
+                id: 'esp32edudht.name',
+                default: 'ESP32 DHT',
+                description: 'ESP32 DHT extension name'
+            }),
             color1: '#5CB1D6',
             color2: '#3E8FB0',
             color3: '#32718C',
             blocks: [
-                {opcode: 'init', blockType: BlockType.COMMAND, text: '[TYPE] を GPIO [PIN] で初期化', arguments: {
-                    TYPE: {type: ArgumentType.STRING, menu: 'types', defaultValue: 'DHT22'},
-                    PIN: {type: ArgumentType.STRING, menu: 'pins', defaultValue: '25'}
-                }},
-                {opcode: 'temp', blockType: BlockType.REPORTER, text: 'DHT 温度（℃）'},
-                {opcode: 'humi', blockType: BlockType.REPORTER, text: 'DHT 湿度（％）'},
-                {opcode: 'status', blockType: BlockType.REPORTER, text: 'DHTの状態'}
+                {
+                    opcode: 'init',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32edudht.init',
+                        default: 'initialize [TYPE] on GPIO [PIN]',
+                        description: 'ESP32 DHT block'
+                    }),
+                    arguments: {
+                        TYPE: {
+                            type: ArgumentType.STRING,
+                            menu: 'types',
+                            defaultValue: 'DHT22'
+                        },
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu: 'pins',
+                            defaultValue: '25'
+                        }
+                    }
+                },
+                {
+                    opcode: 'temp',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudht.temp',
+                        default: 'DHT temperature (°C)',
+                        description: 'ESP32 DHT block'
+                    })
+                },
+                {
+                    opcode: 'humi',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudht.humi',
+                        default: 'DHT humidity (%)',
+                        description: 'ESP32 DHT block'
+                    })
+                },
+                {
+                    opcode: 'status',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32edudht.status',
+                        default: 'DHT status',
+                        description: 'ESP32 DHT block'
+                    })
+                }
             ],
             menus: {
-                types: {acceptReporters: false, items: ['DHT11', 'DHT22']},
-                pins: {acceptReporters: false, items: ['2','4','5','12','13','14','15','16','17','18','19','21','22','23','25','26','27','32','33']}
+                types: {
+                    acceptReporters: false,
+                    items: ['DHT11', 'DHT22']
+                },
+                pins: {
+                    acceptReporters: false,
+                    items: [
+                        '2',
+                        '4',
+                        '5',
+                        '12',
+                        '13',
+                        '14',
+                        '15',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '21',
+                        '22',
+                        '23',
+                        '25',
+                        '26',
+                        '27',
+                        '32',
+                        '33'
+                    ]
+                }
             }
         };
     }

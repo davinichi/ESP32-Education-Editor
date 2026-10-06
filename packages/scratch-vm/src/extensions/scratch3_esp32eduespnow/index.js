@@ -44,27 +44,91 @@ class Scratch3ESP32ESPNowBlocks {
     getInfo () {
         return {
             id: 'esp32eduespnow',
-            name: formatMessage({id: 'esp32eduespnow.name', default: 'ESP32 ESP-NOW', description: 'ESP32 ESP-NOW extension name'}),
+            name: formatMessage({
+                id: 'esp32eduespnow.name',
+                default: 'ESP32 ESP-NOW',
+                description: 'ESP32 ESP-NOW extension name'
+            }),
             color1: '#0FBD8C',
             color2: '#0B8E69',
             color3: '#087052',
             blocks: [
-                {opcode: 'setChannel', blockType: BlockType.COMMAND, text: 'ESP-NOW チャンネルを [CHANNEL] にする', arguments: {
-                    CHANNEL: {type: ArgumentType.STRING, menu: 'channels', defaultValue: '1'}
-                }},
-                {opcode: 'channel', blockType: BlockType.REPORTER, text: 'ESP-NOW チャンネル'},
-                {opcode: 'send', blockType: BlockType.COMMAND, text: '送信先MAC [MAC] に [MESSAGE] を送信', arguments: {
-                    MAC: {type: ArgumentType.STRING, defaultValue: ''},
-                    MESSAGE: {type: ArgumentType.STRING, defaultValue: 'こんにちは'}
-                }},
-                {opcode: 'received', blockType: BlockType.REPORTER, text: 'ESP-NOWで受信したデータ'},
-                {opcode: 'hasNew', blockType: BlockType.BOOLEAN, text: 'ESP-NOWの新しいデータを受信した？'},
-                {opcode: 'result', blockType: BlockType.REPORTER, text: 'ESP-NOWの送信結果'}
+                {
+                    opcode: 'setChannel',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.setChannel',
+                        default: 'set ESP-NOW channel to [CHANNEL]',
+                        description: 'ESP32 ESP-NOW block'
+                    }),
+                    arguments: {
+                        CHANNEL: {
+                            type: ArgumentType.STRING,
+                            menu: 'channels',
+                            defaultValue: '1'
+                        }
+                    }
+                },
+                {
+                    opcode: 'channel',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.channel',
+                        default: 'ESP-NOW channel',
+                        description: 'ESP32 ESP-NOW block'
+                    })
+                },
+                {
+                    opcode: 'send',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.send',
+                        default: 'send [MESSAGE] to MAC address [MAC]',
+                        description: 'ESP32 ESP-NOW block'
+                    }),
+                    arguments: {
+                        MAC: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        },
+                        MESSAGE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'こんにちは'
+                        }
+                    }
+                },
+                {
+                    opcode: 'received',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.received',
+                        default: 'data received via ESP-NOW',
+                        description: 'ESP32 ESP-NOW block'
+                    })
+                },
+                {
+                    opcode: 'hasNew',
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.hasNew',
+                        default: 'new ESP-NOW data received?',
+                        description: 'ESP32 ESP-NOW block'
+                    })
+                },
+                {
+                    opcode: 'result',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32eduespnow.result',
+                        default: 'ESP-NOW send result',
+                        description: 'ESP32 ESP-NOW block'
+                    })
+                }
             ],
             menus: {
                 channels: {
                     acceptReporters: false,
-                    items: ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+                    items: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
                 }
             }
         };

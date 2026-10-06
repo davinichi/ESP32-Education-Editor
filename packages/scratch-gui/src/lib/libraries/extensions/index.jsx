@@ -72,67 +72,184 @@ import esp32DataInsetIconURL from './esp32edudata/esp32edudata-small.svg';
 export default [
     // ESP32_EDUCATION_V02_CARD_BEGIN
     {
-        name: <FormattedMessage defaultMessage="ESP32 接続" description="ESP32 connection extension" id="gui.extension.esp32educonnection.name" />,
-        extensionId: 'esp32educonnection', collaborator: 'davinichi',
-        iconURL: esp32ConnectionIconURL, insetIconURL: esp32ConnectionInsetIconURL,
-        description: <FormattedMessage defaultMessage="最初に追加します。USB/Web SerialでESP32へ接続します。" description="ESP32 connection description" id="gui.extension.esp32educonnection.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 Connection"
+            description="ESP32 connection extension"
+            id="gui.extension.esp32educonnection.name"
+        />,
+        extensionId: 'esp32educonnection',
+        collaborator: 'davinichi',
+        iconURL: esp32ConnectionIconURL,
+        insetIconURL: esp32ConnectionInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Add this extension first to connect to ESP32 using USB/Web Serial."
+            description="ESP32 connection description"
+            id="gui.extension.esp32educonnection.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 GPIO" description="ESP32 GPIO extension" id="gui.extension.esp32edugpio.name" />,
-        extensionId: 'esp32edugpio', collaborator: 'davinichi',
-        iconURL: esp32GPIOIconURL, insetIconURL: esp32GPIOInsetIconURL,
-        description: <FormattedMessage defaultMessage="GPIOのデジタル入出力を行います。" description="ESP32 GPIO description" id="gui.extension.esp32edugpio.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 GPIO"
+            description="ESP32 GPIO extension"
+            id="gui.extension.esp32edugpio.name"
+        />,
+        extensionId: 'esp32edugpio',
+        collaborator: 'davinichi',
+        iconURL: esp32GPIOIconURL,
+        insetIconURL: esp32GPIOInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Read and write digital GPIO signals."
+            description="ESP32 GPIO description"
+            id="gui.extension.esp32edugpio.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 DHT" description="ESP32 DHT extension" id="gui.extension.esp32edudht.name" />,
-        extensionId: 'esp32edudht', collaborator: 'davinichi',
-        iconURL: esp32DHTIconURL, insetIconURL: esp32DHTInsetIconURL,
-        description: <FormattedMessage defaultMessage="DHT11/DHT22の温度・湿度を取得します。" description="ESP32 DHT description" id="gui.extension.esp32edudht.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 DHT"
+            description="ESP32 DHT extension"
+            id="gui.extension.esp32edudht.name"
+        />,
+        extensionId: 'esp32edudht',
+        collaborator: 'davinichi',
+        iconURL: esp32DHTIconURL,
+        insetIconURL: esp32DHTInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Read temperature and humidity from DHT11/DHT22 sensors."
+            description="ESP32 DHT description"
+            id="gui.extension.esp32edudht.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 OLED" description="ESP32 OLED extension" id="gui.extension.esp32eduoled.name" />,
-        extensionId: 'esp32eduoled', collaborator: 'davinichi',
-        iconURL: esp32OLEDIconURL, insetIconURL: esp32OLEDInsetIconURL,
-        description: <FormattedMessage defaultMessage="SSD1306 OLEDへ文字表示・部分消去を行います。" description="ESP32 OLED description" id="gui.extension.esp32eduoled.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 OLED"
+            description="ESP32 OLED extension"
+            id="gui.extension.esp32eduoled.name"
+        />,
+        extensionId: 'esp32eduoled',
+        collaborator: 'davinichi',
+        iconURL: esp32OLEDIconURL,
+        insetIconURL: esp32OLEDInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Display text and clear selected areas on an SSD1306 OLED."
+            description="ESP32 OLED description"
+            id="gui.extension.esp32eduoled.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 ESP-NOW" description="ESP32 ESP-NOW extension" id="gui.extension.esp32eduespnow.name" />,
-        extensionId: 'esp32eduespnow', collaborator: 'davinichi',
-        iconURL: esp32ESPNowIconURL, insetIconURL: esp32ESPNowInsetIconURL,
-        description: <FormattedMessage defaultMessage="ESP-NOWで文字列を送受信します。MAC空欄はブロードキャストです。" description="ESP32 ESP-NOW description" id="gui.extension.esp32eduespnow.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 ESP-NOW"
+            description="ESP32 ESP-NOW extension"
+            id="gui.extension.esp32eduespnow.name"
+        />,
+        extensionId: 'esp32eduespnow',
+        collaborator: 'davinichi',
+        iconURL: esp32ESPNowIconURL,
+        insetIconURL: esp32ESPNowInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Send and receive text using ESP-NOW. Leave the MAC address blank to broadcast."
+            description="ESP32 ESP-NOW description"
+            id="gui.extension.esp32eduespnow.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 Servo" description="ESP32 Servo extension" id="gui.extension.esp32eduservo.name" />,
-        extensionId: 'esp32eduservo', collaborator: 'davinichi',
-        iconURL: esp32ServoIconURL, insetIconURL: esp32ServoInsetIconURL,
-        description: <FormattedMessage defaultMessage="SG90などのサーボモーターをGPIOから制御します。" description="ESP32 Servo description" id="gui.extension.esp32eduservo.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 Servo"
+            description="ESP32 Servo extension"
+            id="gui.extension.esp32eduservo.name"
+        />,
+        extensionId: 'esp32eduservo',
+        collaborator: 'davinichi',
+        iconURL: esp32ServoIconURL,
+        insetIconURL: esp32ServoInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Control servo motors such as the SG90 using GPIO."
+            description="ESP32 Servo description"
+            id="gui.extension.esp32eduservo.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 超音波" description="ESP32 ultrasonic extension" id="gui.extension.esp32eduultrasonic.name" />,
-        extensionId: 'esp32eduultrasonic', collaborator: 'davinichi',
-        iconURL: esp32UltrasonicIconURL, insetIconURL: esp32UltrasonicInsetIconURL,
-        description: <FormattedMessage defaultMessage="HC-SR04超音波センサで距離を測定します。" description="ESP32 ultrasonic description" id="gui.extension.esp32eduultrasonic.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 Ultrasonic"
+            description="ESP32 ultrasonic extension"
+            id="gui.extension.esp32eduultrasonic.name"
+        />,
+        extensionId: 'esp32eduultrasonic',
+        collaborator: 'davinichi',
+        iconURL: esp32UltrasonicIconURL,
+        insetIconURL: esp32UltrasonicInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Measure distance using an HC-SR04 ultrasonic sensor."
+            description="ESP32 ultrasonic description"
+            id="gui.extension.esp32eduultrasonic.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="ESP32 環境指数" description="ESP32 environment extension" id="gui.extension.esp32eduenvironment.name" />,
-        extensionId: 'esp32eduenvironment', collaborator: 'davinichi',
-        iconURL: esp32EnvironmentIconURL, insetIconURL: esp32EnvironmentInsetIconURL,
-        description: <FormattedMessage defaultMessage="温度・湿度から10種類の環境指数を計算します。" description="ESP32 environment description" id="gui.extension.esp32eduenvironment.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="ESP32 Environmental Indices"
+            description="ESP32 environment extension"
+            id="gui.extension.esp32eduenvironment.name"
+        />,
+        extensionId: 'esp32eduenvironment',
+        collaborator: 'davinichi',
+        iconURL: esp32EnvironmentIconURL,
+        insetIconURL: esp32EnvironmentInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Calculate 10 environmental indices from temperature and humidity."
+            description="ESP32 environment description"
+            id="gui.extension.esp32eduenvironment.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     {
-        name: <FormattedMessage defaultMessage="データ処理" description="Data processing extension" id="gui.extension.esp32edudata.name" />,
-        extensionId: 'esp32edudata', collaborator: 'davinichi',
-        iconURL: esp32DataIconURL, insetIconURL: esp32DataInsetIconURL,
-        description: <FormattedMessage defaultMessage="CSV分解と文字列の切り出し・結合を行います。" description="Data processing description" id="gui.extension.esp32edudata.description" />,
-        featured: true, disabled: false, bluetoothRequired: false, internetConnectionRequired: false
+        name: <FormattedMessage
+            defaultMessage="Data Processing"
+            description="Data processing extension"
+            id="gui.extension.esp32edudata.name"
+        />,
+        extensionId: 'esp32edudata',
+        collaborator: 'davinichi',
+        iconURL: esp32DataIconURL,
+        insetIconURL: esp32DataInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Split CSV data, extract parts of text, and join strings."
+            description="Data processing description"
+            id="gui.extension.esp32edudata.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
     },
     // ESP32_EDUCATION_V02_CARD_END
     {

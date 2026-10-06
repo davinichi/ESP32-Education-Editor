@@ -28,7 +28,11 @@ class Scratch3ESP32ServoBlocks {
                 {
                     opcode: 'attach',
                     blockType: BlockType.COMMAND,
-                    text: 'サーボを GPIO [PIN] に接続',
+                    text: formatMessage({
+                        id: 'esp32eduservo.attach',
+                        default: 'attach servo to GPIO [PIN]',
+                        description: 'ESP32 Servo block'
+                    }),
                     arguments: {
                         PIN: {
                             type: ArgumentType.STRING,
@@ -40,7 +44,11 @@ class Scratch3ESP32ServoBlocks {
                 {
                     opcode: 'angle',
                     blockType: BlockType.COMMAND,
-                    text: 'サーボの角度を [ANGLE] 度にする',
+                    text: formatMessage({
+                        id: 'esp32eduservo.angle',
+                        default: 'set servo angle to [ANGLE] degrees',
+                        description: 'ESP32 Servo block'
+                    }),
                     arguments: {
                         ANGLE: {
                             type: ArgumentType.NUMBER,
@@ -51,15 +59,31 @@ class Scratch3ESP32ServoBlocks {
                 {
                     opcode: 'detach',
                     blockType: BlockType.COMMAND,
-                    text: 'サーボを切断する'
+                    text: formatMessage({
+                        id: 'esp32eduservo.detach',
+                        default: 'detach servo',
+                        description: 'ESP32 Servo block'
+                    })
                 }
             ],
             menus: {
                 servoPins: {
                     acceptReporters: false,
                     items: [
-                        '13','14','16','17','18','19',
-                        '21','22','23','25','26','27','32','33'
+                        '13',
+                        '14',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '21',
+                        '22',
+                        '23',
+                        '25',
+                        '26',
+                        '27',
+                        '32',
+                        '33'
                     ]
                 }
             }
