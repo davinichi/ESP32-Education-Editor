@@ -37,10 +37,10 @@ test('ESP32 cards follow Scratch locale changes with English defaults and Japane
 
 test('Japanese messages include VM labels on initialization and custom locale updates', () => {
     const state = initLocale(localesInitialState, 'ja');
-    expect(state.messages).toEqual({core: '日本語', ...fixture.japanese});
+    expect(state.messages).toMatchObject({core: '日本語', ...fixture.japanese});
     const custom = {en: {core: 'custom English'}, ja: {core: 'カスタム'}};
     const updated = reducer(state, setLocales(custom));
-    expect(updated.messages).toEqual({core: 'カスタム', ...fixture.japanese});
+    expect(updated.messages).toMatchObject({core: 'カスタム', ...fixture.japanese});
     expect(custom.ja).toEqual({core: 'カスタム'});
     expect(reducer(updated, selectLocale('en')).messages).toEqual(custom.en);
     const onlyEnglish = {en: {core: 'custom English'}};

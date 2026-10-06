@@ -433,7 +433,7 @@ class MenuBar extends React.Component {
                             onClick={this.handleClickFirmwareInstaller}
                         >
                             <FormattedMessage
-                                defaultMessage="ファームウェア書き込み"
+                                defaultMessage="Install Firmware"
                                 description="Menu bar button for opening the ESP32 firmware installer"
                                 id="gui.menuBar.firmwareInstaller"
                             />

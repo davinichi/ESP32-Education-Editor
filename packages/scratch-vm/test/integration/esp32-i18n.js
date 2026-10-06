@@ -60,7 +60,11 @@ test('ESP32 labels follow ja -> en -> ja without changing extension metadata', a
         const environment = vm.runtime.getBlocksXML().find(category => category.id === 'esp32eduenvironment');
         t.notMatch(environment.xml, 'type="esp32eduenvironment_level"');
     }
-    t.same(require('../../../scratch-gui/src/lib/esp32-messages/ja.json'), fixture.japanese);
+    const japanese = require('../../../scratch-gui/src/lib/esp32-messages/ja.json');
+    const extensionMessages = Object.fromEntries(Object.entries(japanese).filter(([id]) =>
+        id.startsWith('esp32') || id.startsWith('gui.extension.esp32')
+    ));
+    t.same(extensionMessages, fixture.japanese);
 });
 
 const makeProject = () => {

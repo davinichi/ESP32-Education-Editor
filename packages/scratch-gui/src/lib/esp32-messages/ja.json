@@ -71,6 +71,7 @@
     "esp32eduultrasonic.attach": "超音波センサを TRIG [TRIG] ECHO [ECHO] に接続",
     "esp32eduultrasonic.distance": "超音波センサの距離（cm）",
     "esp32eduultrasonic.name": "ESP32 超音波",
+    "gui.aria.fileMenu": "ファイルメニュー",
     "gui.extension.esp32educonnection.description": "最初に追加します。USB/Web SerialでESP32へ接続します。",
     "gui.extension.esp32educonnection.name": "ESP32 接続",
     "gui.extension.esp32edudata.description": "CSV分解と文字列の切り出し・結合を行います。",
@@ -88,5 +89,8 @@
     "gui.extension.esp32eduservo.description": "SG90などのサーボモーターをGPIOから制御します。",
     "gui.extension.esp32eduservo.name": "ESP32 Servo",
     "gui.extension.esp32eduultrasonic.description": "HC-SR04超音波センサで距離を測定します。",
-    "gui.extension.esp32eduultrasonic.name": "ESP32 超音波"
+    "gui.extension.esp32eduultrasonic.name": "ESP32 超音波",
+    "gui.menuBar.firmwareInstaller": "ファームウェア書き込み",
+    "gui.sharedMessages.loadFromComputerTitle": "コンピューターから読み込む",
+    "gui.sharedMessages.replaceProjectWarning": "現在のプロジェクトの内容を置き換えますか？"
 }
