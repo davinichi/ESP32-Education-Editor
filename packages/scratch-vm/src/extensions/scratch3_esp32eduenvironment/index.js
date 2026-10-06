@@ -19,9 +19,15 @@ class Scratch3ESP32EnvironmentBlocks {
                     HUM: {type: ArgumentType.NUMBER, defaultValue: 60},
                     INDEX: {type: ArgumentType.STRING, menu: 'indices', defaultValue: 'WBGT'}
                 }},
-                {opcode: 'level', blockType: BlockType.REPORTER, text: 'WBGT [WBGT] の警戒レベル', arguments: {
-                    WBGT: {type: ArgumentType.NUMBER, defaultValue: 25}
-                }}
+                {
+                    opcode: 'level',
+                    blockType: BlockType.REPORTER,
+                    text: 'WBGT [WBGT] の警戒レベル',
+                    hideFromPalette: true,
+                    arguments: {
+                        WBGT: {type: ArgumentType.NUMBER, defaultValue: 25}
+                    }
+                }
             ],
             menus: {
                 indices: {acceptReporters: false, items: [
