@@ -71,6 +71,7 @@ import prehistoricLogo from './prehistoric-logo.svg';
 import oldtimeyLogo from './oldtimey-logo.svg';
 
 import sharedMessages from '../../lib/shared-messages';
+import {aboutMessages, openAboutPage} from '../../lib/esp32-about';
 
 import {AccountMenuOptionsPropTypes} from '../../lib/account-menu-options';
 import AccountMenu from './account-menu.jsx';
@@ -159,6 +160,7 @@ class MenuBar extends React.Component {
         bindAll(this, [
             'handleClickNew',
             'handleClickFirmwareInstaller',
+            'handleClickESP32About',
             'handleClickShare',
             'handleSetMode',
             'handleKeyPress',
@@ -188,10 +190,13 @@ class MenuBar extends React.Component {
     }
     handleClickFirmwareInstaller () {
         window.open(
-            'https://davinichi.github.io/firmware/',
+            `https://davinichi.github.io/firmware/?lang=${this.props.intl.locale.startsWith('ja') ? 'ja' : 'en'}`,
             '_blank',
             'noopener,noreferrer'
         );
+    }
+    handleClickESP32About () {
+        openAboutPage(this.props.intl);
     }
     handleClickShare (waitForUpdate) {
         if (!this.props.isShared) {
@@ -324,15 +329,19 @@ class MenuBar extends React.Component {
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
                         <button
-                            aria-label={this.props.intl.formatMessage(ariaMessages.home)}
+                            aria-label={this.props.intl.formatMessage(this.props.showESP32About ?
+                                aboutMessages.title : ariaMessages.home)}
+                            title={this.props.showESP32About ?
+                                this.props.intl.formatMessage(aboutMessages.title) : null}
                             className={classNames(styles.menuBarItem)}
-                            onClick={this.props.onClickLogo}
+                            onClick={this.props.showESP32About ? this.handleClickESP32About : this.props.onClickLogo}
                         >
                             <img
                                 id="logo_img"
-                                alt="Scratch"
+                                alt={this.props.showESP32About ? 'ESP32 Education Editor' : 'Scratch'}
                                 className={classNames(styles.scratchLogo, {
-                                    [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
+                                    [styles.clickable]: this.props.showESP32About ||
+                                        typeof this.props.onClickLogo !== 'undefined'
                                 })}
                                 draggable={false}
                                 src={getScratchLogo(this.props.platform)}
@@ -671,6 +680,7 @@ MenuBar.propTypes = {
     ]),
     onClickLogin: PropTypes.func,
     onClickLogo: PropTypes.func,
+    showESP32About: PropTypes.bool,
     onClickMode: PropTypes.func,
     onClickNew: PropTypes.func,
     onClickRemix: PropTypes.func,

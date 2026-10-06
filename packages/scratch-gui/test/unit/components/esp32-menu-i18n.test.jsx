@@ -1,7 +1,4 @@
 import React from 'react';
-import fs from 'fs';
-import path from 'path';
-import {runInNewContext} from 'vm';
 import {act, fireEvent, render} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {Provider} from 'react-redux';
@@ -14,6 +11,7 @@ import {LoadingState} from '../../../src/reducers/project-state';
 import {DEFAULT_MODE} from '../../../src/lib/settings/color-mode';
 import {PLATFORM} from '../../../src/lib/platform';
 import reducer, {localesInitialState, selectLocale} from '../../../src/reducers/locales';
+import * as about from '../../../src/lib/esp32-about';
 
 jest.mock('scratch-l10n/locales/editor-msgs', () => ({
     en: {},
@@ -26,12 +24,10 @@ jest.mock('scratch-l10n/locales/editor-msgs', () => ({
     }
 }));
 
-const template = fs.readFileSync(path.resolve(__dirname, '../../../src/playground/index.ejs'), 'utf8');
-const brandScript = template.match(/<script>\s*(\(\(\) => \{[\s\S]*?)<\/script>/)[1];
-
 test('open File menu and firmware button follow ja -> en -> ja without changing actions', async () => {
     const vm = new VM();
     const open = jest.spyOn(window, 'open').mockImplementation(() => null);
+    const openAbout = jest.spyOn(about, 'openAboutPage').mockImplementation(() => null);
     const confirm = jest.fn(() => false);
     const upload = jest.fn();
     const onIntlError = jest.fn();
@@ -59,6 +55,7 @@ test('open File menu and firmware button follow ja -> en -> ja without changing 
             <Provider store={store}>
                 <MenuRefProvider>
                     <MenuBar
+                        showESP32About
                         canManageFiles
                         canSave
                         canCreateCopy
@@ -73,21 +70,7 @@ test('open File menu and firmware button follow ja -> en -> ja without changing 
         </IntlProvider>);
     };
     const ui = render(content('ja'));
-    const observers = [];
-    const Observer = window.MutationObserver;
-    const observerSpy = jest.spyOn(window, 'MutationObserver').mockImplementation((...args) => {
-        const observer = new Observer(args[0]);
-        observers.push(observer);
-        return observer;
-    });
     try {
-        await act(async () => {
-            runInNewContext(brandScript, {
-                document, window, MutationObserver: window.MutationObserver, Blob, URL, NodeFilter
-            });
-            document.dispatchEvent(new Event('DOMContentLoaded'));
-            await new Promise((...args) => window.requestAnimationFrame(args[0]));
-        });
         fireEvent.click(ui.getByRole('button', {name: 'ファイルメニュー'}));
         for (const [index, locale] of ['ja', 'en', 'ja'].entries()) {
             ui.rerender(content(locale));
@@ -95,6 +78,12 @@ test('open File menu and firmware button follow ja -> en -> ja without changing 
                 await new Promise((...args) => window.requestAnimationFrame(args[0]));
             });
             const japanese = locale === 'ja';
+            expect(ui.getByRole('button', {name: japanese ?
+                'ESP32 Education Editor について' : 'About ESP32 Education Editor'}).title).toBe(japanese ?
+                'ESP32 Education Editor について' : 'About ESP32 Education Editor');
+            fireEvent.click(ui.getByRole('button', {name: japanese ?
+                'ESP32 Education Editor について' : 'About ESP32 Education Editor'}));
+            expect(openAbout.mock.calls[index][0].locale).toBe(locale);
             const fileButton = ui.getByRole('button', {name: japanese ? 'ファイルメニュー' : 'File menu'});
             expect(fileButton.textContent).toContain(japanese ? 'ファイル' : 'File');
             expect(fileButton.getAttribute('aria-expanded')).toBe('true');
@@ -109,13 +98,13 @@ test('open File menu and firmware button follow ja -> en -> ja without changing 
             fireEvent.click(ui.getByText(labels[3]));
             expect(upload).toHaveBeenCalledTimes(index + 1);
             fireEvent.click(ui.getByRole('button', {name: japanese ? 'ファームウェア書き込み' : 'Install Firmware'}));
-            expect(open).toHaveBeenLastCalledWith('https://davinichi.github.io/firmware/', '_blank', 'noopener,noreferrer');
+            expect(open).toHaveBeenLastCalledWith(
+                `https://davinichi.github.io/firmware/?lang=${locale}`, '_blank', 'noopener,noreferrer');
             fireEvent.click(fileButton);
         }
     } finally {
-        for (const observer of observers) observer.disconnect();
-        observerSpy.mockRestore();
         open.mockRestore();
+        openAbout.mockRestore();
         vm.quit();
     }
 });

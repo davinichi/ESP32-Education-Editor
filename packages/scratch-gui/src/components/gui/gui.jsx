@@ -360,6 +360,7 @@ const GUIComponent = props => {
                             showComingSoon={showComingSoon}
                             onClickAbout={onClickAbout}
                             onClickLogo={onClickLogo}
+                            showESP32About={props.showESP32About}
                             onLogOut={onLogOut}
                             onClickLogin={onClickLogin}
                             onOpenRegistration={onOpenRegistration}
@@ -629,6 +630,7 @@ GUIComponent.propTypes = {
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,
     onClickLogo: PropTypes.func,
+    showESP32About: PropTypes.bool,
     onExtensionButtonClick: PropTypes.func,
     onLogOut: PropTypes.func,
     onNewSpriteClick: PropTypes.func,

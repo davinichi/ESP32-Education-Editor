@@ -92,5 +92,18 @@
     "gui.extension.esp32eduultrasonic.name": "ESP32 超音波",
     "gui.menuBar.firmwareInstaller": "ファームウェア書き込み",
     "gui.sharedMessages.loadFromComputerTitle": "コンピューターから読み込む",
-    "gui.sharedMessages.replaceProjectWarning": "現在のプロジェクトの内容を置き換えますか？"
+    "gui.sharedMessages.replaceProjectWarning": "現在のプロジェクトの内容を置き換えますか？",
+    "gui.esp32About.title": "ESP32 Education Editor について",
+    "gui.esp32About.intro": " は、ESP32を使ったプログラミング・電子工作教育のためのWebエディタです。",
+    "gui.esp32About.development": "開発・著作",
+    "gui.esp32About.credits": "ESP32 Education Editorとして追加したESP32拡張、統合コード、ファームウェア、関連文書、独自ブランド素材は、DavinichiブランドのもとでToshikazu Shimadaが開発しています。",
+    "gui.esp32About.relationship": "Scratch Editorとの関係",
+    "gui.esp32About.independent": "このエディタは、Scratch Foundationが公開しているオープンソースのScratch Editorを基にした独立プロジェクトです。Scratch Foundationの公式製品ではなく、同財団による承認、推奨、スポンサーを示すものではありません。",
+    "gui.esp32About.trademarks": "Scratchの名称、ロゴ、Scratch Cat等の商標はScratch Foundationに帰属します。本プロジェクトでは、それらをESP32 Education Editorの製品ロゴやDavinichiのブランド表示として使用しません。",
+    "gui.esp32About.license": "ライセンスと表示",
+    "gui.esp32About.licenseIntro": "ベースとなるScratch Editorのライセンス、商標に関する条件、および本プロジェクトの追加部分に関する情報は、公開ソースリポジトリ内の ",
+    "gui.esp32About.licenseEnd": " を参照してください。",
+    "gui.esp32About.links": "ソースコード・関連情報",
+    "gui.esp32About.source": "ESP32 Education Editor ソースコード",
+    "gui.esp32About.upstream": "上流 Scratch Editor"
 }

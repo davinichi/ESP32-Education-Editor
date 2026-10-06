@@ -68,6 +68,7 @@ export default appTarget => {
         // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
         simulateScratchDesktop ?
             <WrappedGui
+                showESP32About
                 canEditTitle
                 platform={PLATFORM.DESKTOP}
                 showTelemetryModal
@@ -77,6 +78,7 @@ export default appTarget => {
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
             /> :
             <WrappedGui
+                showESP32About
                 canEditTitle
                 backpackVisible
                 showComingSoon
