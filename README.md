@@ -38,6 +38,9 @@ EditorとInstallerはWeb Serialを利用します。ChromeまたはEdgeなど、
 
 ## はじめ方
 
+詳細な手順は[Getting Startedガイド](docs/esp32-education-editor/GETTING_STARTED_JA.md)を参照してください。
+
+
 1. ESP32-WROOM-32をUSBでPCまたはChromebookへ接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってFirmware v0.1.7を書き込みます。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
 3. [公開Editor](https://davinichi.github.io/)を開き、ESP32 Connection拡張からWeb Serial接続を開始します。
