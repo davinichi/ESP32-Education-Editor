@@ -14,6 +14,8 @@ The Firmware Installer targets ESP32-WROOM-32. Do not flash this firmware to oth
 
 ## 2. Install the firmware
 
+For feature and communication details, see the [Firmware Guide](FIRMWARE_GUIDE_EN.md).
+
 1. Connect the ESP32-WROOM-32 to your PC or Chromebook over USB.
 2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) in Chrome or Edge. The public page is served over HTTPS.
 3. Click **Connect to ESP32 and install v0.1.7**, then select the ESP32 USB serial port from the list.

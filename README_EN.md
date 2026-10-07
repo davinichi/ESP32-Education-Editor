@@ -40,6 +40,8 @@ The Editor and Installer use Web Serial. Use a Chromium-based browser that suppo
 
 For troubleshooting, see [FAQ / Troubleshooting](docs/esp32-education-editor/FAQ_EN.md).
 
+For Firmware features and installation, see the [Firmware Guide](docs/esp32-education-editor/FIRMWARE_GUIDE_EN.md).
+
 For detailed instructions, see the [Getting Started guide](docs/esp32-education-editor/GETTING_STARTED_EN.md).
 
 

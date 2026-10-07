@@ -26,6 +26,8 @@ ESP32-WROOM-32、USB接続、Web Serialに対応するブラウザ（Chromeま�
 
 Firmware Installerを使う場合、Firmwareを書き込むためにArduino IDEや追加ライブラリを準備する必要はありません。[Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってください。
 
+詳しい機能と確認方法は[Firmwareガイド](FIRMWARE_GUIDE_JA.md)を参照してください。
+
 ### 3. ESP32がEditorに接続できません
 
 次の順に確認してください。

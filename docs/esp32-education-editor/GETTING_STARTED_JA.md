@@ -14,6 +14,8 @@ Firmware Installerの対象はESP32-WROOM-32です。他のESP32ボードには�
 
 ## 2. Firmwareの書き込み
 
+詳しい機能や通信仕様は[Firmwareガイド](FIRMWARE_GUIDE_JA.md)を参照してください。
+
 1. USBケーブルでESP32-WROOM-32をPCまたはChromebookに接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)をChromeまたはEdgeで開きます。公開ページはHTTPSで配信されています。
 3. 「ESP32に接続して v0.1.7 を書き込む」を押し、一覧からESP32のUSBシリアルポートを選びます。

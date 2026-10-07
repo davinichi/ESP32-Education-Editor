@@ -26,6 +26,8 @@ You need an ESP32-WROOM-32, a USB connection, a browser with Web Serial support 
 
 When you use the Firmware Installer, you do not need to set up Arduino IDE or install additional libraries to flash the firmware. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions.
 
+For a feature overview and verification steps, see the [Firmware Guide](FIRMWARE_GUIDE_EN.md).
+
 ### 3. The Editor cannot connect to the ESP32
 
 Check these items in order:
