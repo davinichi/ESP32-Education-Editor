@@ -76,6 +76,8 @@ HC-SR04のECHO出力は約5 Vです。ESP32のGPIOへ接続する前に、抵抗
 
 ESP-NOWによるESP32同士の通信には、学校Wi-Fi、校内LAN、インターネット接続は必要ありません。公開EditorとFirmware InstallerをWebから読み込む際にはインターネット接続が必要です。EditorとESP32の接続にはUSB / Web Serialを使用します。
 
+授業での活用例は[授業・教育利用ガイド](docs/esp32-education-editor/LESSON_GUIDE_JA.md)を参照してください。
+
 ## 教育利用
 
 本プロジェクトは、ESP32を使ったプログラミングや電子工作の学習に利用できるブロックプログラミング環境です。接続、GPIO、センサー、表示、無線通信などのカテゴリーから、扱う機能を選んでプログラムを作成できます。

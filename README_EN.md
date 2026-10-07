@@ -76,6 +76,8 @@ The HC-SR04 ECHO signal is approximately 5 V. Use a voltage divider or another s
 
 ESP-NOW communication between ESP32 boards does not require school Wi-Fi, a school LAN, or an internet connection. An internet connection is required to load the Public Editor and Firmware Installer from the web. The Editor connects to the ESP32 over USB / Web Serial.
 
+For classroom activity ideas, see the [Lesson and Educational Use Guide](docs/esp32-education-editor/LESSON_GUIDE_EN.md).
+
 ## Educational use
 
 This project provides a block programming environment for learning with ESP32, programming, and electronics. Learners can choose from categories for connection, GPIO, sensors, display output, wireless communication, and data processing to build programs around the functions they need.
