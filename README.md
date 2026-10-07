@@ -38,6 +38,8 @@ EditorとInstallerはWeb Serialを利用します。ChromeまたはEdgeなど、
 
 ## はじめ方
 
+困ったときは[FAQ / トラブルシューティング](docs/esp32-education-editor/FAQ_JA.md)を参照してください。
+
 詳細な手順は[Getting Startedガイド](docs/esp32-education-editor/GETTING_STARTED_JA.md)を参照してください。
 
 

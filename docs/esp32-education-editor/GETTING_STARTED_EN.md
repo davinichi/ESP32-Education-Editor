@@ -93,6 +93,8 @@ An internet connection is required to load the Public Editor and Firmware Instal
 
 ## 9. If you cannot connect
 
+For more troubleshooting steps, see [FAQ / Troubleshooting](FAQ_EN.md).
+
 - **Browser does not support Web Serial:** Open the Editor or Installer in a Web Serial-compatible Chromium browser, such as Chrome or Edge.
 - **USB cable or port is not detected:** Check that the ESP32-WROOM-32 is connected over USB, then reopen the browser's port picker. A charge-only cable cannot carry data.
 - **Serial port is in use by another application:** Close Arduino IDE's Serial Monitor, another Editor session, or any other application using the port, then connect again. Do not use the same USB port from multiple applications at once.
