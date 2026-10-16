@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="145" height="44" viewBox="0 0 145 44" role="img" aria-label="DHT 湿度（％）">
+<title>DHT 湿度（％）</title>
+<path d="M 22.0 1 H 123.0 A 21.0 21.0 0 0 1 123.0 43 H 22.0 A 21.0 21.0 0 0 1 22.0 1 Z" fill="#5CB1D6" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">DHT 湿度（％）</text>
+</svg>

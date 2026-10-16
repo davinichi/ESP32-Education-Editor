@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="233" height="54" viewBox="0 0 233 54" role="img" aria-label="サーボを GPIO [PIN] に接続">
+<title>サーボを GPIO [PIN] に接続</title>
+<path d="M 8 1 H 28 V 7 H 48 V 1 H 223 Q 231 1 231 9 V 45 Q 231 53 223 53 H 48 V 47 H 28 V 53 H 8 Q 1 53 1 45 V 9 Q 1 1 8 1 Z" fill="#FF6680" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">サーボを GPIO </text>
+<rect x="120.9" y="13.0" width="45.7" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="129.9" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">13</text>
+<path d="M 151.58 25.0 L 159.58 25.0 L 155.58 30.0 Z" fill="#555555"/>
+<text x="166.6" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> に接続</text>
+</svg>

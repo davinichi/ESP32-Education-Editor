@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="44" viewBox="0 0 450 44" role="img" aria-label="温度 [TEMP] ℃ 湿度 [HUM] ％ から [INDEX] を計算">
+<title>温度 [TEMP] ℃ 湿度 [HUM] ％ から [INDEX] を計算</title>
+<path d="M 22.0 1 H 428.0 A 21.0 21.0 0 0 1 428.0 43 H 22.0 A 21.0 21.0 0 0 1 22.0 1 Z" fill="#2EAF7D" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">温度 </text>
+<rect x="52.6" y="8.0" width="33.7" height="28" rx="14" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="61.6" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">25</text>
+<text x="86.3" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> ℃ 湿度 </text>
+<rect x="146.2" y="8.0" width="33.7" height="28" rx="14" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="155.2" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">60</text>
+<text x="179.9" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> ％ から </text>
+<rect x="239.7" y="8.0" width="143.7" height="28" rx="14" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="248.7" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">推定WBGT（簡易）</text>
+<path d="M 368.39 20.0 L 376.39 20.0 L 372.39 25.0 Z" fill="#555555"/>
+<text x="383.4" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> を計算</text>
+</svg>

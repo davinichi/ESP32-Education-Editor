@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="367" height="54" viewBox="0 0 367 54" role="img" aria-label="超音波センサを TRIG [TRIG] ECHO [ECHO] に接続">
+<title>超音波センサを TRIG [TRIG] ECHO [ECHO] に接続</title>
+<path d="M 8 1 H 28 V 7 H 48 V 1 H 357 Q 365 1 365 9 V 45 Q 365 53 357 53 H 48 V 47 H 28 V 53 H 8 Q 1 53 1 45 V 9 Q 1 1 8 1 Z" fill="#4C97FF" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">超音波センサを TRIG </text>
+<rect x="165.0" y="13.0" width="45.7" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="174.0" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">26</text>
+<path d="M 195.68000000000004 25.0 L 203.68000000000004 25.0 L 199.68000000000004 30.0 Z" fill="#555555"/>
+<text x="210.7" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> ECHO </text>
+<rect x="254.8" y="13.0" width="45.7" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="263.8" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">34</text>
+<path d="M 285.46000000000004 25.0 L 293.46000000000004 25.0 L 289.46000000000004 30.0 Z" fill="#555555"/>
+<text x="300.5" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> に接続</text>
+</svg>

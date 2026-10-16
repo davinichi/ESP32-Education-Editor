@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="434" height="44" viewBox="0 0 434 44" role="img" aria-label="文字列 [TEXT] の左から [START] 文字目以降を取り出す">
+<title>文字列 [TEXT] の左から [START] 文字目以降を取り出す</title>
+<path d="M 22.0 1 H 412.0 A 21.0 21.0 0 0 1 412.0 43 H 22.0 A 21.0 21.0 0 0 1 22.0 1 Z" fill="#FF8C1A" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">文字列 </text>
+<rect x="67.3" y="8.0" width="95.3" height="28" rx="14" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="76.3" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">2026/08/01</text>
+<text x="162.6" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> の左から </text>
+<rect x="231.9" y="8.0" width="32.0" height="28" rx="14" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="240.9" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">6</text>
+<text x="263.9" y="27.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> 文字目以降を取り出す</text>
+</svg>
