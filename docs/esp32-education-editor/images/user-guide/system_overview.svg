@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="255" viewBox="0 0 980 255" role="img" aria-label="ESP32 Education Editor システム構成">
+<title>ESP32 Education Editor システム構成</title>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#52616b"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="25" y="70" width="205" height="105" rx="14" fill="#4C97FF" stroke="#41505a" stroke-width="1.5"/>
+<text x="127.5" y="101" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Webブラウザ</text>
+<text x="127.5" y="126" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">ESP32 Education Editor</text>
+<text x="127.5" y="144" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">Chrome / Edge</text>
+<rect x="385" y="70" width="205" height="105" rx="14" fill="#2EAF7D" stroke="#41505a" stroke-width="1.5"/>
+<text x="487.5" y="101" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">ESP32-WROOM-32</text>
+<text x="487.5" y="126" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">Firmware v0.1.7</text>
+<rect x="745" y="20" width="205" height="90" rx="14" fill="#5CB1D6" stroke="#41505a" stroke-width="1.5"/>
+<text x="847.5" y="51" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">センサー</text>
+<text x="847.5" y="76" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">DHT / HC-SR04 など</text>
+<rect x="745" y="145" width="205" height="90" rx="14" fill="#FF8C1A" stroke="#41505a" stroke-width="1.5"/>
+<text x="847.5" y="176" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">出力機器</text>
+<text x="847.5" y="201" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">LED / OLED / Servo など</text>
+<line x1="230" y1="122" x2="385" y2="122" stroke="#52616b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="307.5" y="114.0" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#34444e">USB / Web Serial</text>
+<line x1="590" y1="105" x2="745" y2="65" stroke="#52616b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="667.5" y="77.0" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#34444e">入力</text>
+<line x1="590" y1="140" x2="745" y2="190" stroke="#52616b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="667.5" y="157.0" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#34444e">出力</text>
+</svg>

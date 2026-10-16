@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="441" height="54" viewBox="0 0 441 54" role="img" aria-label="OLEDの X [X] Y [Y] 幅 [W] 高さ [H] を黒で塗りつぶす">
+<title>OLEDの X [X] Y [Y] 幅 [W] 高さ [H] を黒で塗りつぶす</title>
+<path d="M 8 1 H 28 V 7 H 48 V 1 H 431 Q 439 1 439 9 V 45 Q 439 53 431 53 H 48 V 47 H 28 V 53 H 8 Q 1 53 1 45 V 9 Q 1 1 8 1 Z" fill="#9966FF" stroke="rgba(0,0,0,0.20)" stroke-width="1.4"/>
+<text x="18.0" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff">OLEDの X </text>
+<rect x="85.2" y="13.0" width="32.0" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="94.2" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">0</text>
+<text x="117.2" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> Y </text>
+<rect x="136.1" y="13.0" width="32.0" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="145.1" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">0</text>
+<text x="168.1" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> 幅 </text>
+<rect x="193.3" y="13.0" width="33.7" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="202.3" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">60</text>
+<text x="227.0" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> 高さ </text>
+<rect x="266.9" y="13.0" width="33.7" height="28" rx="6" fill="#ffffff" fill-opacity="0.97" stroke="rgba(0,0,0,0.22)" stroke-width="1"/>
+<text x="275.9" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="14" fill="#333333">12</text>
+<text x="300.6" y="32.0" font-family="Yu Gothic, Meiryo, Noto Sans CJK JP, sans-serif" font-size="15" font-weight="600" fill="#ffffff"> を黒で塗りつぶす</text>
+</svg>
