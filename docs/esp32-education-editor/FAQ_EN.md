@@ -4,14 +4,14 @@
 
 [README](../../README_EN.md) · [Getting Started](GETTING_STARTED_EN.md)
 
-This page covers ESP32 Education Editor v0.6, Firmware v0.1.7, and the ESP32-WROOM-32. The Editor has 9 categories and 49 public blocks, with one hidden compatibility block retained internally for existing projects.
+This page covers ESP32 Education Editor v0.6, Firmware v0.1.8, and the ESP32-WROOM-32. The Editor has 9 categories and 49 public blocks, with one hidden compatibility block retained internally for existing projects.
 
 ## First checks
 
 If something goes wrong, check these items in order:
 
 1. The board is the supported **ESP32-WROOM-32**.
-2. **Firmware v0.1.7** is installed.
+2. **Firmware v0.1.8** is installed.
 3. You are using a browser with Web Serial support, such as **Chrome or Edge**.
 4. The board is connected over USB.
 5. Another application, such as Arduino IDE's Serial Monitor, is not using the same serial port.
@@ -20,7 +20,7 @@ If something goes wrong, check these items in order:
 
 ### 1. What do I need to use ESP32 Education Editor?
 
-You need an ESP32-WROOM-32, a USB connection, a browser with Web Serial support (such as Chrome or Edge), and Firmware v0.1.7. Open the [Public Editor](https://davinichi.github.io/). The Editor communicates with the board over USB / Web Serial.
+You need an ESP32-WROOM-32, a USB connection, a browser with Web Serial support (such as Chrome or Edge), and Firmware v0.1.8. Open the [Public Editor](https://davinichi.github.io/). The Editor communicates with the board over USB / Web Serial.
 
 ### 2. Do I need Arduino IDE?
 
@@ -34,7 +34,7 @@ Check these items in order:
 
 1. Confirm that the board is an ESP32-WROOM-32.
 2. Check that it is connected over USB.
-3. Confirm that Firmware v0.1.7 is installed. If needed, install it again with the Installer.
+3. Confirm that Firmware v0.1.8 is installed. If needed, install it again with the Installer.
 4. Open the Public Editor in a browser with Web Serial support, such as Chrome or Edge.
 5. When connecting, select the ESP32 serial port in the browser's port picker.
 6. Close other applications that may be using the port, such as Arduino IDE's Serial Monitor, then try again.
@@ -49,7 +49,7 @@ Open the Installer in a Web Serial-compatible browser such as Chrome or Edge, ov
 
 ### 6. The Editor still cannot connect after flashing the firmware
 
-Confirm that the board is an ESP32-WROOM-32 and that Firmware v0.1.7 was installed. The Editor connects over USB from a browser with Web Serial support, such as Chrome or Edge. After flashing, close Serial Monitor or any other application using the same port, then connect from the Editor. After connecting, run `SYS:STATUS` from ESP32 Connection and check whether the response includes `SYS:READY:OK`.
+Confirm that the board is an ESP32-WROOM-32 and that Firmware v0.1.8 was installed. The Editor connects over USB from a browser with Web Serial support, such as Chrome or Edge. After flashing, close Serial Monitor or any other application using the same port, then connect from the Editor. After connecting, run `SYS:STATUS` from ESP32 Connection and check whether the response includes `SYS:READY:OK`.
 
 ### 7. Can I use Arduino IDE's Serial Monitor and the Editor at the same time?
 
@@ -69,7 +69,7 @@ The current supported target is ESP32-WROOM-32. ESP32 Dev Module is the board se
 
 ### 11. ESP-NOW communication is not working
 
-If the send block specifies a destination MAC address, check that it is correct. Leaving the destination MAC field empty sends a broadcast. Also check that the communicating boards use the same Wi-Fi channel. Firmware v0.1.7 starts on channel 1, and the selected channel returns to 1 after a restart. Confirm that your program uses blocks from the ESP32 ESP-NOW category.
+If the send block specifies a destination MAC address, check that it is correct. Leaving the destination MAC field empty sends a broadcast. Also check that the communicating boards use the same Wi-Fi channel. Firmware v0.1.8 starts on channel 1, and the selected channel returns to 1 after a restart. Confirm that your program uses blocks from the ESP32 ESP-NOW category.
 
 ### 12. A sensor or peripheral is not working
 
@@ -77,7 +77,7 @@ Check the wiring, the GPIO selected in the blocks, and the power connection. Als
 
 ### 13. Is there anything special to know when using an HC-SR04?
 
-The HC-SR04 ECHO output is approximately 5 V. **Do not connect ECHO directly to the ESP32 at 5 V. Keep the ESP32 input at or below 3.3 V.** The [Firmware v0.1.7 release notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md) show a voltage-divider example with a 1 kΩ series resistor from ECHO to the ESP32 input and a 2 kΩ resistor from the input to GND. Check the reference before wiring.
+The HC-SR04 ECHO output is approximately 5 V. **Do not connect ECHO directly to the ESP32 at 5 V. Keep the ESP32 input at or below 3.3 V.** The [Firmware v0.1.8 release notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md) show a voltage-divider example with a 1 kΩ series resistor from ECHO to the ESP32 input and a 2 kΩ resistor from the input to GND. Check the reference before wiring.
 
 ### 14. Can I change the Editor and Firmware Installer language?
 
