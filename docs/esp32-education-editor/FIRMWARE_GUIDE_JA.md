@@ -10,7 +10,7 @@ FirmwareはESP32本体で動作する共通プログラムです。EditorからU
 
 ## 2. 現在のFirmwareバージョン
 
-現在のFirmwareは **v0.1.7** です。**Editor v0.6** と組み合わせて使用します。EditorとFirmwareは別々にバージョン管理されています。
+現在のFirmwareは **v0.1.8** です。**Editor v0.6** と組み合わせて使用します。EditorとFirmwareは別々にバージョン管理されています。
 
 ## 3. 対象ボード
 
@@ -23,7 +23,7 @@ FirmwareはESP32本体で動作する共通プログラムです。EditorからU
 1. ESP32-WROOM-32をUSBでPCまたはChromebookに接続します。
 2. Firmware Installerを開きます。必要に応じてページ上部で日本語またはEnglishを選びます。
 3. 書き込みボタンを押し、ブラウザの一覧からESP32のUSBシリアルポートを選択します。
-4. 画面の案内に従ってFirmware v0.1.7を書き込みます。
+4. 画面の案内に従ってFirmware v0.1.8を書き込みます。
 
 Installerは完成済みFirmwareをブラウザから書き込むため、Arduino IDEや追加ライブラリを準備する必要はありません。 Editorも日本語／英語に対応しており、Editor内の **Settings → Language** から切り替えられます。
 
@@ -31,7 +31,7 @@ Installerは完成済みFirmwareをブラウザから書き込むため、Arduin
 
 InstallerとEditorには、Chrome / EdgeなどWeb Serialに対応するブラウザを使います。Installerは **HTTPSまたはlocalhost** から開く必要があります。公開InstallerとEditorはHTTPSで配信されています。ESP32はUSB接続し、InstallerやEditorが使うシリアルポートをArduino IDEのSerial Monitorなど別のアプリが使用していない状態にしてください。
 
-## 6. Firmware v0.1.7の主な機能
+## 6. Firmware v0.1.8の主な機能
 
 | 機能 | Firmwareでできること |
 |---|---|
@@ -50,11 +50,11 @@ InstallerとEditorには、Chrome / EdgeなどWeb Serialに対応するブラウ
 
 FirmwareはGPIOのデジタル入力・出力に対応します。EditorのESP32 GPIOカテゴリーで選択できるピンを使ってください。
 
-PWMは周波数 **5 kHz**、分解能 **8-bit** で、Editorから指定する出力値は **0〜100%** です。PWM出力の停止ブロックもあります。v0.1.7 Release Notesで示されているPWM対応GPIOは次のとおりです。
+PWMは周波数 **5 kHz**、分解能 **8-bit** で、Editorから指定する出力値は **0〜100%** です。PWM出力の停止ブロックもあります。v0.1.8 Release Notesで示されているPWM対応GPIOは次のとおりです。
 
 `13, 14, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32, 33`
 
-PWM停止後に同じ出力を再開できる修正もv0.1.7で確認されています。詳細は[Firmware v0.1.7 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md)を参照してください。
+v0.1.8では、PWM停止後の再開に加えて、同じGPIOでHIGH/LOWのデジタル出力とPWMを交互に使用した場合でも、GPIOへ切り替える際にLEDCを正しく解除し、次のPWM出力で再Attachできるように修正されています。詳細は[Firmware v0.1.8 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md)を参照してください。
 
 ## 8. Servo
 
@@ -62,9 +62,9 @@ ESP32 Servoカテゴリーから、ServoをGPIOへ接続する、角度を指定
 
 ## 9. HC-SR04 Ultrasonic
 
-ESP32 Ultrasonicカテゴリーでは、TRIG / ECHOのGPIOを指定して距離をcm単位で取得できます。v0.1.7 Release Notesに記載された試験構成はTRIGがGPIO26、ECHOがGPIO34です。
+ESP32 Ultrasonicカテゴリーでは、TRIG / ECHOのGPIOを指定して距離をcm単位で取得できます。v0.1.8 Release Notesに記載された試験構成はTRIGがGPIO26、ECHOがGPIO34です。
 
-HC-SR04のECHO出力は約5 Vです。**ECHOをESP32へ5 Vのまま直接入力しないでください。ESP32入力を3.3 V以下にしてください。**リリースノートには、ECHOと入力の間に1 kΩ、入力とGNDの間に2 kΩを接続する分圧例があります。詳細は[Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md)を確認してください。
+HC-SR04のECHO出力は約5 Vです。**ECHOをESP32へ5 Vのまま直接入力しないでください。ESP32入力を3.3 V以下にしてください。**リリースノートには、ECHOと入力の間に1 kΩ、入力とGNDの間に2 kΩを接続する分圧例があります。詳細は[Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md)を確認してください。
 
 ## 10. ESP-NOW
 
@@ -100,4 +100,4 @@ Editorで作成したプロジェクトファイルと、ESP32へ書き込むFir
 
 接続、シリアルポート、ブラウザ、書き込みの問題は[FAQ / トラブルシューティング](FAQ_JA.md)を参照してください。
 
-BLE UARTはFirmware v0.1.7に含まれていません。機能や互換性の詳細は[公式v0.1.7 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md)を参照してください。
+BLE UARTはFirmware v0.1.8に含まれていません。機能や互換性の詳細は[公式v0.1.8 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md)を参照してください。

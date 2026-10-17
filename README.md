@@ -7,7 +7,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 ## 現行バージョン
 
 - Editor: **v0.6**
-- Firmware: **v0.1.7**
+- Firmware: **v0.1.8**
 - EditorとFirmwareは別々にバージョン管理しています。
 - EditorとFirmware Installerは日本語／英語を切り替えて利用できます。
 
@@ -17,7 +17,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 - Firmware Installer: https://davinichi.github.io/firmware/
 - GitHubリポジトリ: https://github.com/davinichi/ESP32-Education-Editor
 - Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
-- Firmware v0.1.7 Release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7
+- Firmware v0.1.8 Release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8
 
 ## 主な機能
 
@@ -46,7 +46,7 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 
 
 1. ESP32-WROOM-32をUSBでPCまたはChromebookへ接続します。
-2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってFirmware v0.1.7を書き込みます。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
+2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってFirmware v0.1.8を書き込みます。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
 3. [公開Editor](https://davinichi.github.io/)を開き、ESP32 Connection拡張からWeb Serial接続を開始します。
 4. 使用する拡張カテゴリーを追加し、ブロックを組んで実行します。
 
@@ -72,9 +72,9 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 
 ## Firmware概要
 
-Firmware v0.1.7は、GPIOデジタル入出力、PWM、サーボ、HC-SR04、DHT11 / DHT22、SSD1306 OLED、ESP-NOWに対応します。PWMは5 kHz、8-bitで、指定可能な出力範囲は0～100%です。ESP-NOWの起動時チャンネルは1で、設定したチャンネルは再起動後に1へ戻ります。BLE UARTは含まれていません。
+Firmware v0.1.8は、GPIOデジタル入出力、PWM、サーボ、HC-SR04、DHT11 / DHT22、SSD1306 OLED、ESP-NOWに対応します。PWMは5 kHz、8-bitで、指定可能な出力範囲は0～100%です。v0.1.8では、同じGPIOでデジタルHIGH/LOWとPWMを交互に使用した場合でも、PWMを安全に再設定できるようGPIOとLEDCの切り替え処理を修正しました。ESP-NOWの起動時チャンネルは1で、設定したチャンネルは再起動後に1へ戻ります。BLE UARTは含まれていません。
 
-HC-SR04のECHO出力は約5 Vです。ESP32のGPIOへ接続する前に、抵抗分圧などを使って3.3 V以下にしてください。詳しい変更内容は[Firmware v0.1.7 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7)を参照してください。
+HC-SR04のECHO出力は約5 Vです。ESP32のGPIOへ接続する前に、抵抗分圧などを使って3.3 V以下にしてください。詳しい変更内容は[Firmware v0.1.8 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8)を参照してください。
 
 ## ESP-NOWと学校ネットワーク
 

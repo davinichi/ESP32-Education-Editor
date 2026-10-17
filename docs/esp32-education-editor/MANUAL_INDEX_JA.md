@@ -1,6 +1,6 @@
 # ESP32 Education Editor マニュアル
 
-このフォルダーには、ESP32 Education Editor v0.6 / Firmware v0.1.7の日本語利用者向けマニュアルを収録しています。
+このフォルダーには、ESP32 Education Editor v0.6 / Firmware v0.1.8の日本語利用者向けマニュアルを収録しています。
 
 ## マニュアル一覧
 

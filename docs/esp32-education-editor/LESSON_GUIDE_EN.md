@@ -1,6 +1,6 @@
 # Lesson and Educational Use Guide
 
-This guide offers planning ideas and activity examples for using ESP32 Education Editor v0.6 with Firmware v0.1.7 in lessons or other learning activities. It does not assume a particular grade level, lesson length, or prior classroom results; adapt it to the devices and learners. For setup instructions, see [Getting Started](GETTING_STARTED_EN.md).
+This guide offers planning ideas and activity examples for using ESP32 Education Editor v0.6 with Firmware v0.1.8 in lessons or other learning activities. It does not assume a particular grade level, lesson length, or prior classroom results; adapt it to the devices and learners. For setup instructions, see [Getting Started](GETTING_STARTED_EN.md).
 
 ## Audience and purpose
 
@@ -90,7 +90,7 @@ For ESP-NOW activities, learners can take sender and receiver roles. The sender 
 
 ## Board-to-board communication with ESP-NOW
 
-ESP-NOW can be used to try broadcast or MAC-addressed communication between two or more ESP32 boards. The communicating boards must use the same ESP-NOW channel. Firmware v0.1.7 starts on channel 1, and a selected channel resets to 1 after a restart.
+ESP-NOW can be used to try broadcast or MAC-addressed communication between two or more ESP32 boards. The communicating boards must use the same ESP-NOW channel. Firmware v0.1.8 starts on channel 1, and a selected channel resets to 1 after a restart.
 
 ESP-NOW communication between boards does not require school Wi-Fi, a school LAN, or an internet connection. An internet connection is required to load the Public Editor and Firmware Installer from the web, and each Editor-to-board connection uses USB / Web Serial. This guide does not claim fully offline operation after the pages load.
 
@@ -109,7 +109,7 @@ These are examples of observation points, not guaranteed learning outcomes or a 
 
 ## Teacher preparation before a lesson
 
-- Confirm the boards are ESP32-WROOM-32 and have Firmware v0.1.7 installed.
+- Confirm the boards are ESP32-WROOM-32 and have Firmware v0.1.8 installed.
 - Check that the Public Editor and Firmware Installer open in a Web Serial-compatible browser such as Chrome or Edge.
 - Ensure internet access is available to load the Editor and Installer from the web.
 - Check USB cables, port selection, and an Editor connection in advance.
@@ -130,4 +130,4 @@ These are examples of observation points, not guaranteed learning outcomes or a 
 
 - [Getting Started: setup and first program](GETTING_STARTED_EN.md)
 - [README: project overview](../../README_EN.md)
-- [Firmware v0.1.7 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7)
+- [Firmware v0.1.8 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8)
