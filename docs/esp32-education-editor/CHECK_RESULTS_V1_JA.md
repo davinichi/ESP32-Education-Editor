@@ -27,6 +27,8 @@ I2C Scanner → BME280 → INA219 → SYS:VERSIONの順にFirmwareを追加し�
 Node.js: 24.18.0、npm: 11.16.0、Arduino CLI: 1.5.1。
 Windowsで既存GUIの`BUILD_TYPE=dev webpack`が実行できなかったため、既存依存の`cross-env`を使う1行の修正を含みます。
 
+GitHubの既存CIは、呼び出し元が再利用テストworkflowの結果記録権限を許可しておらず、実行開始前に停止しました。呼び出し側のテストjobに、既存の結果記録jobが要求している`contents: read`、`checks: write`、`issues: read`、`pull-requests: write`を明示しました。GitHub上の実行結果はPRのChecksで確認してください。
+
 Firmware使用量: プログラム995,010 / 1,310,720 bytes（75%）、グローバル変数45,416 / 327,680 bytes（13%）。
 使用ライブラリ: Adafruit BME280 2.3.0、INA219 1.2.3、BusIO 1.17.4、GFX 1.12.6、SSD1306 2.5.17、Unified Sensor 1.1.15、DHT sensor library 1.4.7。
 
