@@ -7,7 +7,7 @@ ESP32 Education Editor is a browser-based, block programming environment for wor
 ## Current versions
 
 - Editor: **v0.6**
-- Firmware: **v0.1.7**
+- Firmware: **v0.1.8**
 - The Editor and Firmware are versioned separately.
 - The Editor and Firmware Installer support Japanese and English.
 
@@ -17,7 +17,7 @@ ESP32 Education Editor is a browser-based, block programming environment for wor
 - Firmware Installer: https://davinichi.github.io/firmware/
 - GitHub repository: https://github.com/davinichi/ESP32-Education-Editor
 - Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
-- Firmware v0.1.7 release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7
+- Firmware v0.1.8 release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8
 
 ## Key features
 
@@ -46,7 +46,7 @@ For detailed instructions, see the [Getting Started guide](docs/esp32-education-
 
 
 1. Connect an ESP32-WROOM-32 to your PC or Chromebook over USB.
-2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions to install Firmware v0.1.7. The Installer writes the prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries.
+2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions to install Firmware v0.1.8. The Installer writes the prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries.
 3. Open the [Public Editor](https://davinichi.github.io/) and start a Web Serial connection from the ESP32 Connection extension.
 4. Add the extension categories you need, arrange the blocks, and run your program.
 
@@ -72,9 +72,9 @@ One hidden compatibility block, `WBGT [WBGT] warning level`, remains internally 
 
 ## Firmware overview
 
-Firmware v0.1.7 supports GPIO digital I/O, PWM, servo motors, HC-SR04, DHT11 / DHT22, SSD1306 OLED, and ESP-NOW. PWM runs at 5 kHz with 8-bit resolution and accepts output values from 0 to 100%. ESP-NOW starts on channel 1; a channel selection returns to channel 1 after the board restarts. BLE UART is not included.
+Firmware v0.1.8 supports GPIO digital I/O, PWM, servo motors, HC-SR04, DHT11 / DHT22, SSD1306 OLED, and ESP-NOW. PWM runs at 5 kHz with 8-bit resolution and accepts output values from 0 to 100%. Version 0.1.8 fixes GPIO/LEDC switching so PWM can be used again safely after the same GPIO has been driven HIGH or LOW. ESP-NOW starts on channel 1; a channel selection returns to channel 1 after the board restarts. BLE UART is not included.
 
-The HC-SR04 ECHO signal is approximately 5 V. Use a voltage divider or another suitable level reduction method to keep the signal at or below 3.3 V before connecting it to an ESP32 GPIO. See the [Firmware v0.1.7 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7) for details.
+The HC-SR04 ECHO signal is approximately 5 V. Use a voltage divider or another suitable level reduction method to keep the signal at or below 3.3 V before connecting it to an ESP32 GPIO. See the [Firmware v0.1.8 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8) for details.
 
 ## ESP-NOW and school networks
 
