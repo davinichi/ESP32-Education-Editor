@@ -18,7 +18,7 @@ For feature and communication details, see the [Firmware Guide](FIRMWARE_GUIDE_E
 
 1. Connect the ESP32-WROOM-32 to your PC or Chromebook over USB.
 2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) in Chrome or Edge. The public page is served over HTTPS.
-3. Click **Connect to ESP32 and install v0.1.7**, then select the ESP32 USB serial port from the list.
+3. Click **Connect to ESP32 and install v0.1.8**, then select the ESP32 USB serial port from the list.
 4. Follow the on-screen instructions to complete installation of Firmware v0.1.8.
 
 The Installer writes prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries. Close Arduino IDE's Serial Monitor, the Editor, or any other application using the ESP32 USB port before installation.

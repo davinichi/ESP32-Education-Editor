@@ -18,7 +18,7 @@ Firmware Installerの対象はESP32-WROOM-32です。他のESP32ボードには�
 
 1. USBケーブルでESP32-WROOM-32をPCまたはChromebookに接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)をChromeまたはEdgeで開きます。公開ページはHTTPSで配信されています。
-3. 「ESP32に接続して v0.1.7 を書き込む」を押し、一覧からESP32のUSBシリアルポートを選びます。
+3. 「ESP32に接続して v0.1.8 を書き込む」を押し、一覧からESP32のUSBシリアルポートを選びます。
 4. 画面の案内に従ってFirmware v0.1.8の書き込みを完了します。
 
 Installerは完成済みFirmwareをブラウザから書き込むため、Arduino IDEや追加ライブラリを準備する必要はありません。書き込み中はArduino IDEのシリアルモニターやEditorなど、ESP32のUSBポートを使う別のアプリを閉じてください。

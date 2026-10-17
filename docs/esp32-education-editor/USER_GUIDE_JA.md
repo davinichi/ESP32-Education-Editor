@@ -7,7 +7,7 @@
 ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで操作する教育向けプログラミング環境です。ESP32側にはFirmware v0.1.8を書き込み、EditorからUSB / Web Serialで命令を送ります。
 
 - Editor: **v0.6**
-- Firmware: **v0.1.7**
+- Firmware: **v0.1.8**
 - 対象ボード: **ESP32-WROOM-32 / ESP32 Dev Module**
 - 公開Editor: <https://davinichi.github.io/>
 - Firmware Installer: <https://davinichi.github.io/firmware/>
@@ -33,7 +33,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 1. ESP32-WROOM-32をUSBでPCへ接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)を開きます。
-3. 「ESP32に接続して v0.1.7 を書き込む」を押します。
+3. 「ESP32に接続して v0.1.8 を書き込む」を押します。
 4. ESP32のUSBシリアルポートを選びます。
 5. 画面の案内に従って書き込みます。
 

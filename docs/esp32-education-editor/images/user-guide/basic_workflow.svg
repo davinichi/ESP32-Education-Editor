@@ -5,7 +5,7 @@
 <rect x="20" y="75" width="165" height="90" rx="14" fill="#9966FF" stroke="#41505a" stroke-width="1.5"/>
 <text x="102.5" y="106" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">1. Firmware</text>
 <text x="102.5" y="131" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">Installerで</text>
-<text x="102.5" y="149" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">v0.1.7を書き込む</text>
+<text x="102.5" y="149" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">v0.1.8を書き込む</text>
 <rect x="215" y="75" width="165" height="90" rx="14" fill="#4C97FF" stroke="#41505a" stroke-width="1.5"/>
 <text x="297.5" y="106" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="18" font-weight="700" fill="#ffffff">2. Editor</text>
 <text x="297.5" y="131" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="13" fill="#ffffff">公開Editorを開く</text>
