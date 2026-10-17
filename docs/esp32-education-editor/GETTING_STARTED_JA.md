@@ -1,6 +1,6 @@
 # はじめ方
 
-このガイドでは、ESP32 Education Editor v0.6とFirmware v0.1.7を使い、ESP32-WROOM-32を接続してGPIOでLEDを点滅させます。
+このガイドでは、ESP32 Education Editor v0.6とFirmware v0.1.8を使い、ESP32-WROOM-32を接続してGPIOでLEDを点滅させます。
 
 ## 1. 必要なもの
 
@@ -19,7 +19,7 @@ Firmware Installerの対象はESP32-WROOM-32です。他のESP32ボードには�
 1. USBケーブルでESP32-WROOM-32をPCまたはChromebookに接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)をChromeまたはEdgeで開きます。公開ページはHTTPSで配信されています。
 3. 「ESP32に接続して v0.1.7 を書き込む」を押し、一覧からESP32のUSBシリアルポートを選びます。
-4. 画面の案内に従ってFirmware v0.1.7の書き込みを完了します。
+4. 画面の案内に従ってFirmware v0.1.8の書き込みを完了します。
 
 Installerは完成済みFirmwareをブラウザから書き込むため、Arduino IDEや追加ライブラリを準備する必要はありません。書き込み中はArduino IDEのシリアルモニターやEditorなど、ESP32のUSBポートを使う別のアプリを閉じてください。
 
@@ -41,7 +41,7 @@ Editor上部の **Settings → Language** メニューから日本語またはEn
 
 ## 6. 最初のプログラムを作る
 
-ここではGPIO23に接続したLEDを1秒ごとに点灯・消灯するプログラムを作ります。ESP32 GPIO拡張のピンメニューにGPIO23があり、Firmware v0.1.7はGPIOデジタル出力に対応しています。
+ここではGPIO23に接続したLEDを1秒ごとに点灯・消灯するプログラムを作ります。ESP32 GPIO拡張のピンメニューにGPIO23があり、Firmware v0.1.8はGPIOデジタル出力に対応しています。
 
 ### LEDの接続
 
@@ -89,7 +89,7 @@ Editorには9カテゴリー、49個の公開ブロックがあります。既�
 
 ## 8. ESP-NOWについて
 
-ESP-NOWを使ったESP32同士の通信には、学校Wi-Fi、校内LAN、インターネット接続は必要ありません。通信するESP32同士は同じESP-NOWチャンネルを使用してください。Firmware v0.1.7の起動時チャンネルは1で、チャンネル設定は再起動すると1に戻ります。
+ESP-NOWを使ったESP32同士の通信には、学校Wi-Fi、校内LAN、インターネット接続は必要ありません。通信するESP32同士は同じESP-NOWチャンネルを使用してください。Firmware v0.1.8の起動時チャンネルは1で、チャンネル設定は再起動すると1に戻ります。
 
 公開EditorとFirmware InstallerをWebから読み込むにはインターネット接続が必要です。EditorとESP32の間はUSB / Web Serialで接続します。Webページを開いた後の完全なオフライン動作については、このガイドでは保証しません。
 
@@ -100,7 +100,7 @@ ESP-NOWを使ったESP32同士の通信には、学校Wi-Fi、校内LAN、イン
 - **Web Serial非対応のブラウザ**：ChromeまたはEdgeなど、Web Serialに対応したChromium系ブラウザで開いてください。
 - **USBケーブル・ポートが見つからない**：ESP32-WROOM-32がUSBで接続されているか確認し、ブラウザのポート選択画面をもう一度開いてください。充電専用のケーブルではデータ通信できません。
 - **シリアルポートが他アプリで使用中**：Arduino IDEのシリアルモニターや別のEditorを閉じ、再度接続します。同じUSBポートを複数のアプリから同時に使わないでください。
-- **Firmwareが未書き込み、または古い**：[Firmware Installer](https://davinichi.github.io/firmware/)からESP32-WROOM-32へFirmware v0.1.7を書き込み、その後Editorから接続します。書き込み後の確認には、接続から`SYS:STATUS`を実行し、`SYS:READY:OK`を含む応答を確認します。
+- **Firmwareが未書き込み、または古い**：[Firmware Installer](https://davinichi.github.io/firmware/)からESP32-WROOM-32へFirmware v0.1.8を書き込み、その後Editorから接続します。書き込み後の確認には、接続から`SYS:STATUS`を実行し、`SYS:READY:OK`を含む応答を確認します。
 - **Installerを開けない／書き込みを開始できない**：InstallerはHTTPSまたはlocalhostで開く必要があります。公開InstallerのURLを使ってください。Web Serial非対応ブラウザでは書き込みできません。
 - **対象ボードが異なる**：このInstallerが対象とするのはESP32-WROOM-32です。ESP32 Dev ModuleはArduino IDEで使用するボード選択名であり、別のESP32ボードへの対応を示すものではありません。
 
@@ -111,4 +111,4 @@ ESP-NOWを使ったESP32同士の通信には、学校Wi-Fi、校内LAN、イン
 - **ESP32 OLED** でSSD1306 OLEDに文字を表示する
 - **ESP32 Ultrasonic** でHC-SR04の距離を測る（ECHO信号はESP32に入れる前に3.3 V以下へ下げてください）
 - **ESP32 ESP-NOW** で別のESP32と送受信する
-- [Firmware v0.1.7リリースノート](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7)と[README](../../README.md)を確認する
+- [Firmware v0.1.8リリースノート](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8)と[README](../../README.md)を確認する
