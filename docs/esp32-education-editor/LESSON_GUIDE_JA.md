@@ -1,6 +1,6 @@
 # 授業・教育利用ガイド
 
-このガイドは、ESP32 Education Editor v0.6とFirmware v0.1.7を使った授業や学習活動を組み立てるための考え方と課題例を紹介します。特定の学年、授業時間、実施実績を前提にせず、利用する機器や学習者の経験に合わせて調整してください。操作手順は[Getting Started](GETTING_STARTED_JA.md)を参照してください。
+このガイドは、ESP32 Education Editor v0.6とFirmware v0.1.8を使った授業や学習活動を組み立てるための考え方と課題例を紹介します。特定の学年、授業時間、実施実績を前提にせず、利用する機器や学習者の経験に合わせて調整してください。操作手順は[Getting Started](GETTING_STARTED_JA.md)を参照してください。
 
 ## 対象と目的
 
@@ -90,7 +90,7 @@ ESP-NOWの課題では、送信側と受信側を分担します。送信側が�
 
 ## ESP-NOWを使ったボード間通信
 
-ESP-NOWでは、2台以上のESP32間でブロードキャストやMACアドレス指定の通信を試せます。通信するボードは同じESP-NOWチャンネルを使用します。Firmware v0.1.7の起動時チャンネルは1で、設定したチャンネルは再起動すると1へ戻ります。
+ESP-NOWでは、2台以上のESP32間でブロードキャストやMACアドレス指定の通信を試せます。通信するボードは同じESP-NOWチャンネルを使用します。Firmware v0.1.8の起動時チャンネルは1で、設定したチャンネルは再起動すると1へ戻ります。
 
 ボード間のESP-NOW通信には学校Wi-Fi、校内LAN、インターネット接続は必要ありません。一方、公開EditorとFirmware InstallerをWebから読み込むにはインターネット接続が必要で、Editorと各ESP32の接続はUSB / Web Serialです。ページを読み込んだ後に完全オフラインで使えるとは断定しません。
 
@@ -109,7 +109,7 @@ ESP-NOWでは、2台以上のESP32間でブロードキャストやMACアドレ�
 
 ## 授業前に教師が確認する事項
 
-- 使用するボードがESP32-WROOM-32で、Firmware v0.1.7が書き込まれている。
+- 使用するボードがESP32-WROOM-32で、Firmware v0.1.8が書き込まれている。
 - Chrome / EdgeなどWeb Serial対応ブラウザで公開EditorとFirmware Installerを開ける。
 - EditorとInstallerのWeb読み込みに必要なインターネット接続がある。
 - USBケーブル、ポート選択、Editorからの接続を事前に確認する。
@@ -130,4 +130,4 @@ ESP-NOWでは、2台以上のESP32間でブロードキャストやMACアドレ�
 
 - [Getting Started：初期設定と最初のプログラム](GETTING_STARTED_JA.md)
 - [README：プロジェクト概要](../../README.md)
-- [Firmware v0.1.7リリースノート](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7)
+- [Firmware v0.1.8リリースノート](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8)
