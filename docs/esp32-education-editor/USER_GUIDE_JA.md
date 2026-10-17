@@ -4,7 +4,7 @@
 
 ## 1. ESP32 Education Editorとは
 
-ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで操作する教育向けプログラミング環境です。ESP32側にはFirmware v0.1.7を書き込み、EditorからUSB / Web Serialで命令を送ります。
+ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで操作する教育向けプログラミング環境です。ESP32側にはFirmware v0.1.8を書き込み、EditorからUSB / Web Serialで命令を送ります。
 
 - Editor: **v0.6**
 - Firmware: **v0.1.7**
@@ -152,7 +152,7 @@ ESP-NOWはESP32同士が直接通信する仕組みです。
 最初に次を確認してください。
 
 1. 対象ボードがESP32-WROOM-32か
-2. Firmware v0.1.7を書き込んだか
+2. Firmware v0.1.8を書き込んだか
 3. Chrome / Edgeを使っているか
 4. データ通信可能なUSBケーブルか
 5. シリアルポートを他アプリが使用していないか
