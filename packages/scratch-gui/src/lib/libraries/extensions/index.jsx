@@ -68,6 +68,12 @@ import esp32EnvironmentIconURL from './esp32eduenvironment/esp32eduenvironment.s
 import esp32EnvironmentInsetIconURL from './esp32eduenvironment/esp32eduenvironment-small.svg';
 import esp32DataIconURL from './esp32edudata/esp32edudata.svg';
 import esp32DataInsetIconURL from './esp32edudata/esp32edudata-small.svg';
+import esp32edubme280IconURL from './esp32edubme280/esp32edubme280.svg';
+import esp32edubme280InsetIconURL from './esp32edubme280/esp32edubme280-small.svg';
+import esp32eduina219IconURL from './esp32eduina219/esp32eduina219.svg';
+import esp32eduina219InsetIconURL from './esp32eduina219/esp32eduina219-small.svg';
+import esp32edui2cIconURL from './esp32edui2c/esp32edui2c.svg';
+import esp32edui2cInsetIconURL from './esp32edui2c/esp32edui2c-small.svg';
 // ESP32_EDUCATION_V02_IMPORT_END
 export default [
     // ESP32_EDUCATION_V02_CARD_BEGIN
@@ -245,6 +251,66 @@ export default [
             defaultMessage="Split CSV data, extract parts of text, and join strings."
             description="Data processing description"
             id="gui.extension.esp32edudata.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
+    },
+    {
+        name: <FormattedMessage
+            defaultMessage="ESP32 BME280"
+            description="ESP32 extension"
+            id="gui.extension.esp32edubme280.name"
+        />,
+        extensionId: 'esp32edubme280',
+        collaborator: 'davinichi',
+        iconURL: esp32edubme280IconURL,
+        insetIconURL: esp32edubme280InsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Read BME280 measurements over the shared I2C bus."
+            description="ESP32 extension description"
+            id="gui.extension.esp32edubme280.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
+    },
+    {
+        name: <FormattedMessage
+            defaultMessage="ESP32 INA219"
+            description="ESP32 extension"
+            id="gui.extension.esp32eduina219.name"
+        />,
+        extensionId: 'esp32eduina219',
+        collaborator: 'davinichi',
+        iconURL: esp32eduina219IconURL,
+        insetIconURL: esp32eduina219InsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Read INA219 measurements over the shared I2C bus."
+            description="ESP32 extension description"
+            id="gui.extension.esp32eduina219.description"
+        />,
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        internetConnectionRequired: false
+    },
+    {
+        name: <FormattedMessage
+            defaultMessage="ESP32 I2C Scanner"
+            description="ESP32 extension"
+            id="gui.extension.esp32edui2c.name"
+        />,
+        extensionId: 'esp32edui2c',
+        collaborator: 'davinichi',
+        iconURL: esp32edui2cIconURL,
+        insetIconURL: esp32edui2cInsetIconURL,
+        description: <FormattedMessage
+            defaultMessage="Find device addresses on the shared I2C bus."
+            description="ESP32 extension description"
+            id="gui.extension.esp32edui2c.description"
         />,
         featured: true,
         disabled: false,

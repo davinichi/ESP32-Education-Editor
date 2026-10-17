@@ -9,7 +9,8 @@
                 "refresh": "refresh ESP32 status",
                 "status": "ESP32 status",
                 "mac": "ESP32 MAC address",
-                "channel": "ESP32 Wi-Fi channel"
+                "channel": "ESP32 Wi-Fi channel",
+                "firmwareVersion": "ESP32 Firmware version"
             },
             "card": "Add this extension first to connect to ESP32 using USB/Web Serial."
         },
@@ -120,6 +121,38 @@
                 "joinWith": "join [A] and [B] with [SEP]"
             },
             "card": "Split CSV data, extract parts of text, and join strings."
+        },
+        "esp32edubme280": {
+            "name": "ESP32 BME280",
+            "blocks": {
+                "init": "initialize BME280 at address [ADDRESS]",
+                "temperature": "BME280 temperature (°C)",
+                "humidity": "BME280 humidity (%)",
+                "pressure": "BME280 pressure (hPa)",
+                "status": "BME280 status"
+            },
+            "card": "Read BME280 measurements over the shared I2C bus."
+        },
+        "esp32eduina219": {
+            "name": "ESP32 INA219",
+            "blocks": {
+                "init": "initialize INA219 at address [ADDRESS]",
+                "voltage": "INA219 bus voltage (V)",
+                "current": "INA219 current (mA)",
+                "power": "INA219 power (mW)",
+                "shunt": "INA219 shunt voltage (mV)",
+                "status": "INA219 status"
+            },
+            "card": "Read INA219 measurements over the shared I2C bus."
+        },
+        "esp32edui2c": {
+            "name": "ESP32 I2C Scanner",
+            "blocks": {
+                "scan": "scan I2C devices",
+                "result": "I2C scan results",
+                "found": "I2C address [ADDRESS] found?"
+            },
+            "card": "Find device addresses on the shared I2C bus."
         }
     },
     "baseline": {
@@ -164,6 +197,11 @@
                     "opcode": "channel",
                     "blockType": "reporter",
                     "text": "ESP32のWi-Fiチャンネル"
+                },
+                {
+                    "opcode": "firmwareVersion",
+                    "blockType": "reporter",
+                    "text": "ESP32のFirmwareバージョン"
                 }
             ]
         },
@@ -954,6 +992,155 @@
                     }
                 }
             ]
+        },
+        "esp32edui2c": {
+            "id": "esp32edui2c",
+            "name": "ESP32 I2Cスキャナー",
+            "color1": "#5CB1D6",
+            "color2": "#3E8FB0",
+            "color3": "#32718C",
+            "blocks": [
+                {
+                    "opcode": "scan",
+                    "blockType": "command",
+                    "text": "I2Cデバイスをスキャンする"
+                },
+                {
+                    "opcode": "result",
+                    "blockType": "reporter",
+                    "text": "I2Cスキャン結果"
+                },
+                {
+                    "opcode": "found",
+                    "blockType": "Boolean",
+                    "text": "I2Cアドレス [ADDRESS] は見つかった？",
+                    "arguments": {
+                        "ADDRESS": {
+                            "type": "string",
+                            "defaultValue": "0x40"
+                        }
+                    }
+                }
+            ]
+        },
+        "esp32edubme280": {
+            "id": "esp32edubme280",
+            "name": "ESP32 BME280",
+            "color1": "#5CB1D6",
+            "color2": "#3E8FB0",
+            "color3": "#32718C",
+            "blocks": [
+                {
+                    "opcode": "init",
+                    "blockType": "command",
+                    "text": "BME280 をアドレス [ADDRESS] で初期化",
+                    "arguments": {
+                        "ADDRESS": {
+                            "type": "string",
+                            "menu": "addresses",
+                            "defaultValue": "0x76"
+                        }
+                    }
+                },
+                {
+                    "opcode": "temperature",
+                    "blockType": "reporter",
+                    "text": "BME280 温度（℃）"
+                },
+                {
+                    "opcode": "humidity",
+                    "blockType": "reporter",
+                    "text": "BME280 湿度（％）"
+                },
+                {
+                    "opcode": "pressure",
+                    "blockType": "reporter",
+                    "text": "BME280 気圧（hPa）"
+                },
+                {
+                    "opcode": "status",
+                    "blockType": "reporter",
+                    "text": "BME280の状態"
+                }
+            ],
+            "menus": {
+                "addresses": {
+                    "acceptReporters": true,
+                    "items": [
+                        "0x76",
+                        "0x77"
+                    ]
+                }
+            }
+        },
+        "esp32eduina219": {
+            "id": "esp32eduina219",
+            "name": "ESP32 INA219",
+            "color1": "#5CB1D6",
+            "color2": "#3E8FB0",
+            "color3": "#32718C",
+            "blocks": [
+                {
+                    "opcode": "init",
+                    "blockType": "command",
+                    "text": "INA219 をアドレス [ADDRESS] で初期化",
+                    "arguments": {
+                        "ADDRESS": {
+                            "type": "string",
+                            "menu": "addresses",
+                            "defaultValue": "0x40"
+                        }
+                    }
+                },
+                {
+                    "opcode": "voltage",
+                    "blockType": "reporter",
+                    "text": "INA219 バス電圧（V）"
+                },
+                {
+                    "opcode": "current",
+                    "blockType": "reporter",
+                    "text": "INA219 電流（mA）"
+                },
+                {
+                    "opcode": "power",
+                    "blockType": "reporter",
+                    "text": "INA219 電力（mW）"
+                },
+                {
+                    "opcode": "shunt",
+                    "blockType": "reporter",
+                    "text": "INA219 シャント電圧（mV）"
+                },
+                {
+                    "opcode": "status",
+                    "blockType": "reporter",
+                    "text": "INA219の状態"
+                }
+            ],
+            "menus": {
+                "addresses": {
+                    "acceptReporters": true,
+                    "items": [
+                        "0x40",
+                        "0x41",
+                        "0x42",
+                        "0x43",
+                        "0x44",
+                        "0x45",
+                        "0x46",
+                        "0x47",
+                        "0x48",
+                        "0x49",
+                        "0x4A",
+                        "0x4B",
+                        "0x4C",
+                        "0x4D",
+                        "0x4E",
+                        "0x4F"
+                    ]
+                }
+            }
         }
     },
     "japanese": {
@@ -1046,6 +1233,31 @@
         "esp32edudata.substring": "文字列 [TEXT] の左から [START] 文字目から [COUNT] 文字を取り出す",
         "esp32edudata.joinWith": "文字列 [A] と [B] を [SEP] でつなぐ",
         "gui.extension.esp32edudata.name": "データ処理",
-        "gui.extension.esp32edudata.description": "CSV分解と文字列の切り出し・結合を行います。"
+        "gui.extension.esp32edudata.description": "CSV分解と文字列の切り出し・結合を行います。",
+        "esp32edubme280.init": "BME280 をアドレス [ADDRESS] で初期化",
+        "esp32edubme280.temperature": "BME280 温度（℃）",
+        "esp32edubme280.humidity": "BME280 湿度（％）",
+        "esp32edubme280.pressure": "BME280 気圧（hPa）",
+        "esp32edubme280.status": "BME280の状態",
+        "esp32edubme280.name": "ESP32 BME280",
+        "esp32eduina219.init": "INA219 をアドレス [ADDRESS] で初期化",
+        "esp32eduina219.voltage": "INA219 バス電圧（V）",
+        "esp32eduina219.current": "INA219 電流（mA）",
+        "esp32eduina219.power": "INA219 電力（mW）",
+        "esp32eduina219.shunt": "INA219 シャント電圧（mV）",
+        "esp32eduina219.status": "INA219の状態",
+        "esp32eduina219.name": "ESP32 INA219",
+        "esp32edui2c.name": "ESP32 I2Cスキャナー",
+        "esp32edui2c.scan": "I2Cデバイスをスキャンする",
+        "esp32edui2c.result": "I2Cスキャン結果",
+        "esp32edui2c.found": "I2Cアドレス [ADDRESS] は見つかった？",
+        "esp32educonnection.firmwareVersion": "ESP32のFirmwareバージョン",
+        "esp32educonnection.versionUnknown": "不明（Firmware v1.0.0を推奨）",
+        "gui.extension.esp32edubme280.name": "ESP32 BME280",
+        "gui.extension.esp32edubme280.description": "BME280で温度・湿度・気圧を測定します。",
+        "gui.extension.esp32eduina219.name": "ESP32 INA219",
+        "gui.extension.esp32eduina219.description": "INA219でバス電圧・電流・電力を測定します。",
+        "gui.extension.esp32edui2c.name": "ESP32 I2Cスキャナー",
+        "gui.extension.esp32edui2c.description": "共通I2Cバスに接続したデバイスのアドレスを調べます。"
     }
 }

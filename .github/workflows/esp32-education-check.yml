@@ -23,10 +23,15 @@ jobs:
       - name: Check ESP32 extension JavaScript syntax
         shell: bash
         run: |
-          node --check packages/scratch-vm/src/extensions/esp32education_shared/transport.js
-          for f in packages/scratch-vm/src/extensions/scratch3_esp32edu*/index.js; do
+          for f in packages/scratch-vm/src/extensions/esp32education_shared/*.js packages/scratch-vm/src/extensions/scratch3_esp32edu*/index.js; do
             node --check "$f"
           done
 
       - name: Build monorepo
         run: npm run build
+
+      - name: ESP32 protocol, saved-project and language regressions
+        run: npm exec --workspace packages/scratch-vm -- tap --disable-coverage test/integration/esp32-*.js
+
+      - name: ESP32 GUI language regressions
+        run: npm exec --workspace packages/scratch-gui -- jest --runInBand --runTestsByPath test/unit/reducers/esp32-locales.test.jsx test/unit/components/esp32-menu-i18n.test.jsx test/unit/util/esp32-about.test.js

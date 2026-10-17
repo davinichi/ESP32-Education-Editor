@@ -1,6 +1,6 @@
 /**
- * Scratch ESP32 Education v0.4 development
- * 7個の拡張カテゴリーから共用する Web Serial 通信モジュール。
+ * Scratch ESP32 Education v1.0
+ * ESP32拡張カテゴリーから共用する Web Serial 通信モジュール。
  *
  * 1台のESP32に対して複数カテゴリーが別々のシリアルポートを開かないよう、
  * Scratch runtime ごとに Transport を1つだけ生成して共有します。
@@ -42,6 +42,7 @@ class ESP32EducationTransport {
         this.listeners = new Set();
         // SYS:READY:で受信した最新のESP32状態です。
         this.ready = '';
+        this.firmwareVersion = '';
         // SYS:MAC:で受信したESP32自身のMACアドレスです。
         this.mac = '';
         // SYS:CH:で受信したWi-Fiチャンネルです。
@@ -49,6 +50,7 @@ class ESP32EducationTransport {
         // 接続・送信などで発生した最後のエラー文字列です。
         this.lastError = '';
         // Prevent duplicate cleanup when multiple disconnect signals arrive together.
+        this._requestQueue = Promise.resolve();
         this._cleanupPromise = null;
         // Register the browser-level disconnect event only once.
         this._serialDisconnectListenerInstalled = false;
@@ -98,6 +100,7 @@ class ESP32EducationTransport {
     /** Clear values that belong to the previously connected ESP32. */
     clearDeviceState () {
         this.ready = '';
+        this.firmwareVersion = '';
         this.mac = '';
         this.channel = '';
         this.readBuffer = '';
@@ -109,6 +112,7 @@ class ESP32EducationTransport {
         this.connected = false;
         this.keepReading = false;
         this.clearDeviceState();
+        this.notify('SYS:DISCONNECTED');
 
         if (this._cleanupPromise) {
             await this._cleanupPromise;
@@ -181,7 +185,7 @@ class ESP32EducationTransport {
             void this.readLoop();
             await sleep(1500);
             if (!this.connected) throw new Error(this.lastError || 'USB communication disconnected.');
-            await this.sendLine('SYS:STATUS');
+            await this.refreshStatus();
         } catch (error) {
             const message = this.lastError || (error && error.message ? error.message : String(error));
             if (this.port || this.reader || this.writer || this.connected) {
@@ -230,6 +234,8 @@ class ESP32EducationTransport {
                     if (!line) continue;
                     if (line.startsWith('SYS:READY:')) this.ready = line.substring(10);
                     else if (line.startsWith('SYS:MAC:')) this.mac = line.substring(8);
+                    else if (line.startsWith('SYS:VERSION:')) this.firmwareVersion = line.substring(12);
+                    else if (line === 'SYS:UNKNOWN:SYS:VERSION') this.firmwareVersion = '';
                     else if (line.startsWith('SYS:CH:')) this.channel = line.substring(7);
                     this.notify(line);
                 }
@@ -270,11 +276,41 @@ class ESP32EducationTransport {
     }
 
     /**
-     * ESP32へ現在状態の送信を要求します。
-     * @returns {Promise<void>} 送信完了時に解決します。
+     * Queue commands so parallel Scratch scripts cannot mix replies.
+     * @param {string} command Serial command without a line ending.
+     * @param {function(string): boolean} matches Predicate identifying the expected response.
+     * @param {number} timeout Maximum response wait in milliseconds.
+     * @returns {Promise<string>} The matching response line.
+     */
+    request (command, matches, timeout = 3000) {
+        const run = () => new Promise((resolve, reject) => {
+            const pendingRequest = {timer: null, remove: null};
+            const finish = (error, line) => {
+                clearTimeout(pendingRequest.timer);
+                pendingRequest.remove();
+                if (error) reject(error);
+                else resolve(line);
+            };
+            pendingRequest.remove = this.addListener(line => {
+                if (line === 'SYS:DISCONNECTED') finish(new Error('DISCONNECTED'));
+                else if (line === `SYS:UNKNOWN:${command}`) finish(new Error('UNSUPPORTED_FIRMWARE'));
+                else if (matches(line)) finish(null, line);
+            });
+            pendingRequest.timer = setTimeout(() => finish(new Error('TIMEOUT')), timeout);
+            this.sendLine(command).catch(error => finish(error));
+        });
+        const pending = this._requestQueue.then(run);
+        this._requestQueue = pending.catch(() => {});
+        return pending;
+    }
+
+    /**
+     * Request current status and Firmware identity without requiring version support.
+     * @returns {Promise<void>} Resolves after both commands are sent.
      */
     async refreshStatus () {
         await this.sendLine('SYS:STATUS');
+        await this.sendLine('SYS:VERSION');
     }
 }
 

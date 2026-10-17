@@ -88,6 +88,15 @@ class Scratch3ESP32ConnectionBlocks {
                         default: 'ESP32 Wi-Fi channel',
                         description: 'ESP32 Connection block'
                     })
+                },
+                {
+                    opcode: 'firmwareVersion',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32educonnection.firmwareVersion',
+                        default: 'ESP32 Firmware version',
+                        description: 'ESP32 Education block'
+                    })
                 }
             ]
         };
@@ -106,6 +115,13 @@ class Scratch3ESP32ConnectionBlocks {
     /** ESP32自身のMACアドレスを返します。 */
     mac () { return this.transport.mac; }
     /** ESP32が使用中のWi-Fiチャンネルを返します。 */
+    firmwareVersion () {
+        return this.transport.firmwareVersion || formatMessage({
+            id: 'esp32educonnection.versionUnknown',
+            default: 'Unknown (Firmware v1.0.0 recommended)',
+            description: 'Firmware without version support'
+        });
+    }
     channel () { return this.transport.channel; }
 }
 
