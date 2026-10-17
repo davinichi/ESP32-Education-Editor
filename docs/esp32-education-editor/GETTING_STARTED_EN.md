@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide walks through connecting an ESP32-WROOM-32 to ESP32 Education Editor v0.6 with Firmware v0.1.7, then blinking an LED using GPIO.
+This guide walks through connecting an ESP32-WROOM-32 to ESP32 Education Editor v0.6 with Firmware v0.1.8, then blinking an LED using GPIO.
 
 ## 1. What you need
 
@@ -19,7 +19,7 @@ For feature and communication details, see the [Firmware Guide](FIRMWARE_GUIDE_E
 1. Connect the ESP32-WROOM-32 to your PC or Chromebook over USB.
 2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) in Chrome or Edge. The public page is served over HTTPS.
 3. Click **Connect to ESP32 and install v0.1.7**, then select the ESP32 USB serial port from the list.
-4. Follow the on-screen instructions to complete installation of Firmware v0.1.7.
+4. Follow the on-screen instructions to complete installation of Firmware v0.1.8.
 
 The Installer writes prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries. Close Arduino IDE's Serial Monitor, the Editor, or any other application using the ESP32 USB port before installation.
 
@@ -41,7 +41,7 @@ If the serial port does not appear, check the USB connection, close applications
 
 ## 6. Make your first program
 
-This example blinks an LED connected to GPIO23, turning it on and off once per second. GPIO23 is included in the ESP32 GPIO extension's pin menu, and Firmware v0.1.7 supports GPIO digital output.
+This example blinks an LED connected to GPIO23, turning it on and off once per second. GPIO23 is included in the ESP32 GPIO extension's pin menu, and Firmware v0.1.8 supports GPIO digital output.
 
 ### Wire the LED
 
@@ -89,7 +89,7 @@ The Editor has 9 categories and 49 public blocks. One hidden compatibility block
 
 ## 8. About ESP-NOW
 
-ESP-NOW communication between ESP32 boards does not require school Wi-Fi, a school LAN, or an internet connection. The ESP32 boards communicating with each other must use the same ESP-NOW channel. Firmware v0.1.7 starts on channel 1, and the selected channel resets to 1 after a restart.
+ESP-NOW communication between ESP32 boards does not require school Wi-Fi, a school LAN, or an internet connection. The ESP32 boards communicating with each other must use the same ESP-NOW channel. Firmware v0.1.8 starts on channel 1, and the selected channel resets to 1 after a restart.
 
 An internet connection is required to load the Public Editor and Firmware Installer from the web. The Editor connects to the ESP32 over USB / Web Serial. This guide does not guarantee fully offline use after the pages have loaded.
 
@@ -100,7 +100,7 @@ For more troubleshooting steps, see [FAQ / Troubleshooting](FAQ_EN.md).
 - **Browser does not support Web Serial:** Open the Editor or Installer in a Web Serial-compatible Chromium browser, such as Chrome or Edge.
 - **USB cable or port is not detected:** Check that the ESP32-WROOM-32 is connected over USB, then reopen the browser's port picker. A charge-only cable cannot carry data.
 - **Serial port is in use by another application:** Close Arduino IDE's Serial Monitor, another Editor session, or any other application using the port, then connect again. Do not use the same USB port from multiple applications at once.
-- **Firmware is missing or outdated:** Use the [Firmware Installer](https://davinichi.github.io/firmware/) to install Firmware v0.1.7 on ESP32-WROOM-32, then connect from the Editor. To verify the installation, run `SYS:STATUS` from the connection extension and check that the response includes `SYS:READY:OK`.
+- **Firmware is missing or outdated:** Use the [Firmware Installer](https://davinichi.github.io/firmware/) to install Firmware v0.1.8 on ESP32-WROOM-32, then connect from the Editor. To verify the installation, run `SYS:STATUS` from the connection extension and check that the response includes `SYS:READY:OK`.
 - **Installer will not open or start installation:** The Installer must be opened over HTTPS or on localhost. Use the public Installer URL. Installation will not work in a browser without Web Serial support.
 - **The board is not the target model:** The Installer targets ESP32-WROOM-32. ESP32 Dev Module is the Arduino IDE board selection name; it does not indicate support for other ESP32 boards.
 
@@ -111,4 +111,4 @@ For more troubleshooting steps, see [FAQ / Troubleshooting](FAQ_EN.md).
 - Display text on an SSD1306 OLED with **ESP32 OLED**.
 - Measure distance with an HC-SR04 using **ESP32 Ultrasonic** (reduce its ECHO signal to 3.3 V or less before it reaches an ESP32 input).
 - Send and receive messages with another ESP32 using **ESP32 ESP-NOW**.
-- Read the [Firmware v0.1.7 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.7) and the [README](../../README_EN.md).
+- Read the [Firmware v0.1.8 release notes](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8) and the [README](../../README_EN.md).
