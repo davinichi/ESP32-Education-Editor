@@ -10,7 +10,7 @@ The Firmware is the common program that runs on the ESP32. It receives commands 
 
 ## 2. Current Firmware version
 
-The current Firmware is **v0.1.7**. Use it with **Editor v0.6**. The Editor and Firmware have separate version numbers.
+The current Firmware is **v0.1.8**. Use it with **Editor v0.6**. The Editor and Firmware have separate version numbers.
 
 ## 3. Supported board
 
@@ -23,7 +23,7 @@ The standard installation method is the [Firmware Installer](https://davinichi.g
 1. Connect the ESP32-WROOM-32 to a PC or Chromebook over USB.
 2. Open the Firmware Installer. Choose Japanese or English at the top of the page if needed.
 3. Press the install button and select the ESP32 USB serial port from the browser's list.
-4. Follow the on-screen instructions to install Firmware v0.1.7.
+4. Follow the on-screen instructions to install Firmware v0.1.8.
 
 The Installer writes prebuilt firmware from the browser. You do not need to set up Arduino IDE or install additional libraries. The Editor also supports Japanese and English; change its language from **Settings → Language**.
 
@@ -31,7 +31,7 @@ The Installer writes prebuilt firmware from the browser. You do not need to set 
 
 Use a browser with Web Serial support, such as Chrome or Edge, for the Installer and Editor. The Installer must be opened over **HTTPS or localhost**. The public Installer and Editor are served over HTTPS. Connect the ESP32 over USB, and make sure another application, such as Arduino IDE's Serial Monitor, is not using the serial port needed by the Installer or Editor.
 
-## 6. Main features in Firmware v0.1.7
+## 6. Main features in Firmware v0.1.8
 
 | Feature | What the Firmware supports |
 |---|---|
@@ -50,11 +50,11 @@ Environmental index calculations and CSV / text processing belong to the Editor'
 
 The Firmware supports GPIO digital input and output. Use the pins offered in the Editor's ESP32 GPIO category.
 
-PWM runs at **5 kHz** with **8-bit** resolution. The Editor accepts output values from **0 to 100%** and provides a block to stop PWM output. The v0.1.7 release notes list these PWM-capable GPIO pins:
+PWM runs at **5 kHz** with **8-bit** resolution. The Editor accepts output values from **0 to 100%** and provides a block to stop PWM output. The v0.1.8 release notes list these PWM-capable GPIO pins:
 
 `13, 14, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32, 33`
 
-The v0.1.7 release also verifies that PWM can resume after it has been stopped. See the [Firmware v0.1.7 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md) for details.
+Version 0.1.8 keeps PWM restart-after-stop support and also fixes GPIO/LEDC switching when the same pin alternates between digital HIGH/LOW output and PWM. The firmware detaches the generic PWM assignment before switching the pin back to GPIO so PWM can attach again on the next PWM command. See the [Firmware v0.1.8 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md) for details.
 
 ## 8. Servo
 
@@ -62,9 +62,9 @@ The ESP32 Servo category can attach servo output to a GPIO, set an angle, and de
 
 ## 9. HC-SR04 Ultrasonic
 
-The ESP32 Ultrasonic category lets you set the TRIG / ECHO GPIO pins and read distance in centimeters. The test configuration listed in the v0.1.7 release notes uses GPIO26 for TRIG and GPIO34 for ECHO.
+The ESP32 Ultrasonic category lets you set the TRIG / ECHO GPIO pins and read distance in centimeters. The test configuration listed in the v0.1.8 release notes uses GPIO26 for TRIG and GPIO34 for ECHO.
 
-The HC-SR04 ECHO output is approximately 5 V. **Do not input 5 V directly to an ESP32 pin. Keep the ESP32 input at or below 3.3 V.** The release notes show a voltage-divider example with a 1 kΩ resistor between ECHO and the input, and a 2 kΩ resistor between the input and GND. See the [Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md) before wiring.
+The HC-SR04 ECHO output is approximately 5 V. **Do not input 5 V directly to an ESP32 pin. Keep the ESP32 input at or below 3.3 V.** The release notes show a voltage-divider example with a 1 kΩ resistor between ECHO and the input, and a 2 kΩ resistor between the input and GND. See the [Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md) before wiring.
 
 ## 10. ESP-NOW
 
@@ -100,4 +100,4 @@ A project file created in the Editor and the Firmware flashed to the ESP32 are s
 
 For connection, serial-port, browser, or installation problems, see [FAQ / Troubleshooting](FAQ_EN.md).
 
-BLE UART is not included in Firmware v0.1.7. For feature and compatibility details, see the [official v0.1.7 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.7.md).
+BLE UART is not included in Firmware v0.1.8. For feature and compatibility details, see the [official v0.1.8 Release Notes](https://davinichi.github.io/firmware/RELEASE_NOTES_firmware-v0.1.8.md).
