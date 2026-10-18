@@ -83,6 +83,26 @@ for (const [Sensor, prefix, data, values] of [
     });
 }
 
+test('BME280 rejects finite out-of-range readings but accepts 100 percent humidity', async t => {
+    const sensor = new BME280({});
+    let reply;
+    sensor.transport.sendLine = async () => {
+        setTimeout(() => sensor.transport.notify(reply), 1);
+    };
+    for (const data of ['180.25:100:-132.03', '180.25:50:1013.25', '23.5:100:-132.03',
+        '-40.01:50:1013.25', '85.01:50:1013.25', '23.5:-0.01:1013.25', '23.5:100.01:1013.25',
+        '23.5:50:299.99', '23.5:50:1100.01']) {
+        reply = `BME280:DATA:${data}`;
+        t.equal(await sensor.temperature(), '', data);
+        t.equal(sensor.status(), 'READ_ERROR', data);
+    }
+    for (const data of ['-40:0:300', '85:100:1100', '23.5:100:1013.25']) {
+        reply = `BME280:DATA:${data}`;
+        t.equal(await sensor.humidity(), Number(data.split(':')[1]), data);
+        t.equal(sensor.status(), 'OK', data);
+    }
+});
+
 test('request queue serializes concurrent scripts, removes timed-out listeners and survives disconnect', async t => {
     const transport = getTransport({});
     const commands = [];

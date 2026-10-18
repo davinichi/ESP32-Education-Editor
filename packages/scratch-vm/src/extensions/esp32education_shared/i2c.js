@@ -42,7 +42,7 @@ class I2CSensor {
             const fields = line.split(':').slice(2);
             const values = fields.map(Number);
             if (fields.length !== this.count || fields.some(value => !value.trim()) ||
-                !values.every(Number.isFinite)) {
+                !values.every(Number.isFinite) || !this.isValidSample(values)) {
                 this.statusValue = 'READ_ERROR';
                 return null;
             }
@@ -58,6 +58,10 @@ class I2CSensor {
         const values = await this.exchange(`${this.sensor}:READ`);
         // An empty reporter distinguishes unavailable readings from a measured zero.
         return values ? values[index] : '';
+    }
+
+    isValidSample () {
+        return true;
     }
 
     status () {

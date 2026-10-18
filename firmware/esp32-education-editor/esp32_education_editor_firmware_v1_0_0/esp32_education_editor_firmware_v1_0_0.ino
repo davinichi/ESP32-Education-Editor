@@ -103,7 +103,11 @@ void processBME280(const String &command) {
     float temperature = bme280.readTemperature();
     float humidity = bme280.readHumidity();
     float pressure = bme280.readPressure() / 100.0F;
-    if (!isfinite(temperature) || !isfinite(humidity) || !isfinite(pressure) || !i2cPresent(bme280Address)) {
+    // Reject values outside Bosch's operating ranges as failed measurements.
+    // A device ACK alone does not prove that every register read succeeded.
+    if (!isfinite(temperature) || !isfinite(humidity) || !isfinite(pressure) ||
+        temperature < -40.0F || temperature > 85.0F || humidity < 0.0F || humidity > 100.0F ||
+        pressure < 300.0F || pressure > 1100.0F || !i2cPresent(bme280Address)) {
       Serial.println("BME280:STATUS:READ_ERROR");
       return;
     }

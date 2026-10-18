@@ -75,6 +75,12 @@ class Scratch3BME280Blocks extends I2CSensor {
         };
     }
 
+    isValidSample ([temperature, humidity, pressure]) {
+        // Bosch specifies -40..85 C, 0..100 percent RH, and 300..1100 hPa.
+        return temperature >= -40 && temperature <= 85 && humidity >= 0 && humidity <= 100 &&
+            pressure >= 300 && pressure <= 1100;
+    }
+
     temperature () {
         return this.readValue(0);
     }

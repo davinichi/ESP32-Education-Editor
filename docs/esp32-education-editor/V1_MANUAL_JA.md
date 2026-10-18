@@ -38,6 +38,10 @@ Adafruitライブラリの既定32V/2A校正（0.1Ωシャントを前提）を�
 
 ## 測定失敗
 
+BME280はメーカー仕様範囲（温度−40～85℃、湿度0～100％、気圧300～1100hPa）を外れた値も`READ_ERROR`として扱います。範囲外の値を上限・下限へ丸めたり、前回の正常値で置き換えたりしません。湿度100％は範囲内なので、それだけでは異常と判定しません。これは不正な測定を正常扱いしないための判定であり、通信や個体の不具合を解消したことを保証するものではありません。
+
+参照: [Bosch BME280データシート](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf)。
+
 新しいセンサーの測定失敗時は数値の代わりに空文字を返し、過去の値を返しません。各「状態」ブロックで`READY`、`OK`、`INVALID_ADDRESS`、`INIT_FAILED`、`NOT_INITIALIZED`、`READ_ERROR`、`TIMEOUT`、`UNSUPPORTED_FIRMWARE`などを確認してください。数値として計算する前に状態が`OK`であることを確認します。USB切断後は手動で再接続・再初期化してください。
 
 ## USB通信仕様（115200 bps、LF終端）

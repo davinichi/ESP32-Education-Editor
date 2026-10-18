@@ -32,6 +32,8 @@ The Adafruit default 32V/2A calibration assumes a 0.1Ω shunt. Check the actual 
 
 ## Errors
 
+BME280 samples outside Bosch's operating ranges (−40–85 °C, 0–100% RH, 300–1100 hPa) produce `READ_ERROR`. Values are neither clamped nor replaced by previous samples. 100% humidity remains valid. These checks reject invalid measurements; they do not establish or fix the physical cause of a communication or device fault. See the [Bosch datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf).
+
 Failed new sensor readings return an empty string, never the previous value. Check the sensor status reporter for `READY`, `OK`, `INVALID_ADDRESS`, `INIT_FAILED`, `NOT_INITIALIZED`, `READ_ERROR`, `TIMEOUT`, or `UNSUPPORTED_FIRMWARE`. Confirm `OK` before numeric calculations. Reconnect and reinitialize manually after unplugging USB.
 
 ## Serial protocol
