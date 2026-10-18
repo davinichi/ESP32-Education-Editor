@@ -1,5 +1,8 @@
 # Firmwareガイド
 
+> **v1.0 / Firmware v1.0.0:** 新カテゴリー・配線・通信仕様は[v1.0マニュアル](V1_MANUAL_JA.md)を参照してください。以下はv0.6 / Firmware v0.1.8の既存機能の資料です。
+
+
 日本語 | [English](FIRMWARE_GUIDE_EN.md)
 
 [README](../../README.md) · [はじめ方](GETTING_STARTED_JA.md) · [FAQ / トラブルシューティング](FAQ_JA.md)

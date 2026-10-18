@@ -1,0 +1,61 @@
+# v1.0 検証結果
+
+実施日: 2026-10-18（日本時間）
+対象: Editor v1.0 / Firmware v1.0.0
+基点main: `5f19d538b862dfb8bffbb1a31cf88665c51de1b8`
+作業ブランチ: `feat/editor-v1-i2c-sensors`
+
+## 実装
+
+I2C Scanner → BME280 → INA219 → SYS:VERSIONの順にFirmwareを追加し、Editor登録・日英表示・ドキュメントを更新しました。12カテゴリー・64公開ブロックです。Firmware v0.1.8のソースは保持し、既存36関数の実装本文が新Firmwareと一致することを確認しました。変更した既存関数はOLEDの共有Wire初期化とコマンド振り分けです。
+
+## 自動確認
+
+| 確認 | 結果 |
+|---|---|
+| `npm ci --cache <作業用キャッシュ>` | 成功。ブラウザー追加ダウンロードを省略 |
+| ルートの`npm run build` | 成功。全workspace・GUI通常版・単独配布版を含む |
+| ESP32 VM回帰テスト | 1,309件成功、失敗0 |
+| ESP32 GUI回帰テスト | 3スイート・5件成功、失敗0 |
+| 新規JS・新規テストのESLint | エラー0、警告0 |
+| 変更GUIファイルのESLint | エラー0。既存Aboutコードの警告3件 |
+| 既存Transport/ConnectionのLint比較 | mainと同じエラー25件・警告15件。新規指摘0 |
+| VM / GUI `i18n:src` | 両方成功。生成される翻訳ソースは既存の除外設定に従う |
+| `git diff --check` | 成功 |
+| Arduino-ESP32 3.2.1 / ESP32 Dev Module | Firmwareコンパイル成功 |
+
+Node.js: 24.18.0、npm: 11.16.0、Arduino CLI: 1.5.1。
+Windowsで既存GUIの`BUILD_TYPE=dev webpack`が実行できなかったため、既存依存の`cross-env`を使う1行の修正を含みます。
+
+GitHubの既存CIは、呼び出し元が再利用テストworkflowの結果記録権限を許可しておらず、実行開始前に停止しました。呼び出し側のテストjobに、既存の結果記録jobが要求している`contents: read`、`checks: write`、`issues: read`、`pull-requests: write`を明示しました。GitHub上の実行結果はPRのChecksで確認してください。
+
+Firmware使用量: プログラム995,010 / 1,310,720 bytes（75%）、グローバル変数45,416 / 327,680 bytes（13%）。
+使用ライブラリ: Adafruit BME280 2.3.0、INA219 1.2.3、BusIO 1.17.4、GFX 1.12.6、SSD1306 2.5.17、Unified Sensor 1.1.15、DHT sensor library 1.4.7。
+
+## 再実行
+
+```sh
+npm ci
+npm run build
+npm exec --workspace packages/scratch-vm -- tap --disable-coverage test/integration/esp32-*.js
+npm exec --workspace packages/scratch-gui -- jest --runInBand --runTestsByPath test/unit/reducers/esp32-locales.test.jsx test/unit/components/esp32-menu-i18n.test.jsx test/unit/util/esp32-about.test.js
+arduino-cli compile --fqbn esp32:esp32:esp32 firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0
+```
+
+新規テストは、スキャン結果・空応答・不正応答・未対応Firmware、センサーの値とエラー、並行要求、タイムアウト、切断時のクリア、分割受信、接続時の自動バージョン要求を確認します。既存テストは日英切替、新旧ブロックの保存・再読込、WBGT互換ブロック、メニューとAboutを確認します。
+
+## 未実施・公開前の確認
+
+### 実機報告に基づく追加修正
+
+ユーザーのIDEASPARK ESP-WROOM-32（OLED一体型）で接続・バージョン表示、0x3C/0x76のスキャン、BME280測定とOLED表示を確認しました。一方、Editor上にも温度180.25℃、湿度100％、気圧−132.03hPaが時々出ると報告されています。OLEDへの表示更新を止めても発生します。原因は未確定で、個体不良と断定していません。
+
+報告値を使う再現テストは修正前に18項目失敗し、メーカー仕様範囲外の値が`OK`として通る判定不足を確認しました。FirmwareとEditorで範囲外の値を`READ_ERROR`とし、数値を丸めず、過去値でも置き換えない修正を追加しました。湿度100％と仕様範囲の境界は引き続き正常値として許容します。
+
+追加修正後: ESP32回帰テスト1,333件成功、新規・変更対象のESLint成功、scratch-vmのビルド成功、Firmwareコンパイル成功（プログラム995,130 bytes、グローバル変数45,416 bytes）。GUI全体ビルドの成功は上記初期実装時の結果です。現在開いているテスト用Editorのページを自動で更新したり、実機へ書き込んだりはしていません。測定異常の発生原因と、修正Firmwareの実機確認は引き続き未解決です。
+
+続報: 3.3V接続を確認。ユーザーによるESP32のUSB再接続と配線確認後、異常値が出なくなったとの報告を受けました。原因を確定したり、個体不良と判断したり、範囲外判定修正による解消と判断したりはしていません。連続測定・電源再投入後の安定性は継続確認です。
+
+BME280の安定動作・測定精度、INA219、実機での旧機能全体の回帰確認は未確認です。全workspaceの`npm test`およびブラウザーE2Eテストは実施していません。Lint全体は既存指摘を含むため「全体Lint成功」とはしていません。
+
+公開サイト・Installer・manifest・GitHub Release/tagは更新していません。既存PDFは旧版の資料として保持し、v1.0の日英マニュアルをMarkdownで追加しました。公開前の具体的な実機確認・配信項目は[リリース情報](RELEASE_NOTES_V1.md)に記載しています。

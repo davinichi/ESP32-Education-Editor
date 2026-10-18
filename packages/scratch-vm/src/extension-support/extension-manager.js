@@ -22,6 +22,9 @@ const builtinExtensions = {
     esp32eduservo: () => require('../extensions/scratch3_esp32eduservo'),
     esp32eduultrasonic: () => require('../extensions/scratch3_esp32eduultrasonic'),
     esp32eduenvironment: () => require('../extensions/scratch3_esp32eduenvironment'),
+    esp32edubme280: () => require('../extensions/scratch3_esp32edubme280'),
+    esp32eduina219: () => require('../extensions/scratch3_esp32eduina219'),
+    esp32edui2c: () => require('../extensions/scratch3_esp32edui2c'),
     esp32edudata: () => require('../extensions/scratch3_esp32edudata'),
     // ESP32_EDUCATION_V02_END
     pen: () => require('../extensions/scratch3_pen'),

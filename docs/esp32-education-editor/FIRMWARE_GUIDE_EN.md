@@ -1,5 +1,8 @@
 # Firmware Guide
 
+> **v1.0 / Firmware v1.0.0:** See the [v1.0 manual](V1_MANUAL_EN.md) for new categories, wiring and protocol. The material below describes the existing v0.6 / Firmware v0.1.8 features.
+
+
 [日本語](FIRMWARE_GUIDE_JA.md) | English
 
 [README](../../README_EN.md) · [Getting Started](GETTING_STARTED_EN.md) · [FAQ / Troubleshooting](FAQ_EN.md)
