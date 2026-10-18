@@ -54,11 +54,22 @@ describe('Menu bar settings', () => {
         await findByXpath('//div[button[div[span[text()="Share"]]] and @data-tip="tooltip"]');
     });
 
-    test('Logo should be clickable', async () => {
+    test('Logo opens the ESP32 About page without leaving the editor', async () => {
         await loadUri(uri);
-        await clickXpath('//img[@alt="Scratch"]');
-        const currentUrl = await driver.getCurrentUrl();
-        await expect(currentUrl).toEqual('https://scratch.mit.edu/');
+        const editorWindow = await driver.getWindowHandle();
+        const editorUrl = await driver.getCurrentUrl();
+        await clickXpath('//img[@alt="ESP32 Education Editor"]');
+        await driver.wait(async () => (await driver.getAllWindowHandles()).length === 2, 5000);
+        const aboutWindow = (await driver.getAllWindowHandles()).find((handle) => handle !== editorWindow);
+        try {
+            await driver.switchTo().window(aboutWindow);
+            expect(await driver.getTitle()).toBe('About ESP32 Education Editor');
+            await findByXpath('//h1[text()="ESP32 Education Editor"]');
+        } finally {
+            await driver.close();
+            await driver.switchTo().window(editorWindow);
+        }
+        expect(await driver.getCurrentUrl()).toBe(editorUrl);
     });
 
     test('(GH#4064) Project name should be editable', async () => {

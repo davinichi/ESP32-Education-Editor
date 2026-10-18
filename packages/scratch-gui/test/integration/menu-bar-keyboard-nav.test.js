@@ -40,7 +40,7 @@ describe('Menu bar keyboard navigation', () => {
     test('can navigate through the menu items with Tab', async () => {
         await clickKey(Key.TAB);
         let activeElement = await driver.switchTo().activeElement();
-        expect(await activeElement.getAttribute('aria-label')).toBe('Home');
+        expect(await activeElement.getAttribute('aria-label')).toBe('About ESP32 Education Editor');
 
         await clickKey(Key.TAB);
         activeElement = await driver.switchTo().activeElement();

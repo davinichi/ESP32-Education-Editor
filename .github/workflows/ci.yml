@@ -6,12 +6,20 @@ on:
   push: # WARNING: Renovate sometimes automerges without PR, so we MUST build and test renovate/** branches
   workflow_call:
     inputs:
+      publish-preview:
+        description: 'Publish playground previews to GitHub Pages'
+        type: boolean
+        default: false
       force-full-build:
         description: 'Build all packages regardless of path filters'
         type: boolean
         default: false
   workflow_dispatch:
     inputs:
+      publish-preview:
+        description: 'Publish playground previews to GitHub Pages'
+        type: boolean
+        default: false
       force-full-build:
         description: 'Build all packages regardless of path filters'
         type: boolean
@@ -102,7 +110,9 @@ jobs:
   preview:
     name: Preview
     needs: build
-    # We don't want to give forks free reign to publish to our GitHub Pages, so run this job only if both:
+    permissions:
+      contents: write
+    # Publishing is opt-in. Keep the repository and branch restrictions even for explicit requests:
     # - any workspace changed (otherwise there's no work to do)
     # - and either
     #   - this is not a PR (so it's some other event that happened in our fork, like a push or merge group)
@@ -110,6 +120,7 @@ jobs:
     # - and
     #   - it's not a Renovate branch (just to reduce noise)
     if: ${{
+        inputs.publish-preview &&
         (needs.build.outputs.any-workspace == 'true') &&
         (
           (!github.event.pull_request) ||
