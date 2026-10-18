@@ -6,6 +6,8 @@
  * Scratch runtime ごとに Transport を1つだけ生成して共有します。
  */
 
+const log = require('../../util/log');
+
 /** runtimeごとの共通Transportを保持します。 */
 const transports = new WeakMap();
 
@@ -83,7 +85,7 @@ class ESP32EducationTransport {
                 callback(line);
             } catch (error) {
                 // 1つの拡張で例外が起きても他の拡張への通知を続けます。
-                console.error(error);
+                log.error('ESP32EducationTransport.notify: listener failed', error);
             }
         }
     }
@@ -128,14 +130,22 @@ class ESP32EducationTransport {
 
         this._cleanupPromise = (async () => {
             if (reader) {
-                try { await reader.cancel(); } catch (error) { /* already closed */ }
-                try { reader.releaseLock(); } catch (error) { /* already released */ }
+                try {
+                    await reader.cancel();
+                } catch (error) { /* already closed */ }
+                try {
+                    reader.releaseLock();
+                } catch (error) { /* already released */ }
             }
             if (writer) {
-                try { writer.releaseLock(); } catch (error) { /* already released */ }
+                try {
+                    writer.releaseLock();
+                } catch (error) { /* already released */ }
             }
             if (port) {
-                try { await port.close(); } catch (error) { /* unplugged ports can already be closed */ }
+                try {
+                    await port.close();
+                } catch (error) { /* unplugged ports can already be closed */ }
             }
         })();
 
@@ -246,7 +256,9 @@ class ESP32EducationTransport {
                 this.lastError = 'USB cable disconnected. Connect the ESP32 again manually.';
             }
         } finally {
-            try { reader.releaseLock(); } catch (error) { /* already released */ }
+            try {
+                reader.releaseLock();
+            } catch (error) { /* already released */ }
             if (this.reader === reader) this.reader = null;
             if (unexpectedDisconnect) {
                 await this.handleUnexpectedDisconnect(this.lastError);

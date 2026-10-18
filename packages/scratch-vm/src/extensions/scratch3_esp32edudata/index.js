@@ -234,12 +234,15 @@ class Scratch3ESP32DataBlocks {
 
     /** 引用符を考慮して1行のCSV文字列を分解します。 */
     parseCSV (text) {
-        const input = String(text); const result = [];
+        const input = String(text);
+        const result = [];
         let current = ''; let inQuotes = false;
         for (let i = 0; i < input.length; i++) {
             const ch = input[i];
             if (ch === '"') {
-                if (inQuotes && input[i + 1] === '"') { current += '"'; i++; } else inQuotes = !inQuotes;
+                if (inQuotes && input[i + 1] === '"') {
+                    current += '"'; i++;
+                } else inQuotes = !inQuotes;
             } else if (ch === ',' && !inQuotes) {
                 result.push(current); current = '';
             } else current += ch;
@@ -249,15 +252,27 @@ class Scratch3ESP32DataBlocks {
         return {success: true, values: result};
     }
     /** CSVを分解して結果を保存します。 */
-    splitCsv (args) { const parsed = this.parseCSV(args.CSV); this.ok = parsed.success; this.csv = parsed.values; }
+    splitCsv (args) {
+        const parsed = this.parseCSV(args.CSV); this.ok = parsed.success; this.csv = parsed.values;
+    }
     /** 指定した1始まりのCSV項目を文字列で返します。 */
-    csvText (args) { const i = Math.max(1, Math.floor(Number(args.INDEX))) - 1; return i < this.csv.length ? this.csv[i] : ''; }
+    csvText (args) {
+        const i = Math.max(1, Math.floor(Number(args.INDEX))) - 1;
+        return i < this.csv.length ? this.csv[i] : '';
+    }
     /** 指定CSV項目を数値へ変換して返します。 */
-    csvNumber (args) { const n = Number(this.csvText(args)); return Number.isFinite(n) ? n : 0; }
+    csvNumber (args) {
+        const n = Number(this.csvText(args));
+        return Number.isFinite(n) ? n : 0;
+    }
     /** CSV項目数を返します。 */
-    csvCount () { return this.csv.length; }
+    csvCount () {
+        return this.csv.length;
+    }
     /** 最後のCSV分解が成功したかを返します。 */
-    csvSucceeded () { return this.ok; }
+    csvSucceeded () {
+        return this.ok;
+    }
     /** Convert a number to a display string with a fixed number of decimal places. */
     formatFixed (args) {
         const value = Number(args.VALUE);
@@ -268,17 +283,38 @@ class Scratch3ESP32DataBlocks {
         return value.toFixed(digits);
     }
     /** 左から指定文字数を取り出します。 */
-    left (args) { const c = Math.max(0, Math.floor(Number(args.COUNT))); return Array.from(String(args.TEXT)).slice(0, c).join(''); }
+    left (args) {
+        const c = Math.max(0, Math.floor(Number(args.COUNT)));
+        return Array.from(String(args.TEXT)).slice(0, c)
+            .join('');
+    }
     /** 右から指定文字数を取り出します。 */
-    right (args) { const c = Math.max(0, Math.floor(Number(args.COUNT))); return c === 0 ? '' : Array.from(String(args.TEXT)).slice(-c).join(''); }
+    right (args) {
+        const c = Math.max(0, Math.floor(Number(args.COUNT)));
+        return c === 0 ? '' : Array.from(String(args.TEXT)).slice(-c)
+            .join('');
+    }
     /** Unicodeコードポイント単位の文字数を返します。 */
-    length (args) { return Array.from(String(args.TEXT)).length; }
+    length (args) {
+        return Array.from(String(args.TEXT)).length;
+    }
     /** 左から1始まりの指定位置以降を返します。 */
-    fromPosition (args) { const s = Math.max(1, Math.floor(Number(args.START))) - 1; return Array.from(String(args.TEXT)).slice(s).join(''); }
+    fromPosition (args) {
+        const s = Math.max(1, Math.floor(Number(args.START))) - 1;
+        return Array.from(String(args.TEXT)).slice(s)
+            .join('');
+    }
     /** 左から1始まりの指定位置から指定文字数を返します。 */
-    substring (args) { const s = Math.max(1, Math.floor(Number(args.START))) - 1; const c = Math.max(0, Math.floor(Number(args.COUNT))); return Array.from(String(args.TEXT)).slice(s, s + c).join(''); }
+    substring (args) {
+        const s = Math.max(1, Math.floor(Number(args.START))) - 1;
+        const c = Math.max(0, Math.floor(Number(args.COUNT)));
+        return Array.from(String(args.TEXT)).slice(s, s + c)
+            .join('');
+    }
     /** 2つの値を指定区切り文字で連結します。 */
-    joinWith (args) { return `${String(args.A)}${String(args.SEP)}${String(args.B)}`; }
+    joinWith (args) {
+        return `${String(args.A)}${String(args.SEP)}${String(args.B)}`;
+    }
 }
 
 module.exports = Scratch3ESP32DataBlocks;

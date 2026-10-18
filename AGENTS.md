@@ -113,6 +113,8 @@ Prettier (currently `task-herder`), run `npm run format` in addition to lint.
 
 ### scratch-vm specifics
 
+- `npm run lint` runs ESLint, including the `format-message` default rules through `@eslint/compat`.
+  Keep message validation in the flat config; the legacy CLI uses an ES2019 parser that cannot parse all VM sources.
 - Extension entry points live in `src/extensions/`. Each extension exports a class with `getInfo()` and block
   implementation methods.
 - i18n strings in extensions are extracted with `format-message`. Run `npm run i18n:src` after changing them.

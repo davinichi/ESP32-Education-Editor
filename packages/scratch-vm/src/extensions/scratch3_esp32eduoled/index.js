@@ -161,9 +161,13 @@ class Scratch3ESP32OLEDBlocks {
     }
 
     /** OLEDを初期化します。 */
-    async init () { this.lastAck = ''; await this.transport.sendLine('OLED:INIT'); await sleep(150); }
+    async init () {
+        this.lastAck = ''; await this.transport.sendLine('OLED:INIT'); await sleep(150);
+    }
     /** OLED画面全体を黒で消去します。 */
-    async clear () { this.lastAck = ''; await this.transport.sendLine('OLED:CLEAR'); }
+    async clear () {
+        this.lastAck = ''; await this.transport.sendLine('OLED:CLEAR');
+    }
     /** 指定矩形を黒で塗りつぶします。 */
     async fillBlack (args) {
         const x0 = Math.round(Number(args.X));
@@ -200,11 +204,17 @@ class Scratch3ESP32OLEDBlocks {
         await this.transport.sendLine(`OLED:TEXT:${String(args.TEXT).replace(/[\r\n]+/g, ' ')}`);
     }
     /** OLED表示テストを実行します。 */
-    async test () { this.lastAck = ''; await this.transport.sendLine('OLED:TEST'); await sleep(100); }
+    async test () {
+        this.lastAck = ''; await this.transport.sendLine('OLED:TEST'); await sleep(100);
+    }
     /** OLEDの状態を返します。 */
-    status () { return this.statusValue; }
+    status () {
+        return this.statusValue;
+    }
     /** OLEDの最後のACK内容を返します。 */
-    ack () { return this.lastAck; }
+    ack () {
+        return this.lastAck;
+    }
 }
 
 module.exports = Scratch3ESP32OLEDBlocks;

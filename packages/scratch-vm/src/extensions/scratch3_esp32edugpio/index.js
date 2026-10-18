@@ -208,9 +208,13 @@ class Scratch3ESP32GPIOBlocks {
     }
 
     /** 指定GPIOの入出力モードを設定します。 */
-    async mode (args) { await this.transport.sendLine(`GPIO:MODE:${args.PIN},${args.MODE}`); }
+    async mode (args) {
+        await this.transport.sendLine(`GPIO:MODE:${args.PIN},${args.MODE}`);
+    }
     /** 指定GPIOへHIGH/LOWを出力します。 */
-    async write (args) { await this.transport.sendLine(`GPIO:WRITE:${args.PIN},${args.STATE}`); }
+    async write (args) {
+        await this.transport.sendLine(`GPIO:WRITE:${args.PIN},${args.STATE}`);
+    }
     /** 指定GPIOへ0～100%のPWMを出力します。 */
     async pwmWrite (args) {
         let percent = Math.round(Number(args.PERCENT));

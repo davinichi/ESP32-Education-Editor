@@ -152,11 +152,17 @@ class Scratch3ESP32ESPNowBlocks {
         await this.transport.sendLine(`ESPNOW:SENDTO:${mac},${message}`);
     }
     /** 最新受信本文を返し、新着フラグを消します。 */
-    received () { const value = this.receivedData; this.newData = false; return value; }
+    received () {
+        const value = this.receivedData; this.newData = false; return value;
+    }
     /** 未読の新着データがあるかを返します。 */
-    hasNew () { return this.newData; }
+    hasNew () {
+        return this.newData;
+    }
     /** 最後のESP-NOW送信結果を返します。 */
-    result () { return this.txResult; }
+    result () {
+        return this.txResult;
+    }
 }
 
 module.exports = Scratch3ESP32ESPNowBlocks;
