@@ -6,9 +6,9 @@
 - I2C Scanner: scan command, results reporter and address-found predicate.
 - BME280: selectable 0x76/0x77, temperature °C, humidity %, pressure hPa and status.
 - BME280: checked initialization/calibration transfers and one complete sample burst; transfer failures return `READ_ERROR` and the next successful read resumes measurements.
-- INA219: selectable 0x40–0x4F, bus voltage V, current mA, power mW, shunt voltage mV and status.
+- INA219 is hidden from the extension picker and excluded from v1.0 release scope because the cause of the reported hardware issue is unresolved. VM registration and firmware support are retained for existing projects.
 - `SYS:VERSION` → `SYS:VERSION:1.0.0`; automatic retrieval and localized connection reporter.
-- Japanese/English blocks and extension cards. 12 categories, 64 public blocks.
+- Japanese/English blocks and extension cards. 11 categories, 58 public blocks.
 - v0.1.8 functionality retained; historical firmware sources unchanged.
 
 [検証結果 / Validation results](CHECK_RESULTS_V1_JA.md)
@@ -24,9 +24,9 @@
 - [x] 初期実装のv1.0.0を書き込み、接続とバージョンを確認（ユーザー報告）。
 - [x] 失敗時の`READ_ERROR`・値の空欄・次回成功時の復帰をEditorの実機ログで確認（381回中、失敗1回、次回復帰）。
 - [ ] 改訂版FirmwareでOLED+BME280を併用し、表示更新・失敗時の表示・初期化後のスキャンを再確認。
-- [ ] OLED+BME280+INA219同時接続でスキャンし、各初期化順・繰り返し初期化後も全機器が動作することを確認。
+- INA219の実機確認・OLED/BME280との同時接続・基準計器との比較は次期対応として保留（v1.0の公開判定対象外）。
 - [ ] I2C機器なし・機器取り外し・別アドレス・不正アドレスの応答を確認。
-- [ ] BME280温湿度・気圧とINA219電圧・電流・電力の実測値を基準計器と比較。
+- [ ] BME280温湿度・気圧の実測値を基準計器と比較。
 - [x] GPIO・PWMの実機動作を確認（ユーザー報告）。
 - [x] DHT11の実機動作を確認（ユーザー報告）。
 - [x] SG90サーボを外部5V・GPIO13で実機確認。GND接続修正後に正常動作したとのユーザー報告。

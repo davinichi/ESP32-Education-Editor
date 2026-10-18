@@ -9,7 +9,7 @@ ESP32 Education Editor is a browser-based, block programming environment for wor
 
 This branch targets **Editor v1.0 / Firmware v1.0.0** and is a release candidate. The public site and Installer are deployed separately; the public Installer may still provide v0.1.8 until v1.0.0 is verified and published. Compile this branch's Firmware source to try the new blocks.
 
-The features come from lesson planning and teaching-material development: measuring, controlling, displaying, communicating, and comparing. Existing GPIO, PWM, DHT, OLED, ESP-NOW, servo, ultrasonic, environmental-index, and data-processing functions are retained, with I2C Scanner, BME280, and INA219 added.
+The features come from lesson planning and teaching-material development: measuring, controlling, displaying, communicating, and comparing. Existing GPIO, PWM, DHT, OLED, ESP-NOW, servo, ultrasonic, environmental-index, and data-processing functions are retained, with I2C Scanner and BME280 added. INA219 is hidden and excluded from the v1.0 release scope while the cause of the reported hardware issue remains unresolved.
 
 - [v1.0 manual and protocol](docs/esp32-education-editor/V1_MANUAL_EN.md)
 - [v1.0 release candidate notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
@@ -35,7 +35,7 @@ The features come from lesson planning and teaching-material development: measur
 
 - Scratch-style block programming
 - USB connection to the ESP32 through Web Serial
-- 64 public blocks across 12 extension categories
+- 58 public blocks across 12 extension categories
 - GPIO digital I/O and PWM
 - DHT11 / DHT22 temperature and humidity sensors, SSD1306 OLED displays, HC-SR04 ultrasonic distance sensors, and servo motors
 - ESP-NOW communication between ESP32 boards
@@ -73,7 +73,6 @@ If another application, such as Arduino IDE's Serial Monitor or another Editor s
 | ESP32 DHT | Read temperature and humidity from DHT11 / DHT22 sensors |
 | ESP32 I2C Scanner | I2C: SDA=21 / SCL=22 |
 | ESP32 BME280 | °C / % / hPa |
-| ESP32 INA219 | V / mA / mW / mV |
 | ESP32 OLED | Display output on SSD1306 OLEDs |
 | ESP32 ESP-NOW | Wireless communication between ESP32 boards |
 | ESP32 Servo | Control servo motors |
@@ -81,7 +80,7 @@ If another application, such as Arduino IDE's Serial Monitor or another Editor s
 | ESP32 Environmental Indices | Calculate environmental indices from temperature and humidity |
 | Data Processing | Process data |
 
-There are 12 categories with 64 public blocks in total.
+There are 11 categories with 58 public blocks in total.
 
 One hidden compatibility block, `WBGT [WBGT] warning level`, remains internally for existing projects. It is not shown in the block palette.
 

@@ -6,7 +6,7 @@ Target: Editor v1.0 / Firmware v1.0.0 on ESP32-WROOM-32 (ESP32 Dev Module). This
 
 ## Connection and compatibility
 
-Compile and flash the v1.0.0 sketch, add ESP32 Connection, then run “connect to ESP32”. The “ESP32 Firmware version” reporter automatically receives `1.0.0` on connection; “refresh ESP32 status” requests it again. The reporter can be shown as a monitor. There are 12 categories and 64 public blocks.
+Compile and flash the v1.0.0 sketch, add ESP32 Connection, then run “connect to ESP32”. The “ESP32 Firmware version” reporter automatically receives `1.0.0` on connection; “refresh ESP32 status” requests it again. The reporter can be shown as a monitor. There are 11 categories and 58 public blocks.
 
 Older firmware without `SYS:VERSION` remains connected and displays “Unknown (Firmware v1.0.0 recommended)”. New I2C features require v1.0.0. Existing GPIO/PWM, DHT, OLED, ESP-NOW, servo and HC-SR04 commands, responses, opcodes and arguments are retained, including the hidden WBGT compatibility block.
 
@@ -24,11 +24,9 @@ Run “scan I2C devices” and read “I2C scan results”, for example `0x3C,0x
 
 Run “initialize BME280 at address [0x76]”; choose 0x76 or 0x77. Read temperature in °C, humidity in %, and pressure in hPa. Pressure is converted from Pa. BMP280 does not provide humidity and is not supported by this category.
 
-## INA219
+## INA219 (excluded from release)
 
-Run “initialize INA219 at address [0x40]”; choose 0x40–0x4F. Read bus voltage V (VIN− relative to GND), current mA, power mW, and shunt voltage mV. Supply-side voltage can be calculated as bus voltage + shunt voltage/1000.
-
-The Adafruit default 32V/2A calibration assumes a 0.1Ω shunt. Check the actual module's shunt and ratings. Each reporter requests a fresh reading; separate reporters do not represent simultaneous samples.
+INA219 is hidden from the extension picker in v1.0 while the cause of the reported hardware issue remains unresolved. VM registration, firmware support and protocol definitions are retained for existing projects and future verification. Existing INA219 blocks remain available in saved projects, but are not a verified release feature.
 
 ## Errors
 

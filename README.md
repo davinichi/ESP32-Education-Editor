@@ -9,7 +9,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 このブランチは **Editor v1.0 / Firmware v1.0.0** のリリース候補です。公開サイトとInstallerの配信版は別管理です。v1.0.0の公開・Installer更新・実機検証が済むまでは、公開Installerがv1.0.0を提供するとは限りません。新機能を試すには、このブランチのソースからFirmwareをコンパイルしてください。
 
-授業設計・教材開発で必要になった「測る・制御する・表示する・通信する・比較する」機能をまとめています。GPIO、PWM、DHT、OLED、ESP-NOW、サーボ、超音波、環境指数、データ処理を維持し、I2C Scanner、BME280、INA219を追加します。
+授業設計・教材開発で必要になった「測る・制御する・表示する・通信する・比較する」機能をまとめています。GPIO、PWM、DHT、OLED、ESP-NOW、サーボ、超音波、環境指数、データ処理を維持し、I2C Scanner、BME280を追加します。INA219は機器の不具合原因が未特定のため非表示とし、v1.0の公開対象から外しています。
 
 - [v1.0 マニュアル・通信仕様](docs/esp32-education-editor/V1_MANUAL_JA.md)
 - [v1.0 リリース候補情報](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
@@ -35,7 +35,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 - Scratchに似たブロックプログラミング環境
 - EditorからWeb Serial経由でESP32へUSB接続
-- 12カテゴリーに分かれた拡張と64個の公開ブロック
+- 11カテゴリーに分かれた拡張と58個の公開ブロック
 - GPIOデジタル入出力とPWM
 - DHT11 / DHT22温湿度センサー、SSD1306 OLED、HC-SR04超音波距離センサー、サーボモーター
 - ESP-NOWによるESP32間通信
@@ -73,7 +73,6 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 | ESP32 DHT | DHT11 / DHT22による温度・湿度の取得 |
 | ESP32 I2C Scanner | I2C: SDA=21 / SCL=22 |
 | ESP32 BME280 | °C / % / hPa |
-| ESP32 INA219 | V / mA / mW / mV |
 | ESP32 OLED | SSD1306 OLED表示 |
 | ESP32 ESP-NOW | ESP32間の無線通信 |
 | ESP32 Servo | サーボモーター制御 |
@@ -81,7 +80,7 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 | ESP32 Environmental Indices | 温度・湿度を用いた環境指数の計算 |
 | Data Processing | データの処理 |
 
-合計12カテゴリー、64個の公開ブロックです。
+合計11カテゴリー、58個の公開ブロックです。
 
 既存プロジェクトとの互換性のため、`WBGT [WBGT] の警戒レベル`ブロックが非表示の互換ブロックとして内部に1個残っています。このブロックはパレットには表示されません。
 
