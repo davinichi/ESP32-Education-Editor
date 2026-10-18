@@ -5,6 +5,22 @@
 基点main: `5f19d538b862dfb8bffbb1a31cf88665c51de1b8`
 作業ブランチ: `feat/editor-v1-i2c-sensors`
 
+## 実機確認の現状
+
+| 機能 | 結果・確認範囲 |
+|---|---|
+| 接続・Firmwareバージョン・I2Cスキャン | ユーザー確認済み。OLED=0x3C、BME280=0x76 |
+| BME280 | 測定と、読み取り失敗時の空欄・次回復帰を実機ログで確認 |
+| OLED | BME280測定値の表示をユーザー確認済み。改訂版での併用再確認は未報告 |
+| GPIO・PWM | 基本動作をユーザー確認済み |
+| DHT11 | ユーザー確認済み。DHT22は未確認 |
+| サーボ | SG90、外部5V・GPIO13。GND接続修正後にユーザー確認済み |
+| HC-SR04 | ユーザー確認済み |
+| ESP-NOW | 基本動作をユーザー確認済み。チャンネル変更・遠隔サーボ等の個別条件は未記録 |
+| INA219 | 実機未確認（ユーザーの手元に未到着） |
+
+基本動作の確認と、各機能のすべての条件・測定精度・長期安定性の確認は区別しています。
+
 ## 実装
 
 I2C Scanner → BME280 → INA219 → SYS:VERSIONの順にFirmwareを追加し、Editor登録・日英表示・ドキュメントを更新しました。12カテゴリー・64公開ブロックです。Firmware v0.1.8のソースは保持し、既存36関数の実装本文が新Firmwareと一致することを確認しました。変更した既存関数はOLEDの共有Wire初期化とコマンド振り分けです。
@@ -15,7 +31,8 @@ I2C Scanner → BME280 → INA219 → SYS:VERSIONの順にFirmwareを追加し�
 |---|---|
 | `npm ci --cache <作業用キャッシュ>` | 成功。ブラウザー追加ダウンロードを省略 |
 | ルートの`npm run build` | 成功。全workspace・GUI通常版・単独配布版を含む |
-| ESP32 VM回帰テスト | 1,309件成功、失敗0 |
+| ESP32 VM回帰テスト | BME280範囲判定追加後の1,333件成功、失敗0 |
+| BME280 Host C++回帰テスト | 通信失敗・受信不足・復帰などの全ケース成功。詳細は下記 |
 | ESP32 GUI回帰テスト | 3スイート・5件成功、失敗0 |
 | 新規JS・新規テストのESLint | エラー0、警告0 |
 | 変更GUIファイルのESLint | エラー0。既存Aboutコードの警告3件 |
@@ -29,8 +46,8 @@ Windowsで既存GUIの`BUILD_TYPE=dev webpack`が実行できなかったため�
 
 GitHubの既存CIは、呼び出し元が再利用テストworkflowの結果記録権限を許可しておらず、実行開始前に停止しました。呼び出し側のテストjobに、既存の結果記録jobが要求している`contents: read`、`checks: write`、`issues: read`、`pull-requests: write`を明示しました。GitHub上の実行結果はPRのChecksで確認してください。
 
-Firmware使用量: プログラム995,010 / 1,310,720 bytes（75%）、グローバル変数45,416 / 327,680 bytes（13%）。
-使用ライブラリ: Adafruit BME280 2.3.0、INA219 1.2.3、BusIO 1.17.4、GFX 1.12.6、SSD1306 2.5.17、Unified Sensor 1.1.15、DHT sensor library 1.4.7。
+最新Firmware使用量: プログラム994,142 / 1,310,720 bytes（75%）、グローバル変数45,376 / 327,680 bytes（13%）。
+使用ライブラリ: INA219 1.2.3、BusIO 1.17.4、GFX 1.12.6、SSD1306 2.5.17、Unified Sensor 1.1.15、DHT sensor library 1.4.7。BME280ドライバーは同梱で、Adafruit BME280 2.3.0由来の補正式を使用します。別途提供した単独診断スケッチはAdafruit BME280 2.3.0を使用します。
 
 ## 再実行
 
@@ -39,6 +56,7 @@ npm ci
 npm run build
 npm exec --workspace packages/scratch-vm -- tap --disable-coverage test/integration/esp32-*.js
 npm exec --workspace packages/scratch-gui -- jest --runInBand --runTestsByPath test/unit/reducers/esp32-locales.test.jsx test/unit/components/esp32-menu-i18n.test.jsx test/unit/util/esp32-about.test.js
+bash firmware/test/run.sh
 arduino-cli compile --fqbn esp32:esp32:esp32 firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0
 ```
 
@@ -66,7 +84,7 @@ ESP32本体交換後の単独診断ログ: 651回、記録区間653.25秒でNACK
 
 改訂版配布後のEditorログ: 381回、0.00～734.61秒。231回目（258.06秒）は温度・湿度・気圧の値がすべて空欄、状態はすべて`READ_ERROR`。232回目（259.18秒）には28.29℃・43.16%・1022.78hPa、全項目`OK`へ復帰しました。他の380回はすべて`OK`で、仕様範囲外の数値はありませんでした。失敗時の値の抑止と次回成功時の復帰をログ上で確認しました。記録は381回であり、600回完了とは扱いません。
 
-旧機能の実機確認: ユーザーからGPIO・PWMとDHT11の動作確認済みとの報告を受けました。SG90サーボも外部5V・GPIO13で、GND接続修正後に正常動作したとの報告を受けています。途中で`SERVO:ERROR:ATTACH`が報告されましたが、この内部出力設定エラーとGND接点不良の因果関係は特定していません。今回サーボ制御コードの変更は行っていません。GPIO↔PWMを同一ピンで繰り返す条件、DHT22、HC-SR04、OLED部分消去、ESP-NOW各操作の確認結果は別途記録します。
+旧機能の実機確認: ユーザーからGPIO・PWMとDHT11の動作確認済みとの報告を受けました。SG90サーボも外部5V・GPIO13で、GND接続修正後に正常動作したとの報告を受けています。HC-SR04とESP-NOWも動作確認済みとの報告を受けました。途中で`SERVO:ERROR:ATTACH`が報告されましたが、この内部出力設定エラーとGND接点不良の因果関係は特定していません。今回サーボ制御コードの変更は行っていません。GPIO↔PWMを同一ピンで繰り返す条件、DHT22、OLED部分消去、ESP-NOWのチャンネル変更・遠隔サーボなどの個別条件は別途記録します。
 
 BME280の長期安定動作・測定精度、改訂版でのOLED併用、INA219、旧機能の残りの実機回帰確認は未確認です。全workspaceの`npm test`およびブラウザーE2Eテストは実施していません。Lint全体は既存指摘を含むため「全体Lint成功」とはしていません。
 
