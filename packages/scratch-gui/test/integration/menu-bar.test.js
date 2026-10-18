@@ -60,7 +60,7 @@ describe('Menu bar settings', () => {
         const editorUrl = await driver.getCurrentUrl();
         await clickXpath('//img[@alt="ESP32 Education Editor"]');
         await driver.wait(async () => (await driver.getAllWindowHandles()).length === 2, 5000);
-        const aboutWindow = (await driver.getAllWindowHandles()).find((handle) => handle !== editorWindow);
+        const aboutWindow = (await driver.getAllWindowHandles()).find(handle => handle !== editorWindow);
         try {
             await driver.switchTo().window(aboutWindow);
             expect(await driver.getTitle()).toBe('About ESP32 Education Editor');
