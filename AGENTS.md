@@ -154,3 +154,5 @@ Review all changes and confirm:
 ## ESP32 Education v1.0
 
 The shared Web Serial transport is in `packages/scratch-vm/src/extensions/esp32education_shared/`. New I2C categories use its queued request/reply API. Preserve all existing extension IDs/opcodes and serial responses. Firmware v1.0.0 is in `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`; previous sketches are historical. Shared I2C uses Wire on GPIO21/22. Protocol and hardware release checks are in `docs/esp32-education-editor/V1_MANUAL_EN.md` and `RELEASE_NOTES_V1.md`.
+
+BME280 uses the bundled `BME280Checked.h` driver, which checks actual transfers and reads a complete sample in one burst. Host regression test commands are in `firmware/test/README.md` and run in the ESP32 Education checks workflow. Keep its Adafruit compensation attribution and BSD license when editing the driver.

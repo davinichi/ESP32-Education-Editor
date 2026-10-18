@@ -38,6 +38,8 @@ Adafruitライブラリの既定32V/2A校正（0.1Ωシャントを前提）を�
 
 ## 測定失敗
 
+BME280は同梱の`BME280Checked.h`で、初期化時の通信と校正データの受信を確認します。測定時は温度・湿度・気圧の元データ8バイトを1回の連続転送で取得し、送信・受信の成否と受信バイト数を確認してから計算します。通信失敗・データ不足では`READ_ERROR`を返し、その回の値を返しません。次の読み取りが成功すれば、再初期化せず測定を再開します。自動再試行で失敗した回を隠すことはしません。
+
 BME280はメーカー仕様範囲（温度−40～85℃、湿度0～100％、気圧300～1100hPa）を外れた値も`READ_ERROR`として扱います。範囲外の値を上限・下限へ丸めたり、前回の正常値で置き換えたりしません。湿度100％は範囲内なので、それだけでは異常と判定しません。これは不正な測定を正常扱いしないための判定であり、通信や個体の不具合を解消したことを保証するものではありません。
 
 参照: [Bosch BME280データシート](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf)。
@@ -59,7 +61,7 @@ BME280はメーカー仕様範囲（温度−40～85℃、湿度0～100％、気
 
 ## ビルドと公開前確認
 
-Arduinoライブラリ: DHT sensor library、Adafruit Unified Sensor、Adafruit GFX Library、Adafruit SSD1306、Adafruit BusIO、Adafruit BME280 Library、Adafruit INA219。Arduino-ESP32 3.2.1を基準とします。
+Arduinoライブラリ: DHT sensor library、Adafruit Unified Sensor、Adafruit GFX Library、Adafruit SSD1306、Adafruit BusIO、Adafruit INA219。Arduino-ESP32 3.2.1を基準とします。BME280用ドライバーは同梱です。スケッチの`.ino`と`BME280Checked.h`を同じフォルダーに置いてください。Adafruit BME280 Libraryは別途提供した単独診断スケッチで使用します。
 
 ```sh
 arduino-cli compile --fqbn esp32:esp32:esp32 firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0

@@ -21,7 +21,7 @@
 #include <Adafruit_GFX.h>
 // SSD1306の画面バッファと表示転送。
 #include <Adafruit_SSD1306.h>
-#include <Adafruit_BME280.h>
+#include "BME280Checked.h"
 #include <Adafruit_INA219.h>
 
 // All I2C devices share Wire; drivers must not change its pins.
@@ -77,7 +77,7 @@ void scanI2C() {
   Serial.println(addresses);
 }
 
-Adafruit_BME280 bme280;
+BME280Checked bme280;
 bool bme280Ready = false;
 uint8_t bme280Address = 0x76;
 
@@ -96,18 +96,8 @@ void processBME280(const String &command) {
       Serial.println("BME280:STATUS:NOT_INITIALIZED");
       return;
     }
-    if (!i2cPresent(bme280Address)) {
-      Serial.println("BME280:STATUS:READ_ERROR");
-      return;
-    }
-    float temperature = bme280.readTemperature();
-    float humidity = bme280.readHumidity();
-    float pressure = bme280.readPressure() / 100.0F;
-    // Reject values outside Bosch's operating ranges as failed measurements.
-    // A device ACK alone does not prove that every register read succeeded.
-    if (!isfinite(temperature) || !isfinite(humidity) || !isfinite(pressure) ||
-        temperature < -40.0F || temperature > 85.0F || humidity < 0.0F || humidity > 100.0F ||
-        pressure < 300.0F || pressure > 1100.0F || !i2cPresent(bme280Address)) {
+    float temperature, humidity, pressure;
+    if (!bme280.readSample(temperature, humidity, pressure)) {
       Serial.println("BME280:STATUS:READ_ERROR");
       return;
     }

@@ -11,6 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: BME280 checked transfers and recovery
+        run: bash firmware/test/run.sh
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

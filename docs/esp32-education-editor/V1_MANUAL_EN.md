@@ -34,6 +34,8 @@ The Adafruit default 32V/2A calibration assumes a 0.1Ω shunt. Check the actual 
 
 BME280 samples outside Bosch's operating ranges (−40–85 °C, 0–100% RH, 300–1100 hPa) produce `READ_ERROR`. Values are neither clamped nor replaced by previous samples. 100% humidity remains valid. These checks reject invalid measurements; they do not establish or fix the physical cause of a communication or device fault. See the [Bosch datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf).
 
+BME280 uses the bundled `BME280Checked.h` driver. Initialization checks communication and calibration transfers. Each measurement reads all eight data bytes in one burst, checks transfer completion and byte counts, then compensates the sample. A failed transfer returns `READ_ERROR` without values; the next successful read resumes measurements without reinitialization. There are no automatic retries that conceal failed samples.
+
 Failed new sensor readings return an empty string, never the previous value. Check the sensor status reporter for `READY`, `OK`, `INVALID_ADDRESS`, `INIT_FAILED`, `NOT_INITIALIZED`, `READ_ERROR`, `TIMEOUT`, or `UNSUPPORTED_FIRMWARE`. Confirm `OK` before numeric calculations. Reconnect and reinitialize manually after unplugging USB.
 
 ## Serial protocol
@@ -53,7 +55,7 @@ Initialization commands require an address; Editor defaults are 0x76 and 0x40. D
 
 ## Building and release checks
 
-Arduino libraries: DHT sensor library, Adafruit Unified Sensor, Adafruit GFX Library, Adafruit SSD1306, Adafruit BusIO, Adafruit BME280 Library and Adafruit INA219. The reference Arduino-ESP32 core is 3.2.1.
+Arduino libraries: DHT sensor library, Adafruit Unified Sensor, Adafruit GFX Library, Adafruit SSD1306, Adafruit BusIO and Adafruit INA219. The reference Arduino-ESP32 core is 3.2.1. Keep the bundled BME280 driver `BME280Checked.h` in the same folder as the `.ino`. The separate diagnostic sketch uses Adafruit BME280 Library.
 
 ```sh
 arduino-cli compile --fqbn esp32:esp32:esp32 firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0
