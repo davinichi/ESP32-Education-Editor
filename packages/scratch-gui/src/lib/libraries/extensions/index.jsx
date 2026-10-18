@@ -284,8 +284,6 @@ export default [
             id="gui.extension.esp32eduina219.name"
         />,
         extensionId: 'esp32eduina219',
-        // Hardware verification is deferred; retain metadata for existing projects.
-        hidden: true,
         collaborator: 'davinichi',
         iconURL: esp32eduina219IconURL,
         insetIconURL: esp32eduina219InsetIconURL,

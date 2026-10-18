@@ -163,4 +163,4 @@ The shared Web Serial transport is in `packages/scratch-vm/src/extensions/esp32e
 
 BME280 uses the bundled `BME280Checked.h` driver, which checks actual transfers and reads a complete sample in one burst. Host regression test commands are in `firmware/test/README.md` and run in the ESP32 Education checks workflow. Keep its Adafruit compensation attribution and BSD license when editing the driver.
 
-INA219 is hidden from the extension picker and excluded from the v1.0 release scope pending hardware investigation. Preserve its VM registration, metadata and firmware protocol for existing projects. The visible ESP32 library has 11 categories and 58 public blocks.
+INA219 is included in the v1.0 release and visible in the extension picker. Hardware connection and READY initialization were confirmed on 2026-10-19; measurement accuracy remains separately unverified. Preserve its VM registration, metadata and firmware protocol. The visible ESP32 library has 12 categories and 64 public blocks.
