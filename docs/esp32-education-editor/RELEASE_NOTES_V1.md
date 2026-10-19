@@ -1,4 +1,4 @@
-# Editor v1.0 / Firmware v1.0.0 — 公開準備
+# Editor v1.0 / Firmware v1.0.0 — 2026-10-20
 
 ## 変更内容
 
@@ -29,12 +29,12 @@ AE-BME280の電源は1.71～3.6V。ESP32では3.3Vを使用し、J3だけでな�
 
 ## 配布準備と公開順序
 
-- [ ] 最新ソースPRの確認とCI確認後、mainへマージ。
-- [ ] Firmware v1.0.0の配布バイナリー・SHA256・ソース対応を確認。
-- [ ] 日英マニュアルPDF・配線条件・検証記録を配布物へ同梱。
+- [x] [ソースPR #12](https://github.com/davinichi/ESP32-Education-Editor/pull/12)のCI確認後、mainへマージ。
+- [x] Firmware v1.0.0の配布バイナリー・SHA256・ソース対応を確認。
+- [x] 日英マニュアルPDF・配線条件・検証記録を配布物へ同梱。
 - [ ] firmware-v1.0.0タグとReleaseへ配布物を登録。
-- [ ] davinichi.github.ioのInstaller manifest・説明・バイナリーを更新し、PagesのEditorと同時に確認。
+- [x] [公開更新PR #3](https://github.com/davinichi/davinichi.github.io/pull/3)でInstaller manifest・説明・バイナリーを更新し、PagesのEditorと同時配信。
 
-公開サイト用リポジトリへのmain更新は本番配信を開始します。ソース側Publish workflowは上流npmパッケージ向けのため、この製品のWeb公開には使用しません。配布準備が完了しても、公開実施前は公開Installerが旧版を提供します。
+公開先: [Editor](https://davinichi.github.io/) / [Installer](https://davinichi.github.io/firmware/) / [日本語PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_JA.pdf) / [English PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_EN.pdf)。公開用ワークフローは確認済みのソース63dc35b6を指定しています。ソース側Publish workflowは上流npmパッケージ向けのため、この製品のWeb公開には使用しません。GitHubのtag/Release登録はWeb公開とは別の未実施項目です。
 
 詳細: [検証結果](CHECK_RESULTS_V1_JA.md) / [日本語マニュアル](V1_MANUAL_JA.md) / [English manual](V1_MANUAL_EN.md)。
