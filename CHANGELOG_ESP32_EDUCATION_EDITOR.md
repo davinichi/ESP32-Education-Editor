@@ -1,5 +1,10 @@
 # ESP32 Education Editor Change Log
 
+## v1.0 / Firmware v1.0.0 (release candidate)
+
+I2C Scanner → BME280 → INA219 → automatic Firmware version retrieval → Japanese/English extension cards. INA219 is included in the v1.0 release; hardware connection and READY initialization were confirmed on 2026-10-19. Measurement accuracy remains separately unverified. Shared Wire on GPIO21/22; v0.1.8 commands retained. See [release notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md) and [manual](docs/esp32-education-editor/V1_MANUAL_JA.md). Hardware verification and public deployment are pending.
+
+
 ## v0.4 - 2026-09-27
 
 ### Added

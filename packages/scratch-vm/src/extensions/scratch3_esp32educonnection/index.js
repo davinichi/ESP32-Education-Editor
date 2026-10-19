@@ -88,25 +88,55 @@ class Scratch3ESP32ConnectionBlocks {
                         default: 'ESP32 Wi-Fi channel',
                         description: 'ESP32 Connection block'
                     })
+                },
+                {
+                    opcode: 'firmwareVersion',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'esp32educonnection.firmwareVersion',
+                        default: 'ESP32 Firmware version',
+                        description: 'ESP32 Education block'
+                    })
                 }
             ]
         };
     }
 
     /** Web SerialでESP32へ接続します。 */
-    async connect () { await this.transport.connect(); }
+    async connect () {
+        await this.transport.connect();
+    }
     /** ESP32とのWeb Serial接続を閉じます。 */
-    async disconnect () { await this.transport.disconnect(); }
+    async disconnect () {
+        await this.transport.disconnect();
+    }
     /** 接続状態を返します。 */
-    isConnected () { return this.transport.connected; }
+    isConnected () {
+        return this.transport.connected;
+    }
     /** ESP32へ状態送信を要求します。 */
-    async refresh () { await this.transport.refreshStatus(); }
+    async refresh () {
+        await this.transport.refreshStatus();
+    }
     /** ESP32から受信した状態文字列を返します。 */
-    status () { return this.transport.ready; }
+    status () {
+        return this.transport.ready;
+    }
     /** ESP32自身のMACアドレスを返します。 */
-    mac () { return this.transport.mac; }
+    mac () {
+        return this.transport.mac;
+    }
     /** ESP32が使用中のWi-Fiチャンネルを返します。 */
-    channel () { return this.transport.channel; }
+    firmwareVersion () {
+        return this.transport.firmwareVersion || formatMessage({
+            id: 'esp32educonnection.versionUnknown',
+            default: 'Unknown (Firmware v1.0.0 recommended)',
+            description: 'Firmware without version support'
+        });
+    }
+    channel () {
+        return this.transport.channel;
+    }
 }
 
 module.exports = Scratch3ESP32ConnectionBlocks;

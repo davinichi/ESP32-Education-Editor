@@ -1,5 +1,8 @@
 # ESP32 Education Editor ブロックリファレンス
 
+> **v1.0 / Firmware v1.0.0:** 新カテゴリー・配線・通信仕様は[v1.0マニュアル](V1_MANUAL_JA.md)を参照してください。以下はv0.6 / Firmware v0.1.8の既存機能の資料です。
+
+
 [マニュアル一覧](MANUAL_INDEX_JA.md) | [ユーザーズガイド](USER_GUIDE_JA.md)
 
 ESP32 Education Editor v0.6でパレットに表示される49個の公開ブロックを、カテゴリー別に説明します。

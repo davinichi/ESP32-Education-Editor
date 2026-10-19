@@ -4,10 +4,24 @@
 
 ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで操作するための教育向けプログラミング環境です。ブラウザのWeb Serial APIでUSB接続し、GPIO、センサー、ディスプレイ、ESP-NOWなどを扱えます。
 
+
+## v1.0 開発版について
+
+このブランチは **Editor v1.0 / Firmware v1.0.0** のリリース候補です。公開サイトとInstallerの配信版は別管理です。v1.0.0の公開・Installer更新が済むまでは、公開Installerがv1.0.0を提供するとは限りません。新機能を試すには、このブランチのソースからFirmwareをコンパイルしてください。
+
+授業設計・教材開発で必要になった「測る・制御する・表示する・通信する・比較する」機能をまとめています。GPIO、PWM、DHT、OLED、ESP-NOW、サーボ、超音波、環境指数、データ処理を維持し、I2C Scanner、BME280、INA219を追加します。INA219もv1.0の公開対象に含みます。
+
+実機確認: INA219・BME280・内蔵OLEDの3台併用で600回完走、USB再接続後の復帰、従来機能の基本回帰をユーザー確認済みです。配線条件と確認範囲は[検証結果](docs/esp32-education-editor/CHECK_RESULTS_V1_JA.md)を参照してください。
+
+- [v1.0 マニュアル・通信仕様](docs/esp32-education-editor/V1_MANUAL_JA.md)
+- [v1.0 リリース候補情報](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
+- Firmwareソース: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
+
+
 ## 現行バージョン
 
-- Editor: **v0.6**
-- Firmware: **v0.1.8**
+- Editor: **v1.0**
+- Firmware: **v1.0.0**
 - EditorとFirmwareは別々にバージョン管理しています。
 - EditorとFirmware Installerは日本語／英語を切り替えて利用できます。
 
@@ -23,7 +37,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 - Scratchに似たブロックプログラミング環境
 - EditorからWeb Serial経由でESP32へUSB接続
-- 9カテゴリーに分かれた拡張と49個の公開ブロック
+- 12カテゴリーに分かれた拡張と64個の公開ブロック
 - GPIOデジタル入出力とPWM
 - DHT11 / DHT22温湿度センサー、SSD1306 OLED、HC-SR04超音波距離センサー、サーボモーター
 - ESP-NOWによるESP32間通信
@@ -46,7 +60,7 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 
 
 1. ESP32-WROOM-32をUSBでPCまたはChromebookへ接続します。
-2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってFirmware v0.1.8を書き込みます。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
+2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従って配信中のFirmwareを書き込みます（v1.0.0開発版は上記のソースを使用）。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
 3. [公開Editor](https://davinichi.github.io/)を開き、ESP32 Connection拡張からWeb Serial接続を開始します。
 4. 使用する拡張カテゴリーを追加し、ブロックを組んで実行します。
 
@@ -59,6 +73,9 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 | ESP32 Connection | ESP32との接続・通信 |
 | ESP32 GPIO | GPIOデジタル入出力・PWM |
 | ESP32 DHT | DHT11 / DHT22による温度・湿度の取得 |
+| ESP32 I2C Scanner | I2C: SDA=21 / SCL=22 |
+| ESP32 BME280 | °C / % / hPa |
+| ESP32 INA219 | V / mA / mW / mV |
 | ESP32 OLED | SSD1306 OLED表示 |
 | ESP32 ESP-NOW | ESP32間の無線通信 |
 | ESP32 Servo | サーボモーター制御 |
@@ -66,11 +83,13 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 | ESP32 Environmental Indices | 温度・湿度を用いた環境指数の計算 |
 | Data Processing | データの処理 |
 
-合計9カテゴリー、49個の公開ブロックです。
+合計12カテゴリー、64個の公開ブロックです。
 
 既存プロジェクトとの互換性のため、`WBGT [WBGT] の警戒レベル`ブロックが非表示の互換ブロックとして内部に1個残っています。このブロックはパレットには表示されません。
 
 ## Firmware概要
+
+Firmware v1.0.0はv0.1.8の機能を継承し、共通WireによるI2C Scanner・BME280・INA219と`SYS:VERSION`を追加しています。新しい通信仕様は[v1.0マニュアル](docs/esp32-education-editor/V1_MANUAL_JA.md)を参照してください。
 
 Firmware v0.1.8は、GPIOデジタル入出力、PWM、サーボ、HC-SR04、DHT11 / DHT22、SSD1306 OLED、ESP-NOWに対応します。PWMは5 kHz、8-bitで、指定可能な出力範囲は0～100%です。v0.1.8では、同じGPIOでデジタルHIGH/LOWとPWMを交互に使用した場合でも、PWMを安全に再設定できるようGPIOとLEDCの切り替え処理を修正しました。ESP-NOWの起動時チャンネルは1で、設定したチャンネルは再起動後に1へ戻ります。BLE UARTは含まれていません。
 

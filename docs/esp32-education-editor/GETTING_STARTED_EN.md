@@ -1,5 +1,8 @@
 # Getting Started
 
+> **v1.0 / Firmware v1.0.0:** See the [v1.0 manual](V1_MANUAL_EN.md) for new categories, wiring and protocol. The material below describes the existing v0.6 / Firmware v0.1.8 features.
+
+
 This guide walks through connecting an ESP32-WROOM-32 to ESP32 Education Editor v0.6 with Firmware v0.1.8, then blinking an LED using GPIO.
 
 ## 1. What you need

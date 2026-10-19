@@ -148,7 +148,9 @@ class Scratch3ESP32DHTBlocks {
         return Number.isFinite(this.humidity) ? this.humidity : 0;
     }
     /** DHTの最後の状態を返します。 */
-    status () { return this.statusValue; }
+    status () {
+        return this.statusValue;
+    }
 }
 
 module.exports = Scratch3ESP32DHTBlocks;

@@ -1,5 +1,5 @@
 ESP32 Education Editor
-Version: v0.4
-Release Date: 2026-09-27
-Status: Preview Release
+Version: v1.0
+Firmware: v1.0.0
+Status: Release candidate (hardware verification pending)
 Base: Scratch Editor 15.1.1

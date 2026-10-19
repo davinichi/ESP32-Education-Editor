@@ -113,6 +113,8 @@ Prettier (currently `task-herder`), run `npm run format` in addition to lint.
 
 ### scratch-vm specifics
 
+- `npm run lint` runs ESLint, including the `format-message` default rules through `@eslint/compat`.
+  Keep message validation in the flat config; the legacy CLI uses an ES2019 parser that cannot parse all VM sources.
 - Extension entry points live in `src/extensions/`. Each extension exports a class with `getInfo()` and block
   implementation methods.
 - i18n strings in extensions are extracted with `format-message`. Run `npm run i18n:src` after changing them.
@@ -150,3 +152,17 @@ Review all changes and confirm:
 - **Build passes**: `npm run build` (or `npm run build` in the affected package) completes successfully.
 - **Tests pass**: `npm test` (or `npm test` in the affected package) completes with no failures.
 - **No lint errors**: `npm run test:lint` (or `npm run lint`) passes in the affected package.
+
+## ESP32 Education v1.0
+
+The CI workflow builds and tests PRs without publishing previews. To publish a playground preview manually,
+run CI with `publish-preview: true` and `force-full-build: true`. Only that optional job has `contents: write`;
+production release and installer publishing are separate workflows.
+
+The shared Web Serial transport is in `packages/scratch-vm/src/extensions/esp32education_shared/`. New I2C categories use its queued request/reply API. Preserve all existing extension IDs/opcodes and serial responses. Firmware v1.0.0 is in `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`; previous sketches are historical. Shared I2C uses Wire on GPIO21/22. Protocol and hardware release checks are in `docs/esp32-education-editor/V1_MANUAL_EN.md` and `RELEASE_NOTES_V1.md`.
+
+BME280 uses the bundled `BME280Checked.h` driver, which checks actual transfers and reads a complete sample in one burst. Host regression test commands are in `firmware/test/README.md` and run in the ESP32 Education checks workflow. Keep its Adafruit compensation attribution and BSD license when editing the driver.
+
+INA219 is included in the v1.0 release and visible in the extension picker. Hardware connection and READY initialization were confirmed on 2026-10-19; measurement accuracy remains separately unverified. Preserve its VM registration, metadata and firmware protocol. The visible ESP32 library has 12 categories and 64 public blocks.
+
+Hardware validation reported on 2026-10-20 includes 600 foreground diagnostic cycles with BME280/INA219/integrated OLED, USB reconnect recovery, and basic legacy-function regression. AE-BME280 requires 3.3V, J3 bridged for I2C, and SDO grounded for 0x76; never leave its address pin floating. Preserve evidence scope: the 600-cycle project reads INA219 V/I/P and BME280 T/RH, not a pressure time series or reference-meter calibration.

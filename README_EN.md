@@ -4,10 +4,24 @@
 
 ESP32 Education Editor is a browser-based, block programming environment for working with an ESP32-WROOM-32. It connects to the board over USB using the browser's Web Serial API and provides blocks for GPIO, sensors, displays, ESP-NOW, and data processing.
 
+
+## v1.0 development branch
+
+This branch targets **Editor v1.0 / Firmware v1.0.0** and is a release candidate. The public site and Installer are deployed separately; the public Installer may still provide v0.1.8 until v1.0.0 is published. Compile this branch's Firmware source to try the new blocks.
+
+The features come from lesson planning and teaching-material development: measuring, controlling, displaying, communicating, and comparing. Existing GPIO, PWM, DHT, OLED, ESP-NOW, servo, ultrasonic, environmental-index, and data-processing functions are retained, with I2C Scanner, BME280 and INA219 added. INA219 is included in the v1.0 release scope.
+
+Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/integrated OLED, recovery after USB reconnection, and basic legacy-function regression. See [validation results](docs/esp32-education-editor/CHECK_RESULTS_V1_JA.md) for wiring and scope.
+
+- [v1.0 manual and protocol](docs/esp32-education-editor/V1_MANUAL_EN.md)
+- [v1.0 release candidate notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
+- Firmware source: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
+
+
 ## Current versions
 
-- Editor: **v0.6**
-- Firmware: **v0.1.8**
+- Editor: **v1.0**
+- Firmware: **v1.0.0**
 - The Editor and Firmware are versioned separately.
 - The Editor and Firmware Installer support Japanese and English.
 
@@ -23,7 +37,7 @@ ESP32 Education Editor is a browser-based, block programming environment for wor
 
 - Scratch-style block programming
 - USB connection to the ESP32 through Web Serial
-- 49 public blocks across 9 extension categories
+- 64 public blocks across 12 extension categories
 - GPIO digital I/O and PWM
 - DHT11 / DHT22 temperature and humidity sensors, SSD1306 OLED displays, HC-SR04 ultrasonic distance sensors, and servo motors
 - ESP-NOW communication between ESP32 boards
@@ -46,7 +60,7 @@ For detailed instructions, see the [Getting Started guide](docs/esp32-education-
 
 
 1. Connect an ESP32-WROOM-32 to your PC or Chromebook over USB.
-2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions to install Firmware v0.1.8. The Installer writes the prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries.
+2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions to install the deployed Firmware (use the source above for the v1.0.0 development version). The Installer writes the prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries.
 3. Open the [Public Editor](https://davinichi.github.io/) and start a Web Serial connection from the ESP32 Connection extension.
 4. Add the extension categories you need, arrange the blocks, and run your program.
 
@@ -59,6 +73,9 @@ If another application, such as Arduino IDE's Serial Monitor or another Editor s
 | ESP32 Connection | Connect to and communicate with the ESP32 |
 | ESP32 GPIO | GPIO digital input/output and PWM |
 | ESP32 DHT | Read temperature and humidity from DHT11 / DHT22 sensors |
+| ESP32 I2C Scanner | I2C: SDA=21 / SCL=22 |
+| ESP32 BME280 | °C / % / hPa |
+| ESP32 INA219 | V / mA / mW / mV |
 | ESP32 OLED | Display output on SSD1306 OLEDs |
 | ESP32 ESP-NOW | Wireless communication between ESP32 boards |
 | ESP32 Servo | Control servo motors |
@@ -66,11 +83,13 @@ If another application, such as Arduino IDE's Serial Monitor or another Editor s
 | ESP32 Environmental Indices | Calculate environmental indices from temperature and humidity |
 | Data Processing | Process data |
 
-There are 9 categories with 49 public blocks in total.
+There are 12 categories with 64 public blocks in total.
 
 One hidden compatibility block, `WBGT [WBGT] warning level`, remains internally for existing projects. It is not shown in the block palette.
 
 ## Firmware overview
+
+Firmware v1.0.0 retains v0.1.8 functionality and adds shared-Wire I2C Scanner, BME280, INA219 and `SYS:VERSION`. See the [v1.0 manual](docs/esp32-education-editor/V1_MANUAL_EN.md) for the new protocol.
 
 Firmware v0.1.8 supports GPIO digital I/O, PWM, servo motors, HC-SR04, DHT11 / DHT22, SSD1306 OLED, and ESP-NOW. PWM runs at 5 kHz with 8-bit resolution and accepts output values from 0 to 100%. Version 0.1.8 fixes GPIO/LEDC switching so PWM can be used again safely after the same GPIO has been driven HIGH or LOW. ESP-NOW starts on channel 1; a channel selection returns to channel 1 after the board restarts. BLE UART is not included.
 

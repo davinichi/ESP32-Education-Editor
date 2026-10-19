@@ -19,9 +19,10 @@ if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
 
 import styles from './player.css';
 
-const Player = ({isPlayerOnly, onSeeInside, projectId}) => (
+const Player = ({isPlayerOnly, onSeeInside, onSeeProjectPage, projectId}) => (
     <Box className={classNames(isPlayerOnly ? styles.stageOnly : styles.editor)}>
         {isPlayerOnly && <button onClick={onSeeInside}>{'See inside'}</button>}
+        {!isPlayerOnly && <button onClick={onSeeProjectPage}>{'See Project Page'}</button>}
         <GUI
             canEditTitle
             enableCommunity
@@ -34,6 +35,7 @@ const Player = ({isPlayerOnly, onSeeInside, projectId}) => (
 Player.propTypes = {
     isPlayerOnly: PropTypes.bool,
     onSeeInside: PropTypes.func,
+    onSeeProjectPage: PropTypes.func,
     projectId: PropTypes.string
 };
 
@@ -42,7 +44,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSeeInside: () => dispatch(setPlayer(false))
+    onSeeInside: () => dispatch(setPlayer(false)),
+    onSeeProjectPage: () => dispatch(setPlayer(true))
 });
 
 const ConnectedPlayer = connect(
