@@ -7,9 +7,11 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 ## v1.0 開発版について
 
-このブランチは **Editor v1.0 / Firmware v1.0.0** のリリース候補です。公開サイトとInstallerの配信版は別管理です。v1.0.0の公開・Installer更新・実機検証が済むまでは、公開Installerがv1.0.0を提供するとは限りません。新機能を試すには、このブランチのソースからFirmwareをコンパイルしてください。
+このブランチは **Editor v1.0 / Firmware v1.0.0** のリリース候補です。公開サイトとInstallerの配信版は別管理です。v1.0.0の公開・Installer更新が済むまでは、公開Installerがv1.0.0を提供するとは限りません。新機能を試すには、このブランチのソースからFirmwareをコンパイルしてください。
 
 授業設計・教材開発で必要になった「測る・制御する・表示する・通信する・比較する」機能をまとめています。GPIO、PWM、DHT、OLED、ESP-NOW、サーボ、超音波、環境指数、データ処理を維持し、I2C Scanner、BME280、INA219を追加します。INA219もv1.0の公開対象に含みます。
+
+実機確認: INA219・BME280・内蔵OLEDの3台併用で600回完走、USB再接続後の復帰、従来機能の基本回帰をユーザー確認済みです。配線条件と確認範囲は[検証結果](docs/esp32-education-editor/CHECK_RESULTS_V1_JA.md)を参照してください。
 
 - [v1.0 マニュアル・通信仕様](docs/esp32-education-editor/V1_MANUAL_JA.md)
 - [v1.0 リリース候補情報](docs/esp32-education-editor/RELEASE_NOTES_V1.md)

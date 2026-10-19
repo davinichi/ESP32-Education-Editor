@@ -1,44 +1,40 @@
-# Editor v1.0 / Firmware v1.0.0 — Release candidate
+# Editor v1.0 / Firmware v1.0.0 — 公開準備
 
-## Changes / 変更
+## 変更内容
 
-- Shared Wire on GPIO21/22 for OLED, I2C Scanner, BME280 and INA219.
-- I2C Scanner: scan command, results reporter and address-found predicate.
-- BME280: selectable 0x76/0x77, temperature °C, humidity %, pressure hPa and status.
-- BME280: checked initialization/calibration transfers and one complete sample burst; transfer failures return `READ_ERROR` and the next successful read resumes measurements.
-- INA219 is included in the v1.0 release: selectable 0x40–0x4F, bus voltage V, current mA, power mW and shunt voltage mV. Hardware connection and READY initialization confirmed by the user on 2026-10-19; measurement accuracy remains separately unverified.
-- `SYS:VERSION` → `SYS:VERSION:1.0.0`; automatic retrieval and localized connection reporter.
-- Japanese/English blocks and extension cards. 12 categories, 64 public blocks.
-- v0.1.8 functionality retained; historical firmware sources unchanged.
+- I2C Scanner、BME280、INA219を追加。OLEDを含む共通WireはSDA=GPIO21、SCL=GPIO22。
+- 日英12カテゴリー・公開64ブロック。既存ID・通信プロトコル・v0.1.8ソースを保持。
+- 接続時にFirmwareバージョンを自動取得。旧Firmwareでは接続を維持してバージョン不明を表示。
+- BME280は実際の送受信成否を確認し、失敗時は空欄とREAD_ERROR、次回成功で復帰。過去値で置き換えない。
+- INA219を公開対象に含め、拡張一覧に表示。
 
-[検証結果 / Validation results](CHECK_RESULTS_V1_JA.md)
+## 実機確認済みの範囲
 
-## Release gate / 公開前の実機確認
+- [x] 接続・バージョン・I2Cスキャン（0x3C、0x40、0x76）。
+- [x] INA219の初期化、LED点灯・消灯に伴う電圧・電流・電力と状態OK。
+- [x] BME280のREAD_ERROR後、RESET・再初期化なしで次回読み取りがOKへ復帰。
+- [x] 両センサー本体3.3V、AE-BME280のJ3接続・SDO→GNDの条件で、3機器併用診断600回を完了。
+- [x] USB切断・手動再接続後の復帰（ユーザー報告）。
+- [x] 従来機能の実機回帰（2026-10-20ユーザー報告）。個別条件の新たな測定記録とは区別。
 
-### 実機からの報告
+600回診断はINA219電圧・電流・電力、BME280温度・湿度の各状態とOLED応答を確認します。BME280気圧の連続記録、基準計器との精度比較、シャント電圧単独測定、別アドレス・全エラー条件の実機試験は含みません。測定精度を保証する校正済み計測器としては案内しません。
 
-接続・バージョン確認、OLED=0x3C/BME280=0x76のスキャン、BME280の読み取り、OLEDへの測定値表示をユーザーが確認しました。ただし、温度180.25℃、湿度100％、気圧−132.03hPaが時々出るとの報告があり、OLEDへの表示更新を止めても発生しています。個体不良か通信・配線・電源などの問題かは未確定です。BME280単体での切り分けと原因解消が済むまで、この測定は安定動作確認済みとは扱いません。範囲外の値を`OK`として通す判定不足を修正しました。
+AE-BME280の電源は1.71～3.6V。ESP32では3.3Vを使用し、J3だけでなくSDOもGND（0x76）または3.3V（0x77）へ固定します。5Vを接続しないでください。INA219の本体VCCと測定端子Vin+/Vin−は別です。
 
-追加ログ: 配線確認後にも再発し、Editorの600回のログで気温180.85℃が2回、気圧1278.53hPaが1回記録され、いずれも状態は`OK`でした。単独診断781回のログでは7測定周期にI2C NACKが記録され、そのうち3回は受信失敗、3回は範囲外値、1回は正常範囲の値として通っていました。5cm程度の配線を交換しても再発したとの報告を受けています。ESP32本体交換後の単独診断651回（約10分53秒）は通信エラー・異常値ともになしと確認しました。旧ESP32側の通信経路を疑う材料ですが、電気的な原因の特定は未完了です。実際のデータ転送の成否を確認するドライバーへ修正し、範囲判定だけに依存しないようにしました。改訂版配布後のEditorログ381回（734.61秒）では、258.06秒の1回が全項目`READ_ERROR`・値空欄となり、259.18秒の次回には全項目`OK`と正常値へ復帰しました。他の380回は`OK`で、範囲外の数値はありませんでした。通信失敗時の値の抑止と復帰はこのログで確認できました。長期の安定性と測定精度は継続確認です。
+## 確認条件と既知の制限
 
-- [x] 初期実装のv1.0.0を書き込み、接続とバージョンを確認（ユーザー報告）。
-- [x] 失敗時の`READ_ERROR`・値の空欄・次回成功時の復帰をEditorの実機ログで確認（381回中、失敗1回、次回復帰）。
-- [ ] 改訂版FirmwareでOLED+BME280を併用し、表示更新・失敗時の表示・初期化後のスキャンを再確認。
-- [x] INA219の接続と初期化成功（`READY`）を実機確認。2026-10-19のユーザー指示によりv1.0の公開対象へ追加。
-- [ ] INA219の電圧・電流・電力・シャント電圧の取得と基準計器との比較、OLED/BME280との同時接続を確認。
-- [ ] I2C機器なし・機器取り外し・別アドレス・不正アドレスの応答を確認。
-- [ ] BME280温湿度・気圧の実測値を基準計器と比較。
-- [x] GPIO・PWMの実機動作を確認（ユーザー報告）。
-- [x] DHT11の実機動作を確認（ユーザー報告）。
-- [x] SG90サーボを外部5V・GPIO13で実機確認。GND接続修正後に正常動作したとのユーザー報告。
-- [x] HC-SR04の実機動作を確認（ユーザー報告）。
-- [x] ESP-NOWの基本動作を確認（ユーザー報告）。
-- [ ] GPIO↔PWMの同一ピンでの繰り返し切り替えについて、具体的な確認範囲を記録。
-- [ ] DHT22、OLED部分消去、ESP-NOWのチャンネル変更・遠隔サーボなど、基本動作とは別の確認範囲を記録。
-- [ ] v0.1.8 Firmwareで接続し、既存機能の継続とバージョン不明表示を確認。
-- [ ] 新旧プロジェクトの保存・再読込、日本語↔英語、複数スクリプト、USB切断・再接続をブラウザーで確認。
-- [ ] 配布用バイナリー作成、`firmware-v1.0.0`タグ、Installer manifest `1.0.0`、公開Editor・Installer・最新版PDFを更新。
+連続試験はEditor前面表示・PC非スリープの条件です。背面表示で一定周期を保つことは未確認です。配線修正前の応答停止はRESETで復旧しましたが、電気的原因は断定していません。配線修正後は当該600回試験を完走しています。
 
-These hardware checks remain required before describing the release as verified stable. This branch does not create tags, flash boards, or deploy the public website/Installer.
+数値モニターのチェックが外れてもステージに残る事象の報告があります。ステージ側を右クリックして隠す方法を案内済みで、再現プロジェクトによる原因特定は未完了です。OLEDブロックの完了だけでは画面更新成功を保証せず、診断では応答も確認します。
 
-実機検証を終えるまでは「確認済み正式安定版」として公開しません。タグ・配信先manifest・公開サイト・配布PDFはリリース作業時に更新します。
+## 配布準備と公開順序
+
+- [ ] 最新ソースPRの確認とCI確認後、mainへマージ。
+- [ ] Firmware v1.0.0の配布バイナリー・SHA256・ソース対応を確認。
+- [ ] 日英マニュアルPDF・配線条件・検証記録を配布物へ同梱。
+- [ ] firmware-v1.0.0タグとReleaseへ配布物を登録。
+- [ ] davinichi.github.ioのInstaller manifest・説明・バイナリーを更新し、PagesのEditorと同時に確認。
+
+公開サイト用リポジトリへのmain更新は本番配信を開始します。ソース側Publish workflowは上流npmパッケージ向けのため、この製品のWeb公開には使用しません。配布準備が完了しても、公開実施前は公開Installerが旧版を提供します。
+
+詳細: [検証結果](CHECK_RESULTS_V1_JA.md) / [日本語マニュアル](V1_MANUAL_JA.md) / [English manual](V1_MANUAL_EN.md)。

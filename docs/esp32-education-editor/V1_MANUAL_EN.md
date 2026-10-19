@@ -2,7 +2,7 @@
 
 [日本語](V1_MANUAL_JA.md) · [README](../../README_EN.md)
 
-Target: Editor v1.0 / Firmware v1.0.0 on ESP32-WROOM-32 (ESP32 Dev Module). This is a release candidate pending hardware verification.
+Target: Editor v1.0 / Firmware v1.0.0 on ESP32-WROOM-32 (ESP32 Dev Module). This release preparation includes hardware-verified configurations. Check README for public site and Installer availability.
 
 ## Connection and compatibility
 
@@ -22,15 +22,27 @@ Run “scan I2C devices” and read “I2C scan results”, for example `0x3C,0x
 
 ## BME280
 
+### Akizuki AE-BME280 at address 0x76
+
+AE-BME280 accepts 1.71–3.6V. Use 3.3V with ESP32, never 5V. Connect VDD to 3.3V, GND to common GND, SDI to GPIO21 (SDA), and SCK to GPIO22 (SCL). Bridge J3 to hold CSB at VDD for I2C mode. Separately connect SDO to GND for 0x76, or to 3.3V for 0x77; do not leave SDO floating. J3 does not set the address. J1/J2 select pull-up resistors and depend on the complete shared bus. Disconnect USB and external power before rewiring.
+
+See [the official AE-BME280 guide, page 1](https://akizukidenshi.com/goodsaffix/AE-BME280_manu_v1.1.pdf). With SDO grounded and both sensor modules powered from 3.3V, the user completed 600 diagnostic cycles with BME280, INA219 and the integrated OLED.
+
 Run “initialize BME280 at address [0x76]”; choose 0x76 or 0x77. Read temperature in °C, humidity in %, and pressure in hPa. Pressure is converted from Pa. BMP280 does not provide humidity and is not supported by this category.
 
 ## INA219
+
+Keep I2C signal levels at 3.3V. The tested module uses 3.3V on its logic supply VCC. VCC is separate from measurement terminals Vin+/Vin−. For an LED load, wire GPIO25 → Vin+ → Vin− → 330Ω → LED anode → LED cathode → GND. Insert the measurement terminals in series, not across the LED.
 
 Run “initialize INA219 at address [0x40]”; choose 0x40–0x4F. Read bus voltage V (VIN− relative to GND), current mA, power mW, and shunt voltage mV. Supply-side voltage can be calculated as bus voltage + shunt voltage/1000.
 
 The Adafruit default 32V/2A calibration assumes a 0.1Ω shunt. Check the actual module's shunt and ratings. Each reporter requests a fresh reading; separate reporters do not represent simultaneous samples.
 
 ## Errors
+
+Capture sensor status immediately after each reading. Visible sensor monitors also generate requests. Hide unused monitors when diagnosing communication. If a checkbox and stage monitor disagree, hide the monitor through its context menu and save the project. An OLED command returning from its block does not guarantee a display update; inspect the OLED acknowledgement as well.
+
+The 600-cycle hardware test was run with the Editor visible in the foreground and the PC awake. Continuous timing while backgrounded and the root cause of the response stall seen before wiring correction are not established. After USB reconnection, connect manually and initialize the devices again.
 
 BME280 samples outside Bosch's operating ranges (−40–85 °C, 0–100% RH, 300–1100 hPa) produce `READ_ERROR`. Values are neither clamped nor replaced by previous samples. 100% humidity remains valid. These checks reject invalid measurements; they do not establish or fix the physical cause of a communication or device fault. See the [Bosch datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf).
 

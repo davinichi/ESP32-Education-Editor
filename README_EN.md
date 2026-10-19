@@ -7,9 +7,11 @@ ESP32 Education Editor is a browser-based, block programming environment for wor
 
 ## v1.0 development branch
 
-This branch targets **Editor v1.0 / Firmware v1.0.0** and is a release candidate. The public site and Installer are deployed separately; the public Installer may still provide v0.1.8 until v1.0.0 is verified and published. Compile this branch's Firmware source to try the new blocks.
+This branch targets **Editor v1.0 / Firmware v1.0.0** and is a release candidate. The public site and Installer are deployed separately; the public Installer may still provide v0.1.8 until v1.0.0 is published. Compile this branch's Firmware source to try the new blocks.
 
 The features come from lesson planning and teaching-material development: measuring, controlling, displaying, communicating, and comparing. Existing GPIO, PWM, DHT, OLED, ESP-NOW, servo, ultrasonic, environmental-index, and data-processing functions are retained, with I2C Scanner, BME280 and INA219 added. INA219 is included in the v1.0 release scope.
+
+Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/integrated OLED, recovery after USB reconnection, and basic legacy-function regression. See [validation results](docs/esp32-education-editor/CHECK_RESULTS_V1_JA.md) for wiring and scope.
 
 - [v1.0 manual and protocol](docs/esp32-education-editor/V1_MANUAL_EN.md)
 - [v1.0 release candidate notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
