@@ -15,6 +15,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 - [v1.0 マニュアル・通信仕様](docs/esp32-education-editor/V1_MANUAL_JA.md)
 - [v1.0 リリース情報](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
+- [Editor v1.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/editor-v1.0) / [Firmware v1.0.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0)
 - Firmwareソース: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
 
 

@@ -166,3 +166,5 @@ BME280 uses the bundled `BME280Checked.h` driver, which checks actual transfers 
 INA219 is included in the v1.0 release and visible in the extension picker. Hardware connection and READY initialization were confirmed on 2026-10-19; measurement accuracy remains separately unverified. Preserve its VM registration, metadata and firmware protocol. The visible ESP32 library has 12 categories and 64 public blocks.
 
 Hardware validation reported on 2026-10-20 includes 600 foreground diagnostic cycles with BME280/INA219/integrated OLED, USB reconnect recovery, and basic legacy-function regression. AE-BME280 requires 3.3V, J3 bridged for I2C, and SDO grounded for 0x76; never leave its address pin floating. Preserve evidence scope: the 600-cycle project reads INA219 V/I/P and BME280 T/RH, not a pressure time series or reference-meter calibration.
+
+The stable public releases are tagged `editor-v1.0` and `firmware-v1.0.0`, both at deployed source `63dc35b6`. Firmware assets include a merged image for offset 0, build provenance, SHA256 checksums and a source/manual ZIP. Documentation-only follow-ups do not alter these published tags.
