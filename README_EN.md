@@ -15,6 +15,7 @@ Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/int
 
 - [v1.0 manual and protocol](docs/esp32-education-editor/V1_MANUAL_EN.md)
 - [v1.0 release notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
+- [Editor v1.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/editor-v1.0) / [Firmware v1.0.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0)
 - Firmware source: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
 
 
