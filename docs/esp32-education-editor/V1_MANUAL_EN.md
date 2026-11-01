@@ -2,11 +2,22 @@
 
 [日本語](V1_MANUAL_JA.md) · [README](../../README_EN.md)
 
-Target: Editor v1.0 / Firmware v1.0.0 on ESP32-WROOM-32 (ESP32 Dev Module). This release preparation includes hardware-verified configurations. Check README for public site and Installer availability.
+Target: Editor v1.0 / Firmware v1.0.0 on ESP32-WROOM-32 (ESP32 Dev Module). Officially released on October 20, 2026, and available from the [public Editor](https://davinichi.github.io/) and [Firmware Installer](https://davinichi.github.io/firmware/).
 
 ## Connection and compatibility
 
-Compile and flash the v1.0.0 sketch, add ESP32 Connection, then run “connect to ESP32”. The “ESP32 Firmware version” reporter automatically receives `1.0.0` on connection; “refresh ESP32 status” requests it again. The reporter can be shown as a monitor. There are 12 categories and 64 public blocks.
+1. Follow [Getting Started](GETTING_STARTED_EN.md): open the [Firmware Installer](https://davinichi.github.io/firmware/) in Chrome on Chromebook, or Chrome/Edge on Windows, and install prebuilt Firmware v1.0.0. No Arduino IDE or additional libraries are needed. Use a data-capable USB cable, select the ESP32 in the Web Serial port picker, and grant access.
+2. Disconnect the Installer to release the port, then open the [public Editor](https://davinichi.github.io/).
+3. Add ESP32 Connection and run **connect to ESP32**, selecting the ESP32 port again.
+4. Check the version as described below, then add the extensions you need. There are 12 categories and 64 public blocks.
+
+### Check the Firmware version
+
+After connecting, click the **ESP32 Firmware version** reporter in ESP32 Connection, or select its checkbox to show a monitor, and confirm `1.0.0`. It is retrieved automatically on connection; **refresh ESP32 status** retrieves it again. Also confirm that **ESP32 status** shows `OK`.
+
+If the version is older or shows **Unknown (Firmware v1.0.0 recommended)**, disconnect the Editor, install v1.0.0 with the Installer, and reconnect. `SYS:READY:OK` alone does not identify the version. At protocol level, `SYS:VERSION` returns `SYS:VERSION:1.0.0` (normally the blocks handle this; no manual command entry is needed).
+
+See [Getting Started](GETTING_STARTED_EN.md) for school-managed device restrictions and Windows port detection.
 
 Older firmware without `SYS:VERSION` remains connected and displays “Unknown (Firmware v1.0.0 recommended)”. New I2C features require v1.0.0. Existing GPIO/PWM, DHT, OLED, ESP-NOW, servo and HC-SR04 commands, responses, opcodes and arguments are retained, including the hidden WBGT compatibility block.
 
@@ -65,7 +76,11 @@ Failed new sensor readings return an empty string, never the previous value. Che
 
 Initialization commands require an address; Editor defaults are 0x76 and 0x40. Decimal addresses also work. I2C failures return `I2C:ERROR:INIT_FAILED` or `I2C:ERROR:SCAN_FAILED`. Sensor failures return `<sensor>:STATUS:<code>`.
 
-## Building and release checks
+<a id="developer-build"></a>
+
+## For developers: building from source
+
+The following is for developers modifying Firmware or the Editor. For normal use, use the public Installer. In Arduino IDE, the board selection is ESP32 Dev Module.
 
 Arduino libraries: DHT sensor library, Adafruit Unified Sensor, Adafruit GFX Library, Adafruit SSD1306, Adafruit BusIO and Adafruit INA219. The reference Arduino-ESP32 core is 3.2.1. Keep the bundled BME280 driver `BME280Checked.h` in the same folder as the `.ino`. The separate diagnostic sketch uses Adafruit BME280 Library.
 
@@ -75,4 +90,4 @@ npm ci
 npm run build
 ```
 
-See [release candidate notes and hardware checklist](RELEASE_NOTES_V1.md). Public Installer manifests and binaries are a separate deployment in another repository; this branch does not publish them. Existing PDFs document the previous version; use this manual for v1.0 additions.
+See the [official release notes and hardware checklist](RELEASE_NOTES_V1.md). Public Installer manifests and binaries are deployed from a separate repository; a local build does not update that deployment. The [Japanese v1.0 PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_JA.pdf) and [English v1.0 PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_EN.pdf) are also published. The old [Getting Started guide](history/v0.6/GETTING_STARTED_EN.md), [Firmware Guide](history/v0.6/FIRMWARE_GUIDE_EN.md), and [FAQ](history/v0.6/FAQ_EN.md) are retained as historical material.

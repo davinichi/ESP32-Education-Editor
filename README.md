@@ -4,7 +4,6 @@
 
 ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで操作するための教育向けプログラミング環境です。ブラウザのWeb Serial APIでUSB接続し、GPIO、センサー、ディスプレイ、ESP-NOWなどを扱えます。
 
-
 ## v1.0について
 
 **Editor v1.0 / Firmware v1.0.0** を[公開Editor](https://davinichi.github.io/)と[Firmware Installer](https://davinichi.github.io/firmware/)から利用できます。完成済みFirmwareと日英PDFマニュアルを配信しており、利用者によるソースのコンパイルは不要です。
@@ -17,7 +16,6 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 - [v1.0 リリース情報](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
 - [Editor v1.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/editor-v1.0) / [Firmware v1.0.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0)
 - Firmwareソース: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
-
 
 ## 現行バージョン
 
@@ -32,7 +30,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 - Firmware Installer: https://davinichi.github.io/firmware/
 - GitHubリポジトリ: https://github.com/davinichi/ESP32-Education-Editor
 - Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
-- Firmware v0.1.8 Release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8
+- Firmware v1.0.0 Release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0
 
 ## 主な機能
 
@@ -47,7 +45,7 @@ ESP32 Education Editorは、ESP32-WROOM-32をブラウザからブロックで�
 
 ## 対応ハードウェアとブラウザ
 
-対象ボードは**ESP32-WROOM-32**です。Arduino IDEのボード選択では**ESP32 Dev Module**を使用します。Firmware Installerの対象もESP32-WROOM-32です。他のESP32ボードはこのFirmwareの対象として案内していません。
+対象ボードは**ESP32-WROOM-32**です。開発者がソースをビルドする場合、Arduino IDEのボード選択では**ESP32 Dev Module**を使用します。通常利用にArduino IDEは不要です。Firmware Installerの対象もESP32-WROOM-32です。他のESP32ボードはこのFirmwareの対象として案内していません。
 
 EditorとInstallerはWeb Serialを利用します。ChromeまたはEdgeなど、Web Serialに対応するChromium系ブラウザを使ってください。InstallerはHTTPSまたはlocalhostで開く必要があります。公開サイトはHTTPSで配信されています。
 
@@ -59,13 +57,13 @@ Firmwareの機能と書き込み方法は[Firmwareガイド](docs/esp32-educatio
 
 詳細な手順は[Getting Startedガイド](docs/esp32-education-editor/GETTING_STARTED_JA.md)を参照してください。
 
-
 1. ESP32-WROOM-32をUSBでPCまたはChromebookへ接続します。
 2. [Firmware Installer](https://davinichi.github.io/firmware/)を開き、画面の案内に従ってFirmware v1.0.0を書き込みます。Installerから完成済みFirmwareを書き込めるため、Arduino IDEや追加ライブラリを利用者側で準備する必要はありません。
 3. [公開Editor](https://davinichi.github.io/)を開き、ESP32 Connection拡張からWeb Serial接続を開始します。
-4. 使用する拡張カテゴリーを追加し、ブロックを組んで実行します。
+4. 「ESP32のFirmwareバージョン」で`1.0.0`を確認します。接続時に自動取得され、「ESP32の状態を更新」でも再取得できます。
+5. 使用する拡張カテゴリーを追加し、ブロックを組んで実行します。
 
-シリアルポートをArduino IDEのシリアルモニターや別のEditorが使用している場合は、接続前に切断してください。書き込み後はEditorから接続し、必要に応じて`SYS:STATUS`の応答を確認できます。
+シリアルポートをArduino IDEのシリアルモニターや別のEditorが使用している場合は、接続前に切断してください。書き込み後はEditorから接続し、「ESP32の状態」が`OK`、Firmwareバージョンが`1.0.0`であることを確認します。InstallerからEditorへ切り替える前にInstallerを切断してポートを解放してください。ChromebookではChrome、WindowsではChromeまたはEdgeを使用します。学校管理端末の許可設定やWindowsのポート認識は[はじめ方](docs/esp32-education-editor/GETTING_STARTED_JA.md)を参照してください。
 
 ## 拡張カテゴリー
 
@@ -112,7 +110,11 @@ ESP32 Education Editorは、Scratch Foundationが公開するオープンソー�
 
 ベースとなるScratch Editorのライセンス条件およびプロジェクトの表示については、リポジトリ内の[LICENSE](LICENSE)、[NOTICE.md](NOTICE.md)、[TRADEMARK](TRADEMARK)を参照してください。プロジェクトの詳細は[About](docs/esp32-education-editor/ABOUT_JA.md)を参照してください。
 
+旧版の[導入資料](docs/esp32-education-editor/history/v0.6/GETTING_STARTED_JA.md)・[Firmwareガイド](docs/esp32-education-editor/history/v0.6/FIRMWARE_GUIDE_JA.md)・[FAQ](docs/esp32-education-editor/history/v0.6/FAQ_JA.md)は履歴として保持しています。
+
 ## 開発者向け
+
+通常利用はFirmware Installerを使用します。ソースを改変する場合の[Firmwareビルド手順](docs/esp32-education-editor/V1_MANUAL_JA.md#developer-build)と、以下のEditorビルド手順は開発者向けです。
 
 ```bash
 npm ci

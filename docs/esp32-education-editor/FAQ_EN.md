@@ -4,23 +4,36 @@
 
 [README](../../README_EN.md) · [Getting Started](GETTING_STARTED_EN.md)
 
-This page covers ESP32 Education Editor v0.6, Firmware v0.1.8, and the ESP32-WROOM-32. The Editor has 9 categories and 49 public blocks, with one hidden compatibility block retained internally for existing projects.
+This page covers ESP32 Education Editor v1.0, Firmware v1.0.0, and the ESP32-WROOM-32. The Editor has 12 categories and 64 public blocks, with one hidden compatibility block retained internally for existing projects.
 
 ## First checks
 
 If something goes wrong, check these items in order:
 
 1. The board is the supported **ESP32-WROOM-32**.
-2. **Firmware v0.1.8** is installed.
+2. **Firmware v1.0.0** is installed.
 3. You are using a browser with Web Serial support, such as **Chrome or Edge**.
 4. The board is connected over USB.
 5. Another application, such as Arduino IDE's Serial Monitor, is not using the same serial port.
+
+### Chromebook, Windows, and Web Serial
+
+- **Chromebook**: Open the public Installer and Editor in Chrome. No Linux environment or Arduino IDE setup is needed. If a school-managed device restricts USB serial access or the sites, ask the school administrator to check the permissions.
+- **Windows**: Use Chrome or Edge with Web Serial support. Check the USB serial device under **Ports (COM & LPT)** in Device Manager. If it is not recognized, identify the board's USB serial chip and follow the board manufacturer's instructions for the appropriate driver.
+- **Both**: Use a data-capable USB cable, select the connected ESP32 in the browser's port picker, and grant access. Web Serial requires a secure context such as HTTPS and user permission. Use the public HTTPS links. Charge-only cables cannot connect.
+- The Installer, Editor, and Serial Monitor cannot use the same port simultaneously. Disconnect before switching, and close the previous tab if needed. After unplugging USB, reconnect manually from the Editor.
+
+### Check the Firmware version
+
+After connecting, click the **ESP32 Firmware version** reporter in ESP32 Connection, or select its checkbox to show a monitor, and confirm `1.0.0`. It is retrieved automatically on connection; **refresh ESP32 status** retrieves it again. Also confirm that **ESP32 status** shows `OK`.
+
+If the version is older or shows **Unknown (Firmware v1.0.0 recommended)**, disconnect the Editor, install v1.0.0 with the Installer, and reconnect. `SYS:READY:OK` alone does not identify the version. At protocol level, `SYS:VERSION` returns `SYS:VERSION:1.0.0` (normally the blocks handle this; no manual command entry is needed).
 
 ## Frequently asked questions
 
 ### 1. What do I need to use ESP32 Education Editor?
 
-You need an ESP32-WROOM-32, a USB connection, a browser with Web Serial support (such as Chrome or Edge), and Firmware v0.1.8. Open the [Public Editor](https://davinichi.github.io/). The Editor communicates with the board over USB / Web Serial.
+You need an ESP32-WROOM-32, a USB connection, a browser with Web Serial support (such as Chrome or Edge), and Firmware v1.0.0. Open the [Public Editor](https://davinichi.github.io/). The Editor communicates with the board over USB / Web Serial.
 
 ### 2. Do I need Arduino IDE?
 
@@ -34,7 +47,7 @@ Check these items in order:
 
 1. Confirm that the board is an ESP32-WROOM-32.
 2. Check that it is connected over USB.
-3. Confirm that Firmware v0.1.8 is installed. If needed, install it again with the Installer.
+3. Confirm that Firmware v1.0.0 is installed. If needed, install it again with the Installer.
 4. Open the Public Editor in a browser with Web Serial support, such as Chrome or Edge.
 5. When connecting, select the ESP32 serial port in the browser's port picker.
 6. Close other applications that may be using the port, such as Arduino IDE's Serial Monitor, then try again.
@@ -49,7 +62,7 @@ Open the Installer in a Web Serial-compatible browser such as Chrome or Edge, ov
 
 ### 6. The Editor still cannot connect after flashing the firmware
 
-Confirm that the board is an ESP32-WROOM-32 and that Firmware v0.1.8 was installed. The Editor connects over USB from a browser with Web Serial support, such as Chrome or Edge. After flashing, close Serial Monitor or any other application using the same port, then connect from the Editor. After connecting, run `SYS:STATUS` from ESP32 Connection and check whether the response includes `SYS:READY:OK`.
+Confirm that the board is an ESP32-WROOM-32 and that Firmware v1.0.0 was installed. The Editor connects over USB from a browser with Web Serial support, such as Chrome or Edge. After flashing, close Serial Monitor or any other application using the same port, then connect from the Editor. After connecting, run **refresh ESP32 status**, then confirm status `OK` and Firmware version `1.0.0`.
 
 ### 7. Can I use Arduino IDE's Serial Monitor and the Editor at the same time?
 
@@ -69,7 +82,7 @@ The current supported target is ESP32-WROOM-32. ESP32 Dev Module is the board se
 
 ### 11. ESP-NOW communication is not working
 
-If the send block specifies a destination MAC address, check that it is correct. Leaving the destination MAC field empty sends a broadcast. Also check that the communicating boards use the same Wi-Fi channel. Firmware v0.1.8 starts on channel 1, and the selected channel returns to 1 after a restart. Confirm that your program uses blocks from the ESP32 ESP-NOW category.
+If the send block specifies a destination MAC address, check that it is correct. Leaving the destination MAC field empty sends a broadcast. Also check that the communicating boards use the same Wi-Fi channel. Firmware v1.0.0 starts on channel 1, and the selected channel returns to 1 after a restart. Confirm that your program uses blocks from the ESP32 ESP-NOW category.
 
 ### 12. A sensor or peripheral is not working
 
@@ -86,3 +99,7 @@ Yes. Both the Editor and Firmware Installer support Japanese and English. In the
 ### 15. Can I open a project made in Japanese with the Editor set to English?
 
 Block labels change with the selected language, while internal identifiers such as extension IDs and opcodes do not change when the language changes. Current integration tests load test projects containing ESP32 extension blocks in both directions—from Japanese to English and from English to Japanese—and confirm that the block data is preserved. This does not guarantee compatibility for every existing project beyond the tested cases.
+
+## Historical material
+
+The [Editor v0.6 / Firmware v0.1.8 FAQ](history/v0.6/FAQ_EN.md) is retained as history. See [Getting Started](GETTING_STARTED_EN.md) for current installation and the [v1.0 manual](V1_MANUAL_EN.md#developer-build) for developer builds.

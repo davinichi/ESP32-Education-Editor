@@ -2,16 +2,25 @@
 
 [English](V1_MANUAL_EN.md) · [README](../../README.md)
 
-対象: Editor v1.0 / Firmware v1.0.0、ESP32-WROOM-32（ESP32 Dev Module）。実機確認済みの構成を含む公開準備版です。公開サイト・Installerの配信状況はREADMEで確認してください。
+対象: Editor v1.0 / Firmware v1.0.0、ESP32-WROOM-32（ESP32 Dev Module）。2026年10月20日に正式公開されました。[公開Editor](https://davinichi.github.io/)と[Firmware Installer](https://davinichi.github.io/firmware/)から利用できます。
 
 ## 接続と互換性
 
-1. Firmware v1.0.0をソースからコンパイルし、ESP32へ書き込みます。
-2. Editorの「ESP32 接続」を追加し、「ESP32に接続」を実行します。
-3. 「ESP32のFirmwareバージョン」は接続時に自動取得され、`1.0.0`を表示します。「ESP32の状態を更新」でも再取得できます。モニター表示にも対応します。
-4. 必要な拡張を追加します。全12カテゴリー・公開64ブロックです。
+1. [はじめ方](GETTING_STARTED_JA.md)に従い、ChromebookではChrome、WindowsではChromeまたはEdgeで[Firmware Installer](https://davinichi.github.io/firmware/)を開き、完成済みFirmware v1.0.0を書き込みます。Arduino IDEや追加ライブラリは不要です。データ通信対応USBケーブルを使い、Web Serialのポート選択画面でESP32を選んで許可します。
+2. Installerを切断し、ポートを解放してから[公開Editor](https://davinichi.github.io/)を開きます。
+3. Editorの「ESP32 接続」を追加し、「ESP32に接続」を実行し、ESP32のポートを選んで許可します。
+4. 次の手順でFirmwareバージョンを確認します。
+5. 必要な拡張を追加します。全12カテゴリー・公開64ブロックです。
 
 v0.1.8以前のFirmwareが`SYS:VERSION`に対応しない場合、接続は継続し、バージョンは「不明（Firmware v1.0.0を推奨）」と表示します。新しいセンサー機能にはv1.0.0が必要です。旧GPIO/PWM、DHT、OLED、ESP-NOW、Servo、HC-SR04の命令と応答、既存ブロックID・引数は維持します。非表示のWBGT互換ブロックも維持します。
+
+### Firmwareバージョンを確認する
+
+接続後、ESP32 Connectionの「ESP32のFirmwareバージョン」をクリックするか、チェックを入れてモニター表示し、`1.0.0`であることを確認します。接続時に自動取得され、「ESP32の状態を更新」でも再取得できます。「ESP32の状態」が`OK`であることも確認してください。
+
+「不明（Firmware v1.0.0を推奨）」や古いバージョンが表示される場合は、Editorを切断し、Installerでv1.0.0を書き込んでから再接続します。`SYS:READY:OK`だけではバージョンは判定できません。通信仕様上の確認は`SYS:VERSION`への応答`SYS:VERSION:1.0.0`です（通常はブロックで確認でき、コマンドの手入力は不要です）。
+
+学校管理端末の制限やWindowsでのポート認識は[はじめ方](GETTING_STARTED_JA.md)を参照してください。
 
 ## 共通I2C配線
 
@@ -78,7 +87,7 @@ BME280はメーカー仕様範囲（温度−40～85℃、湿度0～100％、気
 
 初期化命令のアドレスは必須です。Editorの既定値はBME280=0x76、INA219=0x40です。アドレスは10進数も使用可能です。I2Cエラーは`I2C:ERROR:INIT_FAILED`または`I2C:ERROR:SCAN_FAILED`、センサーエラーは`<センサー名>:STATUS:<コード>`です。
 
-## ビルドと公開前確認
+## 電源と測定の確認
 
 ### 電源と測定の進め方
 
@@ -88,6 +97,12 @@ BME280はメーカー仕様範囲（温度−40～85℃、湿度0～100％、気
 
 連続試験はEditorを前面に表示し、PCをスリープさせず実施します。今回の600回試験は前面表示の条件です。背面表示中の一定周期動作や、配線修正前に発生した応答停止の原因特定までは確認していません。USB切断後は手動で接続・各機器の初期化を行います。測定回数だけでなく、状態・失敗回数・OLED応答を記録してください。
 
+<a id="developer-build"></a>
+
+## 開発者向け：ソースからのビルド
+
+以下はFirmwareやEditorを改変する開発者向けです。通常利用には公開Installerを使用してください。Arduino IDEを使用する場合のボード選択はESP32 Dev Moduleです。
+
 Arduinoライブラリ: DHT sensor library、Adafruit Unified Sensor、Adafruit GFX Library、Adafruit SSD1306、Adafruit BusIO、Adafruit INA219。Arduino-ESP32 3.2.1を基準とします。BME280用ドライバーは同梱です。スケッチの`.ino`と`BME280Checked.h`を同じフォルダーに置いてください。Adafruit BME280 Libraryは別途提供した単独診断スケッチで使用します。
 
 ```sh
@@ -96,4 +111,4 @@ npm ci
 npm run build
 ```
 
-[リリース候補情報と実機確認項目](RELEASE_NOTES_V1.md)を参照してください。公開Installer、manifest、配布バイナリーの更新は別リポジトリの配信作業です。この変更だけでは公開されません。従来PDFは旧版の資料として扱い、このマニュアルをv1.0の追加仕様としてください。
+[正式リリース情報と実機確認項目](RELEASE_NOTES_V1.md)を参照してください。公開Installerのmanifestとバイナリーは別リポジトリで配信されています。ローカルでビルドしても公開配信は更新されません。[日本語v1.0 PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_JA.pdf)・[English v1.0 PDF](https://davinichi.github.io/manuals/ESP32_Education_Editor_v1.0_EN.pdf)も公開済みです。旧版の[導入資料](history/v0.6/GETTING_STARTED_JA.md)・[Firmwareガイド](history/v0.6/FIRMWARE_GUIDE_JA.md)・[FAQ](history/v0.6/FAQ_JA.md)は履歴として保持しています。
