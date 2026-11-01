@@ -4,7 +4,6 @@
 
 ESP32 Education Editor is a browser-based, block programming environment for working with an ESP32-WROOM-32. It connects to the board over USB using the browser's Web Serial API and provides blocks for GPIO, sensors, displays, ESP-NOW, and data processing.
 
-
 ## v1.0
 
 **Editor v1.0 / Firmware v1.0.0** is available from the [public Editor](https://davinichi.github.io/) and [Firmware Installer](https://davinichi.github.io/firmware/). Prebuilt firmware and Japanese/English PDF manuals are provided; users do not need to compile the source.
@@ -17,7 +16,6 @@ Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/int
 - [v1.0 release notes](docs/esp32-education-editor/RELEASE_NOTES_V1.md)
 - [Editor v1.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/editor-v1.0) / [Firmware v1.0.0 Release](https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0)
 - Firmware source: `firmware/esp32-education-editor/esp32_education_editor_firmware_v1_0_0/`
-
 
 ## Current versions
 
@@ -32,7 +30,7 @@ Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/int
 - Firmware Installer: https://davinichi.github.io/firmware/
 - GitHub repository: https://github.com/davinichi/ESP32-Education-Editor
 - Releases: https://github.com/davinichi/ESP32-Education-Editor/releases
-- Firmware v0.1.8 release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v0.1.8
+- Firmware v1.0.0 release: https://github.com/davinichi/ESP32-Education-Editor/releases/tag/firmware-v1.0.0
 
 ## Key features
 
@@ -47,7 +45,7 @@ Hardware reports confirm 600 foreground diagnostic cycles with INA219/BME280/int
 
 ## Supported hardware and browser requirements
 
-The target board is **ESP32-WROOM-32**. In the Arduino IDE board menu, select **ESP32 Dev Module**. The Firmware Installer also targets ESP32-WROOM-32; this README does not claim support for other ESP32 boards.
+The target board is **ESP32-WROOM-32**. Developers building from source select **ESP32 Dev Module** in Arduino IDE. Normal use does not require Arduino IDE. The Firmware Installer also targets ESP32-WROOM-32; this README does not claim support for other ESP32 boards.
 
 The Editor and Installer use Web Serial. Use a Chromium-based browser that supports Web Serial, such as Chrome or Edge. The Installer must be opened over HTTPS or on localhost. The public site uses HTTPS.
 
@@ -59,13 +57,13 @@ For Firmware features and installation, see the [Firmware Guide](docs/esp32-educ
 
 For detailed instructions, see the [Getting Started guide](docs/esp32-education-editor/GETTING_STARTED_EN.md).
 
-
 1. Connect an ESP32-WROOM-32 to your PC or Chromebook over USB.
 2. Open the [Firmware Installer](https://davinichi.github.io/firmware/) and follow its instructions to install Firmware v1.0.0. The Installer writes the prebuilt firmware from the browser, so you do not need to set up Arduino IDE or install additional libraries.
 3. Open the [Public Editor](https://davinichi.github.io/) and start a Web Serial connection from the ESP32 Connection extension.
-4. Add the extension categories you need, arrange the blocks, and run your program.
+4. Confirm `1.0.0` with **ESP32 Firmware version**. It is retrieved automatically on connection; **refresh ESP32 status** retrieves it again.
+5. Add the extension categories you need, arrange the blocks, and run your program.
 
-If another application, such as Arduino IDE's Serial Monitor or another Editor session, is using the serial port, disconnect it before connecting or installing. After installation, connect from the Editor and, if needed, check the response to `SYS:STATUS`.
+If another application, such as Arduino IDE's Serial Monitor or another Editor session, is using the serial port, disconnect it before connecting or installing. After installation, connect from the Editor confirm that **ESP32 status** shows `OK` and the Firmware version is `1.0.0`. Disconnect the Installer to release the port before switching to the Editor. Use Chrome on Chromebook or Chrome/Edge on Windows. See [Getting Started](docs/esp32-education-editor/GETTING_STARTED_EN.md) for school-managed device permissions and Windows port detection.
 
 ## Extension categories
 
@@ -112,7 +110,11 @@ ESP32 Education Editor is an **independent project** based on the open-source Sc
 
 See the repository's [LICENSE](LICENSE), [NOTICE.md](NOTICE.md), and [TRADEMARK](TRADEMARK) for license terms and notices. For project details, see [About (Japanese)](docs/esp32-education-editor/ABOUT_JA.md).
 
+The old [Getting Started guide](docs/esp32-education-editor/history/v0.6/GETTING_STARTED_EN.md), [Firmware Guide](docs/esp32-education-editor/history/v0.6/FIRMWARE_GUIDE_EN.md), and [FAQ](docs/esp32-education-editor/history/v0.6/FAQ_EN.md) are retained as historical material.
+
 ## For developers
+
+For normal use, use the Firmware Installer. The [Firmware source build instructions](docs/esp32-education-editor/V1_MANUAL_EN.md#developer-build) and the Editor build commands below are for developers modifying the source.
 
 ```bash
 npm ci
