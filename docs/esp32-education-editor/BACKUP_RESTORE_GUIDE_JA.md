@@ -4,12 +4,13 @@
 
 この文書は、ESP32 Education Editor の開発環境を安全にバックアップし、PC の故障や環境の再構築が必要になった場合に復元するための手順をまとめたものです。
 
-対象は現在の **Backup Tool Ver.1（`backup_project.ps1` v1.0.0）** です。
+対象は現在の **Backup Tool Ver.1（`backup_project.ps1` v1.1.0）** です。
 
 - Source Repository: `C:\ESP32-Education-Editor`
 - Pages Repository: `C:\davinichi.github.io`
-- Editor: v0.6
-- Firmware: v0.1.7
+- Editor: v1.0
+- Firmware: v1.0.0（2026年10月20日正式公開）
+- 旧版保存: v0.1.7 のソース・バイナリ・Release Notes・専用チェックサムも保存
 - 主なバックアップ先の例: `F:\ESP32_Backup`
 
 > **重要**
@@ -27,11 +28,11 @@
 
 - ESP32 Education Editor の Git 履歴・ブランチ・タグ
 - GitHub Pages Repository の Git 履歴・ブランチ・タグ
-- Firmware v0.1.7 の Arduino ソース
-- Firmware v0.1.7 の書き込み用 merged binary
+- Firmware v1.0.0 の Arduino スケッチ一式（`.ino` と `BME280Checked.h`）
+- Firmware v1.0.0 の書き込み用 merged binary
 - Firmware の `manifest.json`
 - Firmware の SHA-256 チェックサム
-- Firmware v0.1.7 の Release Notes
+- Firmware v1.0.0 の Release Notes
 - バックアップ時の Repository 情報
 - バックアップ時の Windows / PowerShell / Git / Node.js / npm / Arduino CLI / ESP32 Arduino Core の環境情報
 - 復元時の簡易手順
@@ -120,6 +121,18 @@ nothing to commit, working tree clean
 > Backup Tool 自身も両 Repository を確認します。
 > 未コミット・未追跡のファイルがある場合は `FAIL` となり、バックアップは開始されません。
 
+### 4.4 公開済み Firmware との整合性
+
+両 Repository を必要な公開コミットまで更新し、clean であることを確認してください。ツールは自動 fetch / pull / checkout を行いません。
+
+- 現行 manifest は version `1.0.0`、ESP32 の単一 merged image、offset `0` を要求します。
+- manifest の参照先、実際のバイナリ、チェックサム、固定された正式 SHA-256 が一致しない場合は停止します。
+- `.ino` と `BME280Checked.h` は正式公開タグ `firmware-v1.0.0` の Git blob ID と照合します。コピー後も Git の改行正規化を適用して検証します。ソースを改変した状態を正式版バイナリと組み合わせることはできません。
+- スケッチの不足、余分な追跡ファイル、Release Notes の不足、チェックサム記載の旧版バイナリの不足・破損もエラーです。
+- 将来の Firmware は自動追従しません。公開物を確認してツールのバージョン・正式ハッシュ・ソース情報を更新してください。
+
+既存の安全確認（未コミット・未追跡ファイル、Repository 内への出力、出力先の junction / symlink、同名バックアップ、bundle verify、処理後の clean 確認）は維持しています。
+
 ---
 
 ## 5. 手動バックアップの実行
@@ -151,7 +164,7 @@ Backup Tool を実行します。
 ```text
 ============================================================
  Backup completed successfully.
- PASS: 16  WARNING: 0  FAIL: 0
+ PASS: （処理数により変動）  WARNING: 0  FAIL: 0
 ============================================================
 ```
 
@@ -180,12 +193,13 @@ ESP32_Education_Editor_Backup_YYYY-MM-DD_HHmm\
 ├─ repositories\
 │  ├─ ESP32-Education-Editor.bundle
 │  └─ davinichi.github.io.bundle
-├─ firmware-v0.1.7\
-│  ├─ esp32_education_editor_firmware_v0_1_7.ino
-│  ├─ esp32_education_editor_firmware_v0_1_7.ino.merged.bin
+├─ firmware-v1.0.0\
+│  ├─ source/esp32_education_editor_firmware_v1_0_0/（.ino と BME280Checked.h）
+│  ├─ firmware/（v1.0.0 とチェックサム記載の旧版 merged.bin）
 │  ├─ manifest.json
 │  ├─ SHA256SUMS.txt
-│  └─ RELEASE_NOTES_firmware-v0.1.7.md
+│  └─ RELEASE_NOTES_firmware-v1.0.0.md
+├─ firmware-v0.1.7/（旧版の .ino・merged.bin・Release Notes・SHA256SUMS.txt・ARCHIVE_README.txt）
 ├─ BACKUP_INFO.txt
 ├─ ENVIRONMENT.txt
 ├─ RESTORE_GUIDE.txt
@@ -204,9 +218,13 @@ ESP32 Education Editor の Git Repository を復元するための bundle です
 
 GitHub Pages Repository を復元するための bundle です。
 
+### `firmware-v1.0.0`
+
+Firmware v1.0.0 のスケッチ一式、書き込み用 binary、manifest、チェックサム、Release Notes を保存します。manifest の相対参照 `firmware/…merged.bin` を維持します。元の `SHA256SUMS.txt` に記載された旧版バイナリも同じ相対パスで保存・検証します。
+
 ### `firmware-v0.1.7`
 
-Firmware v0.1.7 のソース、書き込み用 binary、manifest、チェックサム、Release Notes を保存します。
+v0.1.7 のソース、完成済み binary、Release Notes、専用チェックサムを残す旧版アーカイブです。現行の manifest は混在させません。旧版の意図的な復元用であり、現行 Installer の代替フォルダーではありません。旧版を含むコミット済み履歴も Git bundle に保存されます。
 
 ### `BACKUP_INFO.txt`
 
@@ -267,7 +285,7 @@ ESP32_Education_Editor_Backup_2026-10-08_1000.INCOMPLETE
 1. 完成したバックアップフォルダーが存在する
 2. フォルダー名に .INCOMPLETE が付いていない
 3. repositories フォルダーに2個の .bundle がある
-4. firmware-v0.1.7 に merged.bin がある
+4. firmware-v1.0.0\firmware に v1.0.0 の merged.bin がある
 5. BACKUP_INFO.txt がある
 6. ENVIRONMENT.txt がある
 7. BACKUP_SHA256SUMS.txt がある
@@ -526,17 +544,21 @@ cd C:\ESP32-Education-Editor
 
 # 第IV部 Firmware の復旧
 
-## 22. Firmware v0.1.7 の保存場所
+## 22. Firmware v1.0.0 の保存場所
 
-バックアップには Firmware v0.1.7 が保存されています。
+バックアップには Firmware v1.0.0 が保存されています。
 
 ```text
-firmware-v0.1.7\
-├─ esp32_education_editor_firmware_v0_1_7.ino
-├─ esp32_education_editor_firmware_v0_1_7.ino.merged.bin
+firmware-v1.0.0\
+├─ source/esp32_education_editor_firmware_v1_0_0/
+│  ├─ esp32_education_editor_firmware_v1_0_0.ino
+│  └─ BME280Checked.h
+├─ firmware/
+│  ├─ esp32_education_editor_firmware_v1_0_0.ino.merged.bin
+│  └─ （チェックサムに記載された旧版バイナリ）
 ├─ manifest.json
 ├─ SHA256SUMS.txt
-└─ RELEASE_NOTES_firmware-v0.1.7.md
+└─ RELEASE_NOTES_firmware-v1.0.0.md
 ```
 
 ---
@@ -546,22 +568,43 @@ firmware-v0.1.7\
 次のファイルは、バックアップ時点で完成済みの書き込み用 Firmware です。
 
 ```text
-esp32_education_editor_firmware_v0_1_7.ino.merged.bin
+esp32_education_editor_firmware_v1_0_0.ino.merged.bin
 ```
 
 そのため、緊急時には Firmware を再コンパイルせず、保存済み binary を利用できます。
 
-Firmware v0.1.7 の正式 SHA-256 は次の値です。
+Firmware v1.0.0 の正式 SHA-256 は次の値です。
 
 ```text
-53255551385AC31A10B2C1B7E3F5BFD0350E8907EA7FB4C0CDD43FBFFC07F4B1
+7eeb0088ea8cb27d4a1d8c8874f68f9260c3282292e42b374065cf15fbe167da
 ```
 
 確認する場合:
 
 ```powershell
-Get-FileHash .\firmware-v0.1.7\esp32_education_editor_firmware_v0_1_7.ino.merged.bin -Algorithm SHA256
+Get-FileHash .\firmware-v1.0.0\firmware\esp32_education_editor_firmware_v1_0_0.ino.merged.bin -Algorithm SHA256
 ```
+
+---
+
+### 23.1 現行 Installer の復旧
+
+`firmware-v1.0.0` は Firmware データの保存用です。ブラウザー Installer の HTML / JavaScript は含まれないため、画面を復旧する場合は Pages bundle から Repository を復元してください。
+
+manifest とバイナリは次の組を維持します。
+
+| manifest の場所 | バイナリの場所 |
+| --- | --- |
+| `firmware-v1.0.0/manifest.json` | `firmware-v1.0.0/firmware/esp32_education_editor_firmware_v1_0_0.ino.merged.bin` |
+| 復元した Pages の `firmware/manifest.json` | 復元した Pages の `firmware/firmware/esp32_education_editor_firmware_v1_0_0.ino.merged.bin` |
+
+バイナリを manifest と同じ階層へ移動しないでください。書き込み対象は通常の ESP32（ESP32-WROOM-32 / ESP32 Dev Module）、merged image の offset は `0` です。ESP32-C3 / ESP32-S3 用ではありません。
+
+ソースを Arduino IDE で開く場合は `source/esp32_education_editor_firmware_v1_0_0` フォルダー全体を使用し、`BME280Checked.h` を `.ino` と同じ場所に保ちます。
+
+### 23.2 旧版の復旧
+
+`firmware-v0.1.7` は旧版保存用です。専用 `SHA256SUMS.txt` の相対パスはこのフォルダーを基準とします。v0.1.7 の正式ハッシュは `53255551385ac31a10b2c1b7e3f5bfd0350e8907ea7fb4c0cdd43fbffc07f4b1` です。現行 v1.0.0 の manifest と組み合わせないでください。旧版 Installer 全体が必要なら、Pages bundle 内の対応する過去コミットを別の復元先で使用します。
 
 ---
 
@@ -707,3 +750,17 @@ ESP32 Education Editor では、
 - 復元手順の記録
 
 を組み合わせることで、障害発生時にも開発を再開できる状態を維持します。
+
+## 31. 回帰テストと検証範囲
+
+Windows PowerShell 5.1 で次を実行できます。
+
+```powershell
+.\scripts\test_backup_project.ps1
+```
+
+一時フォルダーの模擬バイナリを使用し、実 Repository を変更せず、正常な組合せ、manifest の旧版・参照先・チップ・offset の不一致、バイナリ破損・欠落、チェックサムの不一致・重複・欠落、不正 JSON を検査します。このテストは公式バイナリの実測やバックアップ全体の実行を代替しません。
+
+本修正の作業環境は Linux で PowerShell がなく、この PowerShell テスト、Windows でのバックアップ実行、junction 検出、bundle 復元、ESP32 への実機書き込みは未実施です。GitHub の正式 Release の digest、Pages の manifest / チェックサム、公開タグのソース blob ID の対応を確認し、静的検査を行いました。実バイナリを取得して SHA-256 を再計算する検証も未実施です。
+
+運用開始前には Windows で回帰テストとバックアップを実行し、別の空フォルダーへの bundle 復元、manifest の参照先、全ファイルのハッシュを確認してください。
